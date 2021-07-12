@@ -1,0 +1,7 @@
+# USE CTRL-SPACE for type-ahead support
+#Countries                   
+INSERT_UPDATE Country ; isocode[unique=true] ; latitude			 	; longitude
+                      ; IN                   ; 20.5937				; 78.9629
+                      ; JP                   ;36.2048				;138.2529
+                      ; AU                   ;25.2744				;133.7751
+	

@@ -1,0 +1,119 @@
+$productCatalog=spruceProductCatalog
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])[unique=true,default=$contentCatalog:Staged]
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$lang=en
+
+
+######  Ingredient  ####
+UPDATE Ingredient;$productCV ;  quantity[lang=$lang];   name[lang=$lang]   ;  specialInstruction[lang=$lang]  ; cutStyle[lang=$lang] ;   code[unique=true] 
+				;            ;  "2 1/2 cups"    	;   "plain flour"      ;  "plus extra for dusting"        ;                      ;  IV001                              
+				;            ;  "250g"           	;   "unsalted butter"  ;  "chilled"                  	  ; "cubed"            	 ;   IV002                                                     
+				;            ;  "2 tbs"          	;   "caster sugar"     ;                               	  ;                   	 ;   IV003                                                     
+				;            ;  "1 tbs"          	;   "white vinegar"    ;	                              ;                   	 ;   IV004                                                
+				;            ;  "500g"           	;   "strawberries"     ;  "hulled"                   	  ; "halved"             ;  IV005                                                      
+				;            ;  "3/4 cup"        	;   "caster sugar"     ;                               	  ;                   	 ;   IV006                                                     
+				;            ;  "2 tbs"      		;   "cornflour"        ;                               	  ;                   	 ;   IV007                                                
+				;            ;  "1 tbs"      		;   "vanilla extract"  ;                               	  ;                   	 ;   IV008                                                     
+				;            ;  "1 free range"   	;   "egg"              ;  "lightly beaten"                ;                   	 ;   IV009                                                    
+				;            ;  "1/2 cup"        	;   "flaked almonds"   ;                               	  ;                   	 ;   IV0010                                                  
+                ;            ;  350 gm              ;   Chicken Breast Fillet;                                ; cubed                ;   IV0011           
+		        ;            ;  1 tbs               ;   Masterfoods roast chicken seasoning;                  ;                      ;   IV0012           
+                ;            ;  1 tbs               ;   Carmen Rosemary Sea Salt;                             ;                      ;   IV0013           
+                ;            ;  100 gm              ;   Lindt Extra Dark Chocolate;                           ; molten               ;   IV0014          
+                ;            ;  50 gm               ;   Cadbury Dream White Chocolate;                        ; molten and piped     ;   IV0015           
+                ;            ;  250 gm              ;   Creative Gourmet Frozen Pineapple Pieces;             ; room temperature     ;   IV0016          					   
+                ;            ;  1 tbs               ;   Caster Sugar;                                         ;                      ;   IV0017           
+						 
+									 
+###### Ingredients group #####	
+UPDATE IngredientsGroup; code[unique=true]    ;  groupName[lang=$lang];  $productCV       
+					   ; IG001               ;  "Pastry"              ;  
+					   ; IG002               ;  "Strawberry Galette"  ;  
+					   ; IG003               ;  "Almond Base Filling" ;  
+					   ; IG004               ;  "Cream Cheese Pastry" ;  
+					   ; IG005               ;  "Strawberry Filling"  ;  
+                       ; IG006               ;  "Pineapple Choco Pop" ;         
+					   ; IG007               ;  "Chocolate Frosting"  ;                        
+                       ; IG008               ;  "Icing"               ;                         					   
+
+
+
+
+UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=$lang]; name[lang=$lang]    ; description[lang=$lang] ;  method[lang=$lang]
+			;                       ;RC001            ;                          ; "Shortcrust Pastry Strawberry Tart" ; "Shortcrust Pastry Strawberry Tart" ;  "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."								   
+			;                       ;RC002            ;                          ; "Pineapple Cake"	       ; "Pineapple Cake"   ;  "1. Take some pinapple and strawberies<br>2. Refrigerate them<br>3. Serve and Enjoy."
+			;                       ;RC003            ;                          ; "Mango Flavoured Icecream" ; "Mango Flavouerd Icecream"   ;  "1. Take some raw mango<br>2. Take some mango essence<br>3. Add milk and mango and stir<br>4. Refrigerate"
+            ;                       ;RC006            ;                          ; Raspberry Sorbet        ; Raspberry Sorbet         ;  "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."								   
+			;                       ;RC007            ;                          ; Oreo Shake	           ; Oreo Shake	              ;  "1. Take some pineapple and strawberies<br>2. Refrigerate them<br>3. Serve and Enjoy."
+			;                       ;RC008            ;                          ; Rasmalai                ; Rasmalai                 ;  "1. Take some raw mango<br>2. Take some mango essence<br>3. Add milk and mango and stir<br>4. Refrigerate"
+            ;                       ;RC009            ;                          ; Grilled Chicken         ;Grilled Chicken           ; "1. Preheat oven (conventional) to 180C.<br>2. Peel onion and roughly cut into wedges. Peel garlic and cut in half across the bulb.<br>3. Place onion and garlic into oven proof roasting dish and sprinkle with olive oil.<br>4. Separately, rub the MasterFoods Roast Chicken Seasoning into the chicken and place chicken on top of the bed of onion and garlic. Bake for 90 minutes or until cooked.<br>5. Serve hot and enjoy the delicious meal!." 
+            ;                       ;RC010            ;                          ; Pineapple Choco Pops    ;Pineapple Choco Pops      ; "1. Leave the Creative Gourmet Frozen Pineapple Pieces outside till it is thawed and soft.<br>2. Boil Lindt Extra Dark Chocolate in microwave or double boiler and add a pinch of Carmen Rosemary Sea Salt, mix well then transfer into a tall glass.<br>3. Dip each pineapple piece into the chocolate and shake off the excess. Place the pineapple on the baking sheet and repeat the dipping process with the remaining. Allow the chocolate to fully harden.<br>4. Melt the Cadbury Dream White Chocolate in the microwave or in a double boiler then transfer them to a sealable plastic bag. Snip off the tip then pipe the chocolate across the pineapple wedges. Allow the chocolate to fully harden then serve."						
+
+
+UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=$lang]; name[lang=$lang]        ; description[lang=$lang]; method[lang=$lang]
+			;                       ;RC004            ;                           ; "Butterscotch Cake"    ; "Butterscotch Cake"   ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."					
+			;                       ;RC005            ;                           ; "Chole bhature"       ; "Chole bhature"       ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl and enjoy."							   
+
+
+UPDATE RecipesCategory;$productCV               ;code[unique=true];name[lang=$lang]            ;description[lang=$lang]                  
+                     ;                         ;DC001             ;"What's for Dinner live" ;"Comfort food at its best"        
+                     ;                         ;DC002             ;"Must-try slow cooking"  ;"Italian Dishes with Mughalai effect" 
+                     ;                         ;DC003             ;"Cosy baking ideas"      ;"For your sweet tooth"                       
+                     ;                         ;DC004             ;"In a jiffy"             ;"Easy to Cook, Easy to prepare"          
+                     ;                         ;allRecipes        ;"Explore wide range of recipes with spruce";"Delightful, tasty, pleasant and distinct flavor"           
+
+######  RecipeThemeComponent  #######
+UPDATE RecipeThemeComponent ; uid[unique=true] ; headline[lang=$lang]                   ; $contentCV
+                                   ; TC001            ; "Lower the cost of dinner with these footy favourites" ;     
+
+UPDATE ImageOverLayComponent ;$contentCV    ;uid[unique=true]            ;heading [lang=$lang]  ;subheading[lang=$lang]        ;btnText[lang=$lang]			                                 
+						     ;			    ;SimpleBanner1ForSectionRA   ;"Inspiration"        ;"with a variety of recipes"  ;"View recipes & tips"
+						     ;			    ;SimpleBanner2ForSectionRB   ;"Shop for Ingredients" ;"directly from Recipe"  ;
+						     ;			    ;SimpleBanner3ForSectionRC   ;"Renowned chefs"      ;"right in your kitchen"  ;
+
+######## Search Restriction ########
+	                             
+UPDATE SearchRestriction ; code[unique=true]  ; name[lang=$lang]                         ;                                               
+                         ; recipe_restriction ; "Restrict Duplicate Recipes visibility" ; 
+							                         
+
+UPDATE SearchRestriction ; code[unique=true]      ; name[lang=$lang]                            ;                                               
+                                ; ingredient_restriction ; "Restrict Duplicate Ingredient visibility" ;
+								                        
+UPDATE SearchRestriction ; code[unique=true]            ; name[lang=$lang]                                  ;                                               
+                                ; ingredientsGroup_restriction ; "Restrict Duplicate IngredientsGroup visibility" ;
+								                        
+								                        
+UPDATE SearchRestriction ; code[unique=true]                ; name[lang=$lang]                                      ;                                              
+                                ; recipeThemeComponent_restriction ; "Restrict Duplicate RecipeThemeComponent visibility" ;
+								                        
+	                               
+UPDATE SearchRestriction ; code[unique=true]                    ; name[lang=$lang]                                          ;                                               
+                                ; recipeHighlightComponent_restriction ; "Restrict Duplicate RecipeHighlightComponent visibility" ;
+								    													       
+								                        
+UPDATE SearchRestriction ; code[unique=true]                   ; name[lang=$lang]                                         ;                                               
+                                ; recipeCategoryComponent_restriction ; "Restrict Duplicate RecipeCategoryComponent visibility" ; 
+								    													    							    
+								                        
+UPDATE SearchRestriction ; code[unique=true]                    ; name[lang=$lang]                                 ;                                               
+                                ; recipesCategoryComponent_restriction ; "Restrict Duplicate RecipesCategory visibility" ;
+								                        
+								                        
+	
+
+
+
+
+
+
+
+
+
+
+			                      

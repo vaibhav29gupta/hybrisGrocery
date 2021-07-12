@@ -1,0 +1,24 @@
+# USE CTRL-SPACE for type-ahead support
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang=en
+
+$languageIsoCode=en
+$currencyIsoCode=INR
+$languageName=ENGLISH
+$currencyName=RUPEE
+
+# Languages
+UPDATE Language;isocode[unique=true];name[lang=$lang]
+ ;$languageIsoCode;$languageName
+
+# Currencies
+UPDATE Currency;isocode[unique=true];name[lang=$lang]
+ ;$currencyIsoCode;$currencyName

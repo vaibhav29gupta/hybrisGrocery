@@ -1,0 +1,53 @@
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Content Catalog
+$classificationCatalog=SpruceClassification
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+$supercategories=source(code, $catalogVersion)[unique=true]
+$systemVersion=systemVersion(catalog(id[default='SpruceClassification']),version[default='1.0'])
+$lang=ja
+
+
+UPDATE ClassificationAttributeUnit ; code[unique=true] ; name[lang=$lang] ; $systemVersion[unique=true]
+                                   ; nutritionalUnit   ; "栄養成分" ;                             
+
+
+
+
+UPDATE ClassificationClass ; $classCatalogVersion ; code[unique=true] ; name[lang=$lang]
+                           ;                      ; nutritionalValue  ; "100gm当たりの栄養成分"
+
+
+UPDATE ClassificationAttribute ; $classSystemVersion ; code[unique=true] ; name[lang=$lang]        
+                              ;                     ; Energy            ; "エネルギー"      
+                              ;                     ; Protein           ; "タンパク質"     
+                              ;                     ; Fat               ; "脂質"         
+                              ;                     ; Saturated         ; "飽和"   
+                              ;                     ; Carbohydrate      ; "炭水化物"
+                              ;                     ; Sugars            ; "糖質"      
+                              ;                     ; Sodium            ; "食塩相当量"
+                              
+$clAttrModifiers=system='SpruceClassification',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=$lang
+
+# Insert Product Classifications       
+
+# Classification: Technical details (634)
+$feature1=@Energy[$clAttrModifiers]    ;                  
+$feature2=@Protein[$clAttrModifiers]   ;                  
+$feature3=@Fat[$clAttrModifiers]       ;                  
+$feature4=@Saturated[$clAttrModifiers] ;                  
+$feature6=@Carbohydrate[$clAttrModifiers];                  
+$feature7=@Sugars[$clAttrModifiers]    ;                  
+$feature8=@Sodium[$clAttrModifiers]    ;                  
+
+INSERT_UPDATE Product ; code[unique=true] ; $feature1 ; $feature2 ; $feature3 ; $feature4 ; $feature6 ; $feature7 ; $feature8 ; $catalogVersion ;  
+                      ; AGS002             ; 1290      ; 41.0      ; 2.5       ; 0.9       ; 14.4      ; 0.5       ; 161.0     ;                 

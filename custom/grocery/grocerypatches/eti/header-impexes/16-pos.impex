@@ -1,0 +1,6 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store Name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=%store%
+
+INSERT_UPDATE PointOfService;name[unique=true];displayName;description;type(code);latitude;longitude;isExternal;baseStore(uid)[default=$baseStores]

@@ -1,0 +1,91 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImPex for Importing Product Media into Electronics Store
+
+
+# Macros / Replacement Parameter definitions
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$thumbnail=thumbnail(code, $catalogVersion)
+$picture=picture(code, $catalogVersion)
+$thumbnails=thumbnails(code, $catalogVersion)
+$detail=detail(code, $catalogVersion)
+$normal=normal(code, $catalogVersion)
+$others=others(code, $catalogVersion)
+$data_sheet=data_sheet(code, $catalogVersion)
+$medias=medias(code, $catalogVersion)
+$galleryImages=galleryImages(qualifier, $catalogVersion)
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/grocerycore/import/common/
+
+
+UPDATE Product;code[unique=true];$picture;$thumbnail;$detail;$others;$normal;$thumbnails;$galleryImages;$catalogVersion
+
+;ABV001;ABV001_1_product.jpg;ABV001_1_thumbnail.jpg;ABV001_1_superZoom.jpg;ABV001_1_zoom.jpg,ABV001_1_cartIcon.jpg,ABV001_1_styleSwatch.jpg;ABV001_1_product.jpg;ABV001_1_thumbnail.jpg;ABV001_1.jpg;
+;ABV002;ABV002_1_product.png;ABV002_1_thumbnail.png;ABV002_1_superZoom.png;ABV002_1_zoom.png,ABV002_1_cartIcon.png,ABV002_1_styleSwatch.png;ABV002_1_product.png;ABV002_1_thumbnail.png;ABV002_1.png;
+;ABV003;ABV003_1_product.jpg;ABV003_1_thumbnail.jpg;ABV003_1_superZoom.jpg;ABV003_1_zoom.jpg,ABV003_1_cartIcon.jpg,ABV003_1_styleSwatch.jpg;ABV003_1_product.jpg;ABV003_1_thumbnail.jpg;ABV003_1.jpg;
+;ABV004;ABV004_1_product.png;ABV004_1_thumbnail.png;ABV004_1_superZoom.png;ABV004_1_zoom.png,ABV004_1_cartIcon.png,ABV004_1_styleSwatch.png;ABV004_1_product.png;ABV004_1_thumbnail.png;ABV004_1.png;
+;ABV005;ABV005_1_product.jpg;ABV005_1_thumbnail.jpg;ABV005_1_superZoom.jpg;ABV005_1_zoom.jpg,ABV005_1_cartIcon.jpg,ABV005_1_styleSwatch.jpg;ABV005_1_product.jpg;ABV005_1_thumbnail.jpg;ABV005_1.jpg;
+;APC001;APC001_1_product.jpg;APC001_1_thumbnail.jpg;APC001_1_superZoom.jpg;APC001_1_zoom.jpg,APC001_1_cartIcon.jpg,APC001_1_styleSwatch.jpg;APC001_1_product.jpg;APC001_1_thumbnail.jpg;APC001_1.jpg;
+;APC002;APC002_1_product.png;APC002_1_thumbnail.png;APC002_1_superZoom.png;APC002_1_zoom.png,APC002_1_cartIcon.png,APC002_1_styleSwatch.png;APC002_1_product.png;APC002_1_thumbnail.png;APC002_1.png;
+;APC003;APC003_1_product.jpg;APC003_1_thumbnail.jpg;APC003_1_superZoom.jpg;APC003_1_zoom.jpg,APC003_1_cartIcon.jpg,APC003_1_styleSwatch.jpg;APC003_1_product.jpg;APC003_1_thumbnail.jpg;APC003_1.jpg;
+;APC004;APC004_1_product.jpg;APC004_1_thumbnail.jpg;APC004_1_superZoom.jpg;APC004_1_zoom.jpg,APC004_1_cartIcon.jpg,APC004_1_styleSwatch.jpg;APC004_1_product.jpg;APC004_1_thumbnail.jpg;APC004_1.jpg;
+;APC005;APC005_1_product.png;APC005_1_thumbnail.png;APC005_1_superZoom.png;APC005_1_zoom.png,APC005_1_cartIcon.png,APC005_1_styleSwatch.png;APC005_1_product.png;APC005_1_thumbnail.png;APC005_1.png;
+;APC006;APC006_1_product.png;APC006_1_thumbnail.png;APC006_1_superZoom.png;APC006_1_zoom.png,APC006_1_cartIcon.png,APC006_1_styleSwatch.png;APC006_1_product.png;APC006_1_thumbnail.png;APC006_1.png;
+;APC007;APC007_1_product.png;APC007_1_thumbnail.png;APC007_1_superZoom.png;APC007_1_zoom.png,APC007_1_cartIcon.png,APC007_1_styleSwatch.png;APC007_1_product.png;APC007_1_thumbnail.png;APC007_1.png;
+;APC008;APC008_1_product.png;APC008_1_thumbnail.png;APC008_1_superZoom.png;APC008_1_zoom.png,APC008_1_cartIcon.png,APC008_1_styleSwatch.png;APC008_1_product.png;APC008_1_thumbnail.png;APC008_1.png;
+;AHH001;AHH001_1_product.jpg;AHH001_1_thumbnail.jpg;AHH001_1_superZoom.jpg;AHH001_1_zoom.jpg,AHH001_1_cartIcon.jpg,AHH001_1_styleSwatch.jpg;AHH001_1_product.jpg;AHH001_1_thumbnail.jpg;AHH001_1.jpg;
+;AHH002;AHH002_1_product.png;AHH002_1_thumbnail.png;AHH002_1_superZoom.png;AHH002_1_zoom.png,AHH002_1_cartIcon.png,AHH002_1_styleSwatch.png;AHH002_1_product.png;AHH002_1_thumbnail.png;AHH002_1.png;
+;AHH003;AHH003_1_product.jpg;AHH003_1_thumbnail.jpg;AHH003_1_superZoom.jpg;AHH003_1_zoom.jpg,AHH003_1_cartIcon.jpg,AHH003_1_styleSwatch.jpg;AHH003_1_product.jpg;AHH003_1_thumbnail.jpg;AHH003_1.jpg;
+;AHH004;AHH004_1_product.jpg;AHH004_1_thumbnail.jpg;AHH004_1_superZoom.jpg;AHH004_1_zoom.jpg,AHH004_1_cartIcon.jpg,AHH004_1_styleSwatch.jpg;AHH004_1_product.jpg;AHH004_1_thumbnail.jpg;AHH004_1.jpg;
+;AHH005;AHH005_1_product.jpg;AHH005_1_thumbnail.jpg;AHH005_1_superZoom.jpg;AHH005_1_zoom.jpg,AHH005_1_cartIcon.jpg,AHH005_1_styleSwatch.jpg;AHH005_1_product.jpg;AHH005_1_thumbnail.jpg;AHH005_1.jpg;
+;AGS001;AGS001_1_product.jpg;AGS001_1_thumbnail.jpg;AGS001_1_superZoom.jpg;AGS001_1_zoom.jpg,AGS001_1_cartIcon.jpg,AGS001_1_styleSwatch.jpg;AGS001_1_product.jpg;AGS001_1_thumbnail.jpg;AGS001_1.jpg;
+;AGS002;AGS002_1_product.png;AGS002_1_thumbnail.png;AGS002_1_superZoom.png;AGS002_1_zoom.png,AGS002_1_cartIcon.png,AGS002_1_styleSwatch.png;AGS002_1_product.png;AGS002_1_thumbnail.png;AGS002_1.png;
+;AGS003;AGS003_1_product.jpg;AGS003_1_thumbnail.jpg;AGS003_1_superZoom.jpg;AGS003_1_zoom.jpg,AGS003_1_cartIcon.jpg,AGS003_1_styleSwatch.jpg;AGS003_1_product.jpg;AGS003_1_thumbnail.jpg;AGS003_1.jpg;
+;AGS004;AGS004_1_product.jpg;AGS004_1_thumbnail.jpg;AGS004_1_superZoom.jpg;AGS004_1_zoom.jpg,AGS004_1_cartIcon.jpg,AGS004_1_styleSwatch.jpg;AGS004_1_product.jpg;AGS004_1_thumbnail.jpg;AGS004_1.jpg;
+;AGS005;AGS005_1_product.jpg;AGS005_1_thumbnail.jpg;AGS005_1_superZoom.jpg;AGS005_1_zoom.jpg,AGS005_1_cartIcon.jpg,AGS005_1_styleSwatch.jpg;AGS005_1_product.jpg;AGS005_1_thumbnail.jpg;AGS005_1.jpg;
+;CH001;CH001_1_product.jpg;CH001_1_thumbnail.jpg;CH001_1_superZoom.jpg;CH001_1_zoom.jpg,CH001_1_cartIcon.jpg,CH001_1_styleSwatch.jpg;CH001_1_product.jpg;CH001_1_thumbnail.jpg;CH001_1.jpg;
+;CH002;CH002_1_product.png;CH002_1_thumbnail.png;CH002_1_superZoom.png;CH002_1_zoom.png,CH002_1_cartIcon.png,CH002_1_styleSwatch.png;CH002_1_product.png;CH002_1_thumbnail.png;CH002_1.png;
+;CH003;CH003_1_product.png;CH003_1_thumbnail.png;CH003_1_superZoom.png;CH003_1_zoom.png,CH003_1_cartIcon.png,CH003_1_styleSwatch.png;CH003_1_product.png;CH003_1_thumbnail.png;CH003_1.png;
+;CH004;CH004_1_product.jpg;CH004_1_thumbnail.jpg;CH004_1_superZoom.jpg;CH004_1_zoom.jpg,CH004_1_cartIcon.jpg,CH004_1_styleSwatch.jpg;CH004_1_product.jpg;CH004_1_thumbnail.jpg;CH004_1.jpg;
+;CH005;CH005_1_product.jpg;CH005_1_thumbnail.jpg;CH005_1_superZoom.jpg;CH005_1_zoom.jpg,CH005_1_cartIcon.jpg,CH005_1_styleSwatch.jpg;CH005_1_product.jpg;CH005_1_thumbnail.jpg;CH005_1.jpg;
+;BFC001;BFC001_1_product.jpg;BFC001_1_thumbnail.jpg;BFC001_1_superZoom.jpg;BFC001_1_zoom.jpg,BFC001_1_cartIcon.jpg,BFC001_1_styleSwatch.jpg;BFC001_1_product.jpg;BFC001_1_thumbnail.jpg;BFC001_1.jpg;
+;BFC002;BFC002_1_product.jpg;BFC002_1_thumbnail.jpg;BFC002_1_superZoom.jpg;BFC002_1_zoom.jpg,BFC002_1_cartIcon.jpg,BFC002_1_styleSwatch.jpg;BFC002_1_product.jpg;BFC002_1_thumbnail.jpg;BFC002_1.jpg;
+;BFC003;BFC003_1_product.jpg;BFC003_1_thumbnail.jpg;BFC003_1_superZoom.jpg;BFC003_1_zoom.jpg,BFC003_1_cartIcon.jpg,BFC003_1_styleSwatch.jpg;BFC003_1_product.jpg;BFC003_1_thumbnail.jpg;BFC003_1.jpg;
+;BFC004;BFC004_1_product.jpg;BFC004_1_thumbnail.jpg;BFC004_1_superZoom.jpg;BFC004_1_zoom.jpg,BFC004_1_cartIcon.jpg,BFC004_1_styleSwatch.jpg;BFC004_1_product.jpg;BFC004_1_thumbnail.jpg;BFC004_1.jpg;
+;BFC005;BFC005_1_product.jpg;BFC005_1_thumbnail.jpg;BFC005_1_superZoom.jpg;BFC005_1_zoom.jpg,BFC005_1_cartIcon.jpg,BFC005_1_styleSwatch.jpg;BFC005_1_product.jpg;BFC005_1_thumbnail.jpg;BFC005_1.jpg;
+;MSF001;MSF001_1_product.jpg;MSF001_1_thumbnail.jpg;MSF001_1_superZoom.jpg;MSF001_1_zoom.jpg,MSF001_1_cartIcon.jpg,MSF001_1_styleSwatch.jpg;MSF001_1_product.jpg;MSF001_1_thumbnail.jpg;MSF001_1.jpg;
+;MSF002;MSF002_1_product.jpg;MSF002_1_thumbnail.jpg;MSF002_1_superZoom.jpg;MSF002_1_zoom.jpg,MSF002_1_cartIcon.jpg,MSF002_1_styleSwatch.jpg;MSF002_1_product.jpg;MSF002_1_thumbnail.jpg;MSF002_1.jpg;
+;MSF003;MSF003_1_product.jpg;MSF003_1_thumbnail.jpg;MSF003_1_superZoom.jpg;MSF003_1_zoom.jpg,MSF003_1_cartIcon.jpg,MSF003_1_styleSwatch.jpg;MSF003_1_product.jpg;MSF003_1_thumbnail.jpg;MSF003_1.jpg;
+;MSF004;MSF004_1_product.png;MSF004_1_thumbnail.png;MSF004_1_superZoom.png;MSF004_1_zoom.png,MSF004_1_cartIcon.png,MSF004_1_styleSwatch.png;MSF004_1_product.png;MSF004_1_thumbnail.png;MSF004_1.png;
+;MSF005;MSF005_1_product.jpg;MSF005_1_thumbnail.jpg;MSF005_1_superZoom.jpg;MSF005_1_zoom.jpg,MSF005_1_cartIcon.jpg,MSF005_1_styleSwatch.jpg;MSF005_1_product.jpg;MSF005_1_thumbnail.jpg;MSF005_1.jpg;
+;RW001;RW001_1_product.png;RW001_1_thumbnail.png;RW001_1_superZoom.png;RW001_1_zoom.png,RW001_1_cartIcon.png,RW001_1_styleSwatch.png;RW001_1_product.png;RW001_1_thumbnail.png;RW001_1.png;
+;RW002;RW002_1_product.png;RW002_1_thumbnail.png;RW002_1_superZoom.png;RW002_1_zoom.png,RW002_1_cartIcon.png,RW002_1_styleSwatch.png;RW002_1_product.png;RW002_1_thumbnail.png;RW002_1.png;
+;SCH001;SCH001_1_product.jpg;SCH001_1_thumbnail.jpg;SCH001_1_superZoom.jpg;SCH001_1_zoom.jpg,SCH001_1_cartIcon.jpg,SCH001_1_styleSwatch.jpg;SCH001_1_product.jpg;SCH001_1_thumbnail.jpg;SCH001_1.jpg;
+;SCH002;SCH002_1_product.png;SCH002_1_thumbnail.png;SCH002_1_superZoom.png;SCH002_1_zoom.png,SCH002_1_cartIcon.png,SCH002_1_styleSwatch.png;SCH002_1_product.png;SCH002_1_thumbnail.png;SCH002_1.png;
+;SCH003;SCH003_1_product.jpg;SCH003_1_thumbnail.jpg;SCH003_1_superZoom.jpg;SCH003_1_zoom.jpg,SCH003_1_cartIcon.jpg,SCH003_1_styleSwatch.jpg;SCH003_1_product.jpg;SCH003_1_thumbnail.jpg;SCH003_1.jpg;
+;CMP001;CMP001_1_product.png;CMP001_1_thumbnail.png;CMP001_1_superZoom.png;CMP001_1_zoom.png,CMP001_1_cartIcon.png,CMP001_1_styleSwatch.png;CMP001_1_product.png;CMP001_1_thumbnail.png;CMP001_1.png;
+;WW001;WW001_1_product.png;WW001_1_thumbnail.png;WW001_1_superZoom.png;WW001_1_zoom.png,WW001_1_cartIcon.png,WW001_1_styleSwatch.png;WW001_1_product.png;WW001_1_thumbnail.png;WW001_1.png;
+;BBY001;BBY001_1_product.jpg;BBY001_1_thumbnail.jpg;BBY001_1_superZoom.jpg;BBY001_1_zoom.jpg,BBY001_1_cartIcon.jpg,BBY001_1_styleSwatch.jpg;BBY001_1_product.jpg;BBY001_1_thumbnail.jpg;BBY001_1.jpg;
+;BBY002;BBY002_1_product.jpg;BBY002_1_thumbnail.jpg;BBY002_1_superZoom.jpg;BBY002_1_zoom.jpg,BBY002_1_cartIcon.jpg,BBY002_1_styleSwatch.jpg;BBY002_1_product.jpg;BBY002_1_thumbnail.jpg;BBY002_1.jpg;
+;BBY003;BBY003_1_product.jpg;BBY003_1_thumbnail.jpg;BBY003_1_superZoom.jpg;BBY003_1_zoom.jpg,BBY003_1_cartIcon.jpg,BBY003_1_styleSwatch.jpg;BBY003_1_product.jpg;BBY003_1_thumbnail.jpg;BBY003_1.jpg;
+;BBY004;BBY004_1_product.png;BBY004_1_thumbnail.png;BBY004_1_superZoom.png;BBY004_1_zoom.png,BBY004_1_cartIcon.png,BBY004_1_styleSwatch.png;BBY004_1_product.png;BBY004_1_thumbnail.png;BBY004_1.png;
+;BBY005;BBY005_1_product.jpg;BBY005_1_thumbnail.jpg;BBY005_1_superZoom.jpg;BBY005_1_zoom.jpg,BBY005_1_cartIcon.jpg,BBY005_1_styleSwatch.jpg;BBY005_1_product.jpg;BBY005_1_thumbnail.jpg;BBY005_1.jpg;
+;PTC001;PTC001_1_product.jpg;PTC001_1_thumbnail.jpg;PTC001_1_superZoom.jpg;PTC001_1_zoom.jpg,PTC001_1_cartIcon.jpg,PTC001_1_styleSwatch.jpg;PTC001_1_product.jpg;PTC001_1_thumbnail.jpg;PTC001_1.jpg;
+;PTC002;PTC002_1_product.png;PTC002_1_thumbnail.png;PTC002_1_superZoom.png;PTC002_1_zoom.png,PTC002_1_cartIcon.png,PTC002_1_styleSwatch.png;PTC002_1_product.png;PTC002_1_thumbnail.png;PTC002_1.png;
+;PTC003;PTC003_1_product.png;PTC003_1_thumbnail.png;PTC003_1_superZoom.png;PTC003_1_zoom.png,PTC003_1_cartIcon.png,PTC003_1_styleSwatch.png;PTC003_1_product.png;PTC003_1_thumbnail.png;PTC003_1.png;
+;PTC004;PTC004_1_product.png;PTC004_1_thumbnail.png;PTC004_1_superZoom.png;PTC004_1_zoom.png,PTC004_1_cartIcon.png,PTC004_1_styleSwatch.png;PTC004_1_product.png;PTC004_1_thumbnail.png;PTC004_1.png;
+;PTC005;PTC005_1_product.jpg;PTC005_1_thumbnail.jpg;PTC005_1_superZoom.jpg;PTC005_1_zoom.jpg,PTC005_1_cartIcon.jpg,PTC005_1_styleSwatch.jpg;PTC005_1_product.jpg;PTC005_1_thumbnail.jpg;PTC005_1.jpg;
+;SSS001;SSS001_1_product.jpg;SSS001_1_thumbnail.jpg;SSS001_1_superZoom.jpg;SSS001_1_zoom.jpg,SSS001_1_cartIcon.jpg,SSS001_1_styleSwatch.jpg;SSS001_1_product.jpg;SSS001_1_thumbnail.jpg;SSS001_1.jpg;
+;SSS002;SSS002_1_product.jpg;SSS002_1_thumbnail.jpg;SSS002_1_superZoom.jpg;SSS002_1_zoom.jpg,SSS002_1_cartIcon.jpg,SSS002_1_styleSwatch.jpg;SSS002_1_product.jpg;SSS002_1_thumbnail.jpg;SSS002_1.jpg;
+;SSS003;SSS003_1_product.jpg;SSS003_1_thumbnail.jpg;SSS003_1_superZoom.jpg;SSS003_1_zoom.jpg,SSS003_1_cartIcon.jpg,SSS003_1_styleSwatch.jpg;SSS003_1_product.jpg;SSS003_1_thumbnail.jpg;SSS003_1.jpg;
+;SSS004;SSS004_1_product.jpg;SSS004_1_thumbnail.jpg;SSS004_1_superZoom.jpg;SSS004_1_zoom.jpg,SSS004_1_cartIcon.jpg,SSS004_1_styleSwatch.jpg;SSS004_1_product.jpg;SSS004_1_thumbnail.jpg;SSS004_1.jpg;
+;SSS005;SSS005_1_product.jpg;SSS005_1_thumbnail.jpg;SSS005_1_superZoom.jpg;SSS005_1_zoom.jpg,SSS005_1_cartIcon.jpg,SSS005_1_styleSwatch.jpg;SSS005_1_product.jpg;SSS005_1_thumbnail.jpg;SSS005_1.jpg;
+;PN001;PN001_1_product.jpg;PN001_1_thumbnail.jpg;PN001_1_superZoom.jpg;PN001_1_zoom.jpg,PN001_1_cartIcon.jpg,PN001_1_styleSwatch.jpg;PN001_1_product.jpg;PN001_1_thumbnail.jpg;PN001_1.jpg;
+;PN002;PN002_1_product.png;PN002_1_thumbnail.png;PN002_1_superZoom.png;PN002_1_zoom.png,PN002_1_cartIcon.png,PN002_1_styleSwatch.png;PN002_1_product.png;PN002_1_thumbnail.png;PN002_1.png;
+;PN003;PN003_1_product.jpg;PN003_1_thumbnail.jpg;PN003_1_superZoom.jpg;PN003_1_zoom.jpg,PN003_1_cartIcon.jpg,PN003_1_styleSwatch.jpg;PN003_1_product.jpg;PN003_1_thumbnail.jpg;PN003_1.jpg;
+;PN004;PN004_1_product.jpg;PN004_1_thumbnail.jpg;PN004_1_superZoom.jpg;PN004_1_zoom.jpg,PN004_1_cartIcon.jpg,PN004_1_styleSwatch.jpg;PN004_1_product.jpg;PN004_1_thumbnail.jpg;PN004_1.jpg;
+;PN005;PN005_1_product.jpg;PN005_1_thumbnail.jpg;PN005_1_superZoom.jpg;PN005_1_zoom.jpg,PN005_1_cartIcon.jpg,PN005_1_styleSwatch.jpg;PN005_1_product.jpg;PN005_1_thumbnail.jpg;PN005_1.jpg;
+;FF001;FF001_1_product.jpg;FF001_1_thumbnail.jpg;FF001_1_superZoom.jpg;FF001_1_zoom.jpg,FF001_1_cartIcon.jpg,FF001_1_styleSwatch.jpg;FF001_1_product.jpg;FF001_1_thumbnail.jpg;FF001_1.jpg;
+;FF002;FF002_1_product.jpg;FF002_1_thumbnail.jpg;FF002_1_superZoom.jpg;FF002_1_zoom.jpg,FF002_1_cartIcon.jpg,FF002_1_styleSwatch.jpg;FF002_1_product.jpg;FF002_1_thumbnail.jpg;FF002_1.jpg;
+;FF003;FF003_1_product.jpg;FF003_1_thumbnail.jpg;FF003_1_superZoom.jpg;FF003_1_zoom.jpg,FF003_1_cartIcon.jpg,FF003_1_styleSwatch.jpg;FF003_1_product.jpg;FF003_1_thumbnail.jpg;FF003_1.jpg;

@@ -1,0 +1,2 @@
+INSERT_UPDATE ServiceabilityArea;code;startPostalCode[unique=true];endPostalCode[unique=true];region(isocode);warehouse(code)
+

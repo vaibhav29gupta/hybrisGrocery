@@ -1,0 +1,7 @@
+
+$lang=en
+
+# Languages
+INSERT_UPDATE Language;isocode[unique=true];fallbackLanguages(isocode);active[default=true]
+;$lang;en;;
+

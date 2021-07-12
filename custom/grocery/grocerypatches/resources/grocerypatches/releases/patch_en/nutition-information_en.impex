@@ -1,0 +1,68 @@
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Content Catalog
+$classificationCatalog=SpruceClassification
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+$supercategories=source(code, $catalogVersion)[unique=true]
+$systemVersion=systemVersion(catalog(id[default='SpruceClassification']),version[default='1.0'])
+$lang=en
+
+
+INSERT_UPDATE ClassificationAttributeUnit ; code[unique=true] ; name[lang=$lang] ; $systemVersion[unique=true] ; symbol ; unitType       ;  
+                                          ; nutritionalUnit   ; Nutritional Unit ;                             ; kj     ; nutritionalUnit
+
+
+
+
+UPDATE ClassificationClass ; $classCatalogVersion ; code[unique=true] ; name[lang=$lang]
+                                  ;                      ; nutritionalValue  ; Nutritional value per 100gm
+
+
+UPDATE ClassificationAttribute ; $classSystemVersion ; code[unique=true] ; name[lang=$lang]        
+                                      ;                     ; Energy            ; energy      
+                                      ;                     ; Protein           ; protein     
+                                      ;                     ; Fat               ; fat         
+                                      ;                     ; Saturated         ; saturated   
+                                      ;                     ; Carbohydrate      ; carbohybrate
+                                      ;                     ; Sugars            ; sugars      
+                                      ;                     ; Sodium            ; sodium      
+
+INSERT_UPDATE CategoryCategoryRelation ; $categories ; $supercategories
+                                       ; fnv         ; root            
+
+INSERT_UPDATE ClassAttributeAssignment ; $class           ; $attribute   ; position ; $unit           ; attributeType(code[default=string]) ; multiValued[default=false] ; range[default=false] ; localized[default=true]
+                                       ; nutritionalValue ; Energy       ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Protein      ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Fat          ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Saturated    ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Sugars       ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Carbohydrate ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       ; nutritionalValue ; Sodium       ; 1        ; nutritionalUnit ; number                              ; true                       ; true                 ;                        
+                                       
+                                       
+ $clAttrModifiers=system='SpruceClassification',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+# Insert Product Classifications       
+
+# Classification: Technical details (634)
+$feature1=@Energy[$clAttrModifiers]    ;                  
+$feature2=@Protein[$clAttrModifiers]   ;                  
+$feature3=@Fat[$clAttrModifiers]       ;                  
+$feature4=@Saturated[$clAttrModifiers] ;                  
+$feature6=@Carbohydrate[$clAttrModifiers];                  
+$feature7=@Sugars[$clAttrModifiers]    ;                  
+$feature8=@Sodium[$clAttrModifiers]    ;                  
+
+INSERT_UPDATE Product ; code[unique=true] ; $feature1 ; $feature2 ; $feature3 ; $feature4 ; $feature6 ; $feature7 ; $feature8 ; $catalogVersion ;  
+                      ; FV001             ; 1290      ; 41.0      ; 2.5       ; 0.9       ; 14.4      ; 0.5       ; 161.0     ;                 
+					                 
+                      

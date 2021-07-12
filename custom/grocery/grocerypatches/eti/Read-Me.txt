@@ -1,0 +1,30 @@
+To run utility after taking pull from bit-bucket repo - 
+1. cd /excel_to_impex
+2. npm install
+3. node ./node_modules/excel_to_impex/app.js <config file path> <etl file path>
+
+
+To run without bitbucket repo - 
+1. Create a new folder and do 'npm init'.
+2. Then do 'npm install excel_to_impex'
+3. Then run 'node ./node_modules/excel_to_impex/app.js <config file path> <etl file path>' 
+
+Properties to configure - 
+In etl file
+1. headerFilePath - Where all the headers are stored
+2. excelFilePath - Where excel is stored
+3. replaceTokensFilePath - Where replacable tokens file is stored
+4. impexFilePath - Where we have to store the created impexes
+5. excelFileName - name of th excel file (Default is Product_Data)
+6. configFileName - name of the config file (Default is config)
+
+In config file - 
+1. name - name of the impex file to be generated
+2. sheet_in_excel - sheet in excel from which data to be imported
+3. columns - columns in the sheet in excel to be imported. If array is empty then all columns will be imported
+4. stringColumns - cloumns to be converted to string
+5. header - header file name
+6. replacable_tokens - replacable tokens file. Whther this property provided or not, common replacable tokens file will be imported
+7. semicolons_at_end - no. of semi colons to be put at the end of each row
+8. rowsToSkip - row to skip from each sheet in excel
+9. prepend_data - file data which is to be put before this data

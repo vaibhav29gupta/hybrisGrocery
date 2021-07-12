@@ -1,0 +1,386 @@
+.page-storefinderPage {
+    main {
+        background: @brand-tertiary-c;
+    }
+}
+
+#storeFinder {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .store-finder-heading {
+        width: 30%;
+        padding: 2rem 4rem;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        @media @small-and-xsmall {
+            width: 100%;
+            &.shownone {
+                display: none;
+            }
+        }
+
+        @media @medium {
+            width: 100%;
+        }
+        .store-finder-overlay {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            background-color: @brand-tertiary-c;
+            z-index: 2;
+            opacity: 0;
+        }
+        .headline {
+            font-size: 2rem;
+            font-weight: 600;
+            z-index: 2;
+            color: @text-color-dark;
+        }
+        .store-finder-search {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 2;
+            width: 100%;
+
+            @media @small-and-xsmall {
+                width: 100%;
+            }
+            .store-finder-form {
+                margin: 0;
+                display: flex;
+                align-items: center;
+
+                @media @small-and-xsmall {
+                    width: 100%;
+                }
+
+                .form-group {
+                    margin: 0;
+
+                    @media @small-and-xsmall {
+                        width: 100%;
+                    }
+
+                    .store-finder-search-input {
+                        border-top-left-radius: 3px !important;
+                        border-bottom-left-radius: 3px !important;
+                        .border(@brand-quinary-c, 0.5px);
+                        background-color: @brand-tertiary;
+                        &::placeholder {
+                            color: @text-color;
+                            font-weight: 300;
+                            font-size: 1.25rem;
+                        }
+                        &#storelocator-query {
+                            height: @button-ext-height;
+                        }
+                    }
+                }
+                .storefinder-search-button {
+                    width: @button-ext-width / 2;
+                    border-top-left-radius: 0px !important;
+                    border-bottom-left-radius: 0px !important;
+                }
+            }
+            #findStoresNearMe {
+                margin-left: 2rem;
+                width: @button-ext-width / 3;
+                font-size: 2rem;
+                &:disabled {
+                    display: none;
+                }
+            }
+        }
+    }
+    #map {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1;
+        top: 0;
+        height: 500px;
+        .mark {
+            background-color: transparent;
+            color: @text-color-dark;
+            font-weight: 500;
+            font-size: 1.25rem;
+            padding: 0;
+        }
+        .gm-style .gm-style-iw-c {
+            border-radius: 3px;
+        }
+        .gm-style .gm-style-iw-t::after {
+            width: 10px;
+            height: 10px;
+        }
+    }
+}
+
+.no-stores-found {
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 2rem 4rem;
+    width: 40%;
+    .sub-heading {
+        padding-bottom: 0;
+    }
+}
+
+.hidden-find-store {
+    display: none;
+}
+
+.js-store-info-item-desc {
+    display: table-row;
+}
+
+.store__finder--map {
+    position: relative;
+}
+
+.opening-details-details-tab {
+    display: block;
+}
+
+.opening-details-info-tab {
+    display: none;
+}
+
+.store-finder-main {
+    padding: 0 4rem;
+    .store-finder-panel {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+
+        .store-finder-navigation {
+            flex: 1;
+            background-color: @brand-tertiary;
+
+            @media @small-and-xsmall {
+                &.shownone-mobile{
+                    display: none;
+                }
+            }
+            .store-finder-navigation-list {
+                padding: 0;
+                list-style: none;
+                .list__entry {
+                    input {
+                        display: none;
+                    }
+                    label {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        padding: 2rem;
+                        cursor: pointer;
+                        margin: 0;
+                        justify-content: space-between;
+                        &:hover {
+                            background-color: @brand-quinary;
+                        }
+                        .entry__distance {
+                            color: @text-color;
+                            font-weight: 400;
+                            font-size: 1.25rem;
+                        }
+                    }
+                    input:checked + label {
+                        background-color: @brand-quinary-c;
+                        cursor: default;
+                        &:hover {
+                            background-color: @brand-quinary-c;
+                        }
+                    }
+                }
+            }
+        }
+
+        .store-finder-details {
+            display: flex;
+            flex: 3;
+            align-items: stretch;
+
+            @media @medium {
+                flex: 1;
+                flex-direction: column;
+            }
+
+            @media @small-and-xsmall {
+                flex-direction: column;
+                &.shownone {
+                    display: none;
+                }
+            }
+
+            .store__finder--details-back {
+                @media @small-and-xsmall {
+                    margin-top: 20px;
+                }
+
+                @media @medium {
+                    display: none !important;
+                }
+            }
+
+            .store__finder--details-info {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                z-index: 1;
+                margin: 0;
+                padding: 2rem;
+                flex: 1;
+                background-color: @text-color-secondary;
+                color: @brand-tertiary;
+                font-weight: 400;
+                font-size: 1.5rem;
+                background: @brand-tertiary-c;
+                color: @text-color-dark;
+
+                @media @medium {
+                    height: 400px;
+                    overflow: auto;
+                }
+
+                @media @small-and-xsmall {
+                    height: 400px;
+                    overflow: auto;
+                }
+
+                .info__name {
+                    font-weight: 600;
+                    font-size: 2.5rem;
+                    color: @brand-quinary-c;
+                    color: @brand-secondary-c;
+                }
+
+                .info__address {
+                    margin: 1rem 0;
+                    font-size: 1.75rem;
+                }
+
+                .info__code {
+                    font-size: 1rem;
+                    color: @brand-contrast;
+                    display: none;
+                }
+
+                .store__finder--details-image {
+                    width: 100%;
+                    img {
+                        object-fit: cover;
+                        height: 100px;
+                    }
+                }
+
+                .opening-details-info-tab {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+                    .dl-horizontal {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                        width: 100%;
+                        &.has-content {
+                            margin: 1rem 0;
+                            padding: 1rem 0;
+                            .border-top(@brand-secondary-c, 0.2px);
+                            .border-bottom(@brand-secondary-c, 0.2px);
+                        }
+                        .store-hours {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: space-between;
+                            width: 100%;
+                            dt {
+                                width: unset;
+                                text-align: unset;
+                                float: none;
+                                font-size: 1.3rem;
+                                font-weight: 400;
+                            }
+                            dd {
+                                margin: 0;
+                                font-size: 1.25rem;
+                                font-weight: 200;
+                                &::after,
+                                &::before {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                    .openings__title {
+                        margin-top: 1rem;
+                    }
+                    .js-store-features {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+
+            .store__finder--map {
+                overflow: hidden;
+                top: 0;
+                z-index: 0;
+                flex: 2;
+                min-height: 500px;
+                height: unset;
+                @media @medium {
+                    flex: 1;
+                }
+            }
+
+            .opening-details-details-tab {
+                display: none;
+            }
+        }
+    }
+    .store-finder-pagination {
+        width: 25%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+
+        @media @medium {
+            width: 50%;
+        }
+
+        @media @small-and-xsmall {
+            &.shownone {
+                display: none;
+            }
+            width: 100%;
+        }
+
+        .btn-neutral {
+            width: @button-ext-width / 3;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.on-load-height-class {
+    height : 500px;
+}

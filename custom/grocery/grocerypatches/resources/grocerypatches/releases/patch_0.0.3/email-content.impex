@@ -1,0 +1,168 @@
+	# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the site emails
+#
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+#Site
+$site = spruce
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=jar:org.grocery.core.setup.CoreSystemSetup&/grocerycore/import/cockpits/cmscockpit
+$emailPackageName=$config-emailContextPackageName
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;ProductBackInStockNotificationEmailTemplate;Product Back In Stock Email Template;true;productBackInStockNotificationEmailTemplate;$site_Email_Product_Back_In_Stock_Subject;$site_Email_Product_Back_In_Stock_Body;EmailPage
+;;CustomerRegistrationEmailTemplate;Customer Registration Email Template;true;customerRegistrationEmail;Customer_Registration_Email_Subject;Customer_Registration_Email_Body;EmailPage
+;;ForgottenPasswordEmailTemplate;Forgotten Password Email Template;true;forgottenPasswordEmail;email_Forgotten_Password_Subject;email_Forgotten_Password_Body;EmailPage
+;;OrderConfirmationEmailTemplate;Order Confirmation Email Template;true;orderConfirmationEmail;Order_confirmation_Email_Subject;Order_confirmation_Email_Body;EmailPage
+;;UpdatePasswordEmailTemplate;Update Password Email Template;true;UpdatePasswordEmail;email_Update_Password_Subject;email_Update_Password_Body;EmailPage
+
+# Templates for CMS Cockpit Page Edit
+UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;;ProductBackInStockNotificationEmailTemplate;$jarResourceCms/structure-view/structure_productBackInStockNotificationEmailTemplate.vm
+;;CustomerRegistrationEmailTemplate;$jarResourceCms/structure-view/structure_customerRegistrationEmailTemplate.vm
+;;ForgottenPasswordEmailTemplate;$jarResourceCms/structure-view/structure_forgottenPasswordEmailTemplate.vm
+;;OrderConfirmationEmailTemplate;$jarResourceCms/structure-view/structure_orderConfirmationEmailTemplate.vm
+;;UpdatePasswordEmailTemplate;$jarResourceCms/structure-view/structure_updatePasswordEmailTemplate.vm
+
+INSERT_UPDATE ComponentTypeGroup;code[unique=true]
+;email
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ProductBackInStockNotificationEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+                             ;SiteLogo;;$wideContent;email
+                             ;TopContent;;$wideContent;email
+                             ;BottomContent;;$wideContent;email
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CustomerRegistrationEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;$wideContent;email
+;TopContent;;$wideContent;email
+;BottomContent;;$wideContent;email
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ForgottenPasswordEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;$wideContent;email
+;TopContent;;$wideContent;email
+;BottomContent;;$wideContent;email
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='OrderConfirmationEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;$wideContent;email
+;TopContent;;$wideContent;email
+;BottomContent;;$wideContent;email
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='UpdatePasswordEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;$wideContent;email
+;TopContent;;$wideContent;email
+;BottomContent;;$wideContent;email
+
+
+INSERT_UPDATE ComponentTypeGroups2ComponentType;source(code)[unique=true];target(code)[unique=true]
+;email;SimpleBannerComponent
+;email;CMSImageComponent
+;email;CMSLinkComponent
+;email;CMSParagraphComponent
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;CustomerRegistrationEmailTopSlot;Default customerRegistration Email Top Slot;true
+;;ForgottenPasswordEmailTopSlot;Default forgottenPassword Email Top Slot;true
+;;OrderConfirmationEmailTopSlot;Default orderConfirmation Email Top Slot;true
+;;ProductBackInStockNotificationEmailTopSlot;Default ProductBackInStockNotification Email Top Slot;true
+;;UpdatePasswordEmailTopSlot;Default UpdatePassword Email Top Slot;true
+;;EmailBottomSlot;Default Email Bottom Slot;true
+;;EmailSiteLogoSlot;Default Email Site Slot;true
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='ProductBackInStockNotificationEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+                                    ;;SiteLogo-ProductBackInStockNotificationEmail;SiteLogo;;EmailSiteLogoSlot;true
+                                    ;;TopContent-ProductBackInStockNotificationEmail;TopContent;;ProductBackInStockNotificationEmailTopSlot;true
+                                    ;;BottomContent-ProductBackInStockNotificationEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CustomerRegistrationEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-CustomerRegistrationEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-CustomerRegistrationEmail;TopContent;;CustomerRegistrationEmailTopSlot;true
+;;BottomContent-CustomerRegistrationEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='ForgottenPasswordEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-ForgottenPasswordEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-ForgottenPasswordEmail;TopContent;;ForgottenPasswordEmailTopSlot;true
+;;BottomContent-ForgottenPasswordEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='OrderConfirmationEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-OrderConfirmationEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-OrderConfirmationEmail;TopContent;;OrderConfirmationEmailTopSlot;true
+;;BottomContent-OrderConfirmationEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='UpdatePasswordEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-UpdatePasswordEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-UpdatePasswordEmail;TopContent;;UpdatePasswordEmailTopSlot;true
+;;BottomContent-UpdatePasswordEmail;BottomContent;;EmailBottomSlot;true
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;CustomerRegistrationEmail; Customer Registration Email;CustomerRegistrationEmailTemplate;true
+;;OrderConfirmationEmail; Order Confirmation Email;OrderConfirmationEmailTemplate;true
+;;ForgottenPasswordEmail;Forgotten Password Email;ForgottenPasswordEmailTemplate;true;
+;;ProductBackInStockNotificationEmail;Product Back In Stock Notification Email;ProductBackInStockNotificationEmailTemplate;true;
+;;UpdatePasswordEmail;Update Password Email;UpdatePasswordEmailTemplate;true;;customerservices@hybris.com;Customer Services Team
+
+# CMS components velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                    ; contextClass; rendererType(code)[default = 'velocity']
+                              ; $site-CMSImageComponent-template     ; java.util.Map
+                              ; $site-BannerComponent-template       ; java.util.Map
+                              ; $site-SimpleBannerComponent-template ; java.util.Map
+                              ; $site-CMSLinkComponent-template      ; java.util.Map
+                              ; $site-CMSParagraphComponent-template ; java.util.Map
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;Customer_Registration_Email_Body;$emailPackageName.CustomerEmailContext
+;Customer_Registration_Email_Subject;$emailPackageName.CustomerEmailContext
+;Order_confirmation_Email_Body;$emailPackageName.OrderNotificationEmailContext
+;Order_confirmation_Email_Subject;$emailPackageName.OrderNotificationEmailContext
+;email_Forgotten_Password_Body;$emailPackageName.ForgottenPasswordEmailContext
+;email_Forgotten_Password_Subject;$emailPackageName.ForgottenPasswordEmailContext
+;email_Update_Password_Body;$emailPackageName.UpdatePasswordEmailContext
+;email_Update_Password_Subject;$emailPackageName.UpdatePasswordEmailContext
+;$site_Email_Product_Back_In_Stock_Body;de.hybris.platform.stocknotificationfacades.process.email.context.BackInStockNotificationEmailContext
+;$site_Email_Product_Back_In_Stock_Subject;de.hybris.platform.stocknotificationfacades.process.email.context.BackInStockNotificationEmailContext
+
+# Preview Image for use in the CMS Cockpit
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+;;EmailPageModel_preview;text/gif;EmailPageModel_preview.gif;$jarResourceCms/preview-images/EmailPageModel_preview.gif
+
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];previewImage(code, $contentCV)
+;;CustomerRegistrationEmail;EmailPageModel_preview
+;;OrderConfirmationEmail;EmailPageModel_preview
+;;ForgottenPasswordEmail;EmailPageModel_preview
+;;ProductBackInStockNotificationEmail;EmailPageModel_preview
+;;UpdatePasswordEmail;EmailPageModel_preview
+
+#INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];fromEmail[lang=en];fromName[lang=en]
+#;;CustomerRegistrationEmail;Customer Registration Email;CustomerRegistrationEmailTemplate;true;;customerservices@spruce.com;Customer Services Team
+#;;ForgottenPasswordEmail;Forgotten Password Email;ForgottenPasswordEmailTemplate;true;;customerservices@spruce.com;Customer Services Team
+#;;OrderConfirmationEmail;Order Confirmation Email;OrderConfirmationEmailTemplate;true;;customerservices@spruce.com;Customer Services Team
+#;;ProductBackInStockNotificationEmail;Product Back InStock Notification Email;ProductBackInStockNotificationEmailTemplate;true;;customerservices@spruce.com;Customer Services Team
+#;;UpdatePasswordEmail;Update Password Email;UpdatePasswordEmailTemplate;true;;customerservices@spruce.com;Customer Services Team
+
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];
+;;CustomerRegistrationEmail;Customer Registration Email;CustomerRegistrationEmailTemplate;true;;
+;;ForgottenPasswordEmail;Forgotten Password Email;ForgottenPasswordEmailTemplate;true;;
+;;OrderConfirmationEmail;Order Confirmation Email;OrderConfirmationEmailTemplate;true;;
+;;ProductBackInStockNotificationEmail;Product Back InStock Notification Email;ProductBackInStockNotificationEmailTemplate;true;;
+;;UpdatePasswordEmail;Update Password Email;UpdatePasswordEmailTemplate;true;;
+
+
+
+
+
+
+
+
+
+

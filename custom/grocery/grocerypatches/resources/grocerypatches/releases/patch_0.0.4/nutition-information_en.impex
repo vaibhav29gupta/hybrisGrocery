@@ -1,0 +1,37 @@
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Content Catalog
+$classificationCatalog=SpruceClassification
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+$supercategories=source(code, $catalogVersion)[unique=true]
+$systemVersion=systemVersion(catalog(id[default='SpruceClassification']),version[default='1.0'])
+$lang=en
+
+
+UPDATE ClassificationAttributeUnit ; code[unique=true] ; name[lang=$lang] ; $systemVersion[unique=true] ;  
+                                          ; nutritionalUnit   ; Nutritional Unit ;                       ;
+
+
+
+
+UPDATE ClassificationClass ; $classCatalogVersion ; code[unique=true] ; name[lang=$lang]
+                                  ;                      ; nutritionalValue  ; Nutritional value per 100gm
+
+
+UPDATE ClassificationAttribute ; $classSystemVersion ; code[unique=true] ; name[lang=$lang]        
+                                      ;                     ; Energy            ; energy      
+                                      ;                     ; Protein           ; protein     
+                                      ;                     ; Fat               ; fat         
+                                      ;                     ; Saturated         ; saturated   
+                                      ;                     ; Carbohydrate      ; carbohybrate
+                                      ;                     ; Sugars            ; sugars      
+                                      ;                     ; Sodium            ; sodium      

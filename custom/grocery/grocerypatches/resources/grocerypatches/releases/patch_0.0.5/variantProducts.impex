@@ -1,0 +1,29 @@
+$productCatalog=spruceProductCatalog
+$storeUid =spruce
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$lang=en
+
+
+# Insert Products
+UPDATE Product;code[unique=true];variantType(code);$catalogVersion;$approved
+;ABV001;GroceryVariantProduct
+
+
+INSERT_UPDATE GroceryVariantProduct;code[unique=true];name;$baseProduct;unit(code);packSizeLabel;$supercategories;approvalstatus(code)[default='approved'];$catalogVersion
+;ABV001_1;"Hybrid Tomato";ABV001;pieces;Small Pack;
+;ABV001_2;"Hybrid Tomato";ABV001;pieces;Medium Pack;
+;ABV001_3;"Hybrid Tomato";ABV001;pieces;Large Pack;
+
+
+INSERT_UPDATE StockLevel;productCode[unique=true];warehouse(code)[default='default',unique=true];available;reserved;preOrder;overSelling;inStockStatus(code)[default='notSpecified'];maxPreOrder
+;ABV001_1;WH3_IN01;1000;0;0;0;notSpecified;0;
+;ABV001_2;WH3_IN01;1000;0;0;0;notSpecified;0;
+;ABV001_3;WH3_IN01;1000;0;0;0;notSpecified;0;
+
+INSERT_UPDATE PriceRow;productId[unique=true];currency(isocode)[unique=true];price;minqtd[default=1];net[default=true];channel(code);giveAwayPrice[default=false];startTime[dateformat=yyyyMMdd];endTime[dateformat=yyyyMMdd];user(uid);ug(code)[unique=true];pg(code)[unique=true];unit(code[unique=true,default=pieces])
+;ABV001_1;INR;27;1;true;;false;20200515;21001201;;;;;;
+;ABV001_2;INR;54;1;true;;false;20200515;21001201;;;;;;
+;ABV001_3;INR;81;1;true;;false;20200515;21001201;;;;;;# USE CTRL-SPACE for type-ahead support

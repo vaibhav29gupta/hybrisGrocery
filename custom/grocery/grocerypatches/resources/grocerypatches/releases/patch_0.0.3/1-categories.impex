@@ -1,0 +1,24 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Category;code[unique=true];name[lang=en];name[lang=ja];description[lang=en];description[lang=ja];allowedPrincipals(uid)[default='customergroup'];$catalogVersion
+;root;"root";"根菜";"Root";"根菜";;;
+;fnv;"Fruit and Veg";"野菜、果物";"Fruits & Vegtables";"野菜、果物";;;
+;dairy;"Dairy , eggs & cheese";"乳製品";"Dairy";"乳製品";;;
+;bakery;"Bakery";"ベーカリー";"Bakery";"ベーカリー";;;
+;personalcare;"Personal Care";"パーソナルケア";"Personal Care";"パーソナルケア";;;
+;lqdr;"Beverages";"飲料";"Liquor & Drinks";"飲料";;;
+;household;"Household";"家事用品";"Household";"家事用品";;;
+;pantry;"Pantry";"主食、食料品";"Pantry";"主食、食料品";;;
+;mlp;"Milk And Milk products";"牛乳、乳製品";"Milk & Milk products";"牛乳、乳製品";;;
+;chocolates;"Chocolates";"チョコレート";"chocolates";"チョコレート";;;
+;bfc;"Breakfast cereals";"朝食用シリアル";"Breakfast cereal";;;;
+;msd;"Meat, Seafood & Deli";"精肉、シーフード、デリ";"Meat, Seafood & Deli";;;;
+;lqr;"Liquor";"酒類";"Liquors";;;;
+;bc;"Baby Care";"乳児用製品";"Baby Care";;;;
+;pc;"Pet care";"ペットケア";"Pet care";;;;
+;sss;"Sauces-Spreads-Seasoning";"調味料、ソース";"Sauces spreads seasoning";;;;
+;pn;"Pasta & Noodles";"パスタ＆麺類";"Pasta-Noodles";;;;
+;ff;"Frozen food";"冷凍食品";"Frozen food";;;;
+;essentials;"Essentials";"生活必需品";"Essentials";;;;

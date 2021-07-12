@@ -1,0 +1,5 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store Name% Product Catalog
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Category;code[unique=true];name[lang=en];name[lang=ja];description[lang=en];description[lang=ja];allowedPrincipals(uid)[default='customergroup'];$catalogVersion

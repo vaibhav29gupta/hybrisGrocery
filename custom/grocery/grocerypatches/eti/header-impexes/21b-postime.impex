@@ -1,0 +1,1 @@
+INSERT_UPDATE StoreDeliverySlotTime; source(name)[unique=true]; target(&timeslotid)[unique=true]

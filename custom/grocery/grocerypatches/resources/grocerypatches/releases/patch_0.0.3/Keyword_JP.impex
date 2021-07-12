@@ -1,0 +1,12 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+$approved=approvalstatus(code)[default='approved']
+
+INSERT_UPDATE Keyword;keyword[unique=true];products(code,$catalogVersion)[mode=append, lang=ja];language(isocode)[default=ja];catalog(id[default=$productCatalog]);$catalogVersion;
+
+;"牛乳";ABV002,ABV001;;;;
+;"ワイン";WW001,RW001,RW002;;;;
+;"冷凍食品";MSF001,MSF002,MSF004;;;;
+;"スキンケア";APC006,APC007,APC002,APC003;;;;

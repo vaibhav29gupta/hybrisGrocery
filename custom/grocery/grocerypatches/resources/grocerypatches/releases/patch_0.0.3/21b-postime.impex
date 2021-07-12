@@ -1,0 +1,27 @@
+INSERT_UPDATE DeliverySlotTimeConfig ; openingtime[dateformat='yyyy-MM-dd''T''HH:mm:ssZ'][unique=true] ; closingtime[dateformat='yyyy-MM-dd''T''HH:mm:ssZ'][unique=true] ;  &timeslotid;carrierCode; code ;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+
+INSERT_UPDATE StoreDeliverySlotTime; source(name)[unique=true]; target(&timeslotid)[unique=true]
+;POS1_AUS_SYDW;;
+;POS2_AUS_MLB;;
+;POS3_AUS_CAN;;
+;POS4_AUS_PRT;;
+;POS5_AUS_SYDS;;
+;Pickup_AUS_SYDW01;;
+;POS1_JP_Tokyo;;
+;POS2_JP_Nikko;;
+;POS3_JP_Kyoto;;
+;POS4_JP_Osaka;;
+;POS5_JP_Tokyo  02;;
+;POS5_JP_Tokyo  03;;

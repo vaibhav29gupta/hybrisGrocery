@@ -1,0 +1,8 @@
+INSERT_UPDATE ServicelayerJob ; code[unique = true]      ; springId[unique = true]
+                              ; abandonedShoppingCartJob ; abandonedShoppingCartJob
+
+INSERT_UPDATE AbandonedShoppingCartCronJob ; code[unique = true]          ; job(code)                ; sites(uid) ; singleExecutable ; sessionLanguage(isocode)
+                                           ; abandonedShoppingCartCronJob ; abandonedShoppingCartJob ; spruce     ; false            ; en
+
+INSERT_UPDATE Trigger ; cronjob(code)[unique = true] ; cronExpression
+                      ; abandonedShoppingCartCronJob ; 0 0 0 * * ?

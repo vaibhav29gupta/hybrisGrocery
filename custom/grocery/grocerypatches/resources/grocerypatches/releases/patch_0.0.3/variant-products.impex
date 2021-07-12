@@ -1,0 +1,9 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+$approved=approvalstatus(code)[default='approved']
+
+
+INSERT_UPDATE GroceryVariantProduct;code[unique=true];name[lang=en];name[lang=ja];summary[lang=en];summary[lang=ja];description[lang=en];description[lang=ja];$approved;ean;$baseProduct;brand;weight;expiry;dietSuitability(code);ingredients[lang=en];ingredients[lang=ja];usageGuidelines[lang=en];usageGuidelines[lang=ja];packSizeLabel;availableForDelivery[default=true];availableForPickUp[default=true];$catalogVersion;unit(code)[default=pieces]
+

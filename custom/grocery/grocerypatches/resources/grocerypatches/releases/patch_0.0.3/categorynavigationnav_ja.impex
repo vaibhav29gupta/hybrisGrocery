@@ -1,0 +1,22 @@
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=ja]
+;;FruitAndVegLink;"野菜、果物"
+;;DECLink;"乳製品"
+;;BakeryLink;"ベーカリー"
+;;PersonalCareLink;"パーソナルケア"
+;;BeveragesLink;"飲料"
+;;HouseHoldsLink;"家事用品"
+;;PantryLink;"主食、食料品"
+;;MSDLink;"精肉、シーフード、デリ"
+;;EssentialsLink;"生活必需品"
+;;MilkProductLink;"牛乳、乳製品"
+;;BabyCareLink;"乳児用製品"
+;;PetCareLink;"ペットケア"
+;;LiquorLink;"酒類"
+;;ChocolatesLink;"チョコレート"
+;;BreakfastCerealsLink;"朝食用シリアル"
+;;SaSpSeLink;"調味料、ソース"
+;;PastaNoodlesLink;"パスタ＆麺類"
+;;FrozenFoodLink;"冷凍食品"

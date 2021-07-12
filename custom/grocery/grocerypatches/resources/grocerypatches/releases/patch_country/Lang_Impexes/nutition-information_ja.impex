@@ -1,0 +1,38 @@
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Content Catalog
+$classificationCatalog=SpruceClassification
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+$supercategories=source(code, $catalogVersion)[unique=true]
+$systemVersion=systemVersion(catalog(id[default='SpruceClassification']),version[default='1.0'])
+$lang=__LANG__
+
+
+UPDATE ClassificationAttributeUnit ; code[unique=true] ; name[lang=$lang] ; $systemVersion[unique=true]
+                                          ; nutritionalUnit   ; "栄養単位" ;                             
+
+
+
+
+UPDATE ClassificationClass ; $classCatalogVersion ; code[unique=true] ; name[lang=$lang]
+                                  ;                      ; nutritionalValue  ; "100gmあたりの栄養価"
+
+
+UPDATE ClassificationAttribute ; $classSystemVersion ; code[unique=true] ; name[lang=$lang]        
+                                      ;                     ; Energy            ; "エネルギー"      
+                                      ;                     ; Protein           ; "タンパク質"     
+                                      ;                     ; Fat               ; "脂質"         
+                                      ;                     ; Saturated         ; "飽和"   
+                                      ;                     ; Carbohydrate      ; "炭水化物"
+                                      ;                     ; Sugars            ; "砂糖"      
+                                      ;                     ; Sodium            ; "ナトリウム"      
+

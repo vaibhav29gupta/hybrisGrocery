@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+
+	<!-- Spring Integration -->
+	<import resource="classpath:/grocerycore/integration/hot-folder-store-electronics-spring.xml" />
+	<import resource="classpath:/grocerycore/integration/hot-folder-store-apparel-spring.xml" />
+	<import resource="classpath:/grocerycore/integration/hot-folder-common-spring.xml" />
+
+	<!-- SystemSetup for the GroceryCore -->
+	<bean id="acceleratorCoreSystemSetup" class="org.grocery.core.setup.CoreSystemSetup"
+		parent="abstractCoreSystemSetup" />
+
+	<!-- Solr field value providers -->
+
+	<bean id="volumeAwareProductPriceValueProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.VolumeAwareProductPriceValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="priceService" ref="priceService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="userService" ref="userService" />
+		<property name="priceComparator" ref="volumePriceComparator" />
+		<property name="catalogVersionService" ref="catalogVersionService" />
+	</bean>
+
+	<bean id="volumePriceComparator" class="org.grocery.core.comparators.VolumeAwarePriceInformationComparator"
+		scope="singleton" />
+
+	<bean id="productVolumePricesProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductVolumePricesProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="priceService" ref="priceService" />
+	</bean>
+
+
+	<bean id="electronicsCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="1" />
+		<!-- '1' is the root icecat category -->
+	</bean>
+	<bean id="electronicsBrandCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="brands" />
+		<!-- 'brands' is the root of the brands hierarchy -->
+	</bean>
+
+	<bean id="apparelCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="categories" />
+		<!-- 'categories' is the root apparel category -->
+	</bean>
+	<bean id="apparelBrandCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="brands" />
+		<!-- 'brands' is the root of the brands hierarchy -->
+	</bean>
+	<bean id="apparelCollectionCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="collections" /> <!-- 'collections' is the root of the collections hierarchy -->
+	</bean>
+
+	<bean id="abstractCategoryCodeValueProvider" abstract="true"
+		class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryCodeValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+	<bean id="abstractCategoryNameValueProvider" abstract="true"
+		class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryNameValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="electronicsCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="electronicsCategorySource" />
+	</bean>
+	<bean id="electronicsBrandCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="electronicsBrandCategorySource" />
+	</bean>
+	<bean id="electronicsCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="electronicsCategorySource" />
+	</bean>
+	<bean id="electronicsBrandCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="electronicsBrandCategorySource" />
+	</bean>
+
+	<bean id="apparelCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="apparelCategorySource" />
+	</bean>
+	<bean id="apparelBrandCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="apparelBrandCategorySource" />
+	</bean>
+	<bean id="apparelCollectionCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="apparelCollectionCategorySource" />
+	</bean>
+	<bean id="apparelCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="apparelCategorySource" />
+	</bean>
+	<bean id="apparelBrandCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="apparelBrandCategorySource" />
+	</bean>
+	<bean id="apparelCollectionCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="apparelCollectionCategorySource" />
+	</bean>
+
+	<bean id="image515ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="515Wx515H" />
+	</bean>
+	<bean id="image300ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="300Wx300H" />
+	</bean>
+	<bean id="image96ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="96Wx96H" />
+	</bean>
+	<bean id="image65ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="65Wx65H" />
+	</bean>
+	<bean id="image30ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="30Wx30H" />
+	</bean>
+
+	<bean id="productUrlValueProvider"
+		class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.ProductUrlValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="urlResolver" ref="productModelUrlResolver" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="promotionCodeValueProvider"
+		class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PromotionCodeValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="promotionImageValueProvider"
+		class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PrimaryPromotionImageValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="colorFacetValueProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ColorFacetValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="colorFacetDisplayNameProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ColorFacetDisplayNameProvider">
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="apparelPointOfServiceFacetDisplayNameProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.PointOfServiceFacetDisplayNameProvider">
+		<property name="pointOfServiceService" ref="pointOfServiceService" />
+	</bean>
+
+	<bean id="electronicsPointOfServiceFacetDisplayNameProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.PointOfServiceFacetDisplayNameProvider">
+		<property name="pointOfServiceService" ref="pointOfServiceService" />
+	</bean>
+
+	<bean id="genderValueProvider" class="org.grocery.core.search.solrfacetsearch.provider.impl.GenderValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="genderFacetDisplayNameProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.GenderFacetDisplayNameProvider">
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<alias alias="productStockInWarehouseValueResolver" name="groceryProductStockInWarehouseValueResolver" />
+	<bean id="groceryProductStockInWarehouseValueResolver"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductStockInWarehouseValueResolver"
+		parent="abstractValueResolver">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="stockService" ref="stockService" />
+		<property name="warehouseSelectionStrategy" ref="warehouseSelectionStrategy" />
+		<property name="stockLevelStatusStrategy" ref="stockLevelStatusStrategy" />
+	</bean>
+
+	<!-- Event listeners are singletons, therefore the dependency for a bean in tenant-scope must be configured with a lookup 
+		method. -->
+	<bean id="orderCancelledEventListener" class="org.grocery.core.event.OrderCancelledEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="orderRefundEventListener" class="org.grocery.core.event.OrderRefundEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="customerRegistrationEventListener" class="org.grocery.core.event.RegistrationEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="promotionService" ref="processRelatedPromotionService"/>
+	</bean>
+
+	<bean id="processRelatedPromotionService" class="org.grocery.service.promotions.impl.ProcessesRelatedPromotionServiceImpl">
+		<property name="couponCodeGenerationService" ref="couponCodeGenerationService" />
+		<property name="mediaService" ref="mediaService" />
+	</bean>
+
+	<bean id="forgottenPasswordEventListener" class="org.grocery.core.event.ForgottenPasswordEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="submitOrderEventListener" class="org.grocery.core.event.SubmitOrderEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+	<bean id="orderConfirmationEventListener" class="org.grocery.core.event.OrderConfirmationEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendDeliveryMessageEventListener" class="org.grocery.core.event.SendDeliveryMessageEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendReadyForPickupMessageEventListener"
+		class="org.grocery.core.event.SendReadyForPickupMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendOrderPartiallyCanceledMessageEventListener"
+		class="org.grocery.core.event.SendOrderPartiallyCanceledMessageEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendOrderPartiallyRefundedMessageEventListener"
+		class="org.grocery.core.event.SendOrderPartiallyRefundedMessageEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledMessageEventListener"
+		class="org.grocery.core.event.SendNotPickedUpConsignmentCanceledMessageEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="orderCompletedEventListener" class="org.grocery.core.event.OrderCompletedEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="abandonedShoppingCartEventListener" class="org.grocery.core.event.AbandonedShoppingCartEventListener"
+		  parent="abstractAcceleratorSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="promotionService" ref="processRelatedPromotionService"/>
+	</bean>
+
+	<!-- Process resources definition -->
+
+	<bean id="customerRegistrationEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/customerRegistrationEmailProcess.xml" />
+	</bean>
+	<bean id="forgottenPasswordEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/forgottenPasswordEmailProcess.xml" />
+	</bean>
+	<bean id="orderConfirmationEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/orderConfirmationEmailProcess.xml" />
+	</bean>
+	<bean id="sendDeliveryEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendDeliveryEmailProcess.xml" />
+	</bean>
+	<bean id="sendReadyForPickupEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendReadyForPickupEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderCancelledEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendOrderCancelledEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderRefundEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendOrderRefundEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderPartiallyCanceledEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendOrderPartiallyCanceledEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderPartiallyRefundedEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/sendOrderPartiallyRefundedEmailProcess.xml" />
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/grocerycore/processes/sendNotPickedUpConsignmentCanceledEmailProcess.xml" />
+	</bean>
+	<bean id="abandonedShoppingCartEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+				  value="classpath:/grocerycore/processes/abandonedShoppingCartEmailProcess.xml" />
+	</bean>
+
+	<!-- Actions -->
+	<bean id="abstractAction" class="de.hybris.platform.processengine.action.AbstractAction" abstract="true">
+		<property name="modelService" ref="modelService" />
+		<property name="processParameterHelper" ref="processParameterHelper" />
+	</bean>
+
+	<bean id="sendEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.SendEmailAction"
+		parent="abstractAction">
+		<property name="emailService" ref="emailService" />
+	</bean>
+
+	<bean id="abstractGenerateEmailAction"
+		class="de.hybris.platform.acceleratorservices.process.email.actions.GenerateEmailAction" parent="abstractAction"
+		abstract="true">
+		<property name="modelService" ref="modelService" />
+		<property name="cmsEmailPageService" ref="cmsEmailPageService" />
+		<property name="contextResolutionStrategy" ref="processContextResolutionStrategy" />
+		<property name="emailGenerationService" ref="emailGenerationService" />
+	</bean>
+
+	<bean id="generateCustomerRegistrationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerRegistrationEmailTemplate" />
+	</bean>
+
+	<bean id="generateForgottenPasswordEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ForgottenPasswordEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderConfirmationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderConfirmationEmailTemplate" />
+	</bean>
+
+	<bean id="generateDeliverySentEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="DeliverySentEmailTemplate" />
+	</bean>
+
+	<bean id="generateReadyForPickupEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ReadyForPickupEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderCancelledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderCancelledEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderRefundEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderRefundEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderPartiallyCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyCanceledEmailTemplate" />
+	</bean>
+	<bean id="generateOrderPartiallyRefundedEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyRefundedEmailTemplate" />
+	</bean>
+	<bean id="generateNotPickedUpConsignmentCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="NotPickedUpConsignmentCanceledEmailTemplate" />
+	</bean>
+
+	<bean id="removeSentEmail"
+		class="de.hybris.platform.acceleratorservices.process.email.actions.RemoveSentEmailAction" parent="abstractAction">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="generateAbandonedShoppingCartEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AbandonedShoppingCartEmailTemplate" />
+	</bean>
+
+	<bean id="markAbandonedShoppingCartEmailSentAction" class="org.grocery.core.actions.email.MarkAbandonedShoppingCartEmailSentAction"
+		  parent="abstractAction"/>
+
+	<bean id="markQuoteNotificationAsSent" class="org.grocery.core.actions.quote.MarkQuoteNotificationAsSentAction"
+		parent="abstractAction" abstract="true">
+		<property name="quoteService" ref="quoteService" />
+	</bean>
+
+	<!-- Simple Suggestion Service -->
+	<alias alias="simpleSuggestionService" name="defaultSimpleSuggestionService" />
+	<bean id="defaultSimpleSuggestionService" class="org.grocery.core.suggestion.impl.DefaultSimpleSuggestionService">
+		<property name="simpleSuggestionDao" ref="simpleSuggestionDao" />
+	</bean>
+	<alias alias="simpleSuggestionDao" name="defaultSimpleSuggestionDao" />
+	<bean id="defaultSimpleSuggestionDao" class="org.grocery.core.suggestion.dao.impl.DefaultSimpleSuggestionDao"
+		parent="abstractItemDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<!-- Product Reference Lookup Strategies -->
+	<alias name="apparelCrossSellingProductReferenceTargetStrategy"
+		alias="crossSellingProductReferenceTargetStrategy" />
+	<bean id="apparelCrossSellingProductReferenceTargetStrategy"
+		parent="defaultCrossSellingProductReferenceTargetStrategy">
+		<property name="productReferenceTargetStrategies">
+			<list merge="true">
+				<ref bean="apparelSizeProductReferenceTargetStrategy" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="apparelSizeProductReferenceTargetStrategy"
+		class="org.grocery.core.strategies.impl.ApparelSizeProductReferenceTargetStrategy">
+		<property name="commerceCategoryService" ref="commerceCategoryService" />
+		<property name="rootCategoryCode" value="categories" />
+	</bean>
+
+	<!-- Sales quote process actions -->
+
+	<!-- quote -->
+	<bean id="quoteBuyerSubmitEventListener" class="org.grocery.core.event.QuoteBuyerSubmitEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteSalesRepSubmitEventListener" class="org.grocery.core.event.QuoteSalesRepSubmitEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteSellerApprovalSubmitEventListener"
+		class="org.grocery.core.event.QuoteSellerApprovalSubmitEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteBuyerOrderPlacedEventListener" class="org.grocery.core.event.QuoteBuyerOrderPlacedEventListener"
+		parent="abstractEventListener">
+		<property name="commerceQuoteService" ref="commerceQuoteService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="quoteToExpireSoonEventListener" class="org.grocery.core.event.QuoteToExpireSoonEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteExpiredEventListener" class="org.grocery.core.event.QuoteExpiredEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteCancelEventListener" class="org.grocery.core.event.QuoteCancelEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteBuyerProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/quote/quote-buyer-process.xml" />
+	</bean>
+
+	<bean id="quoteSalesRepProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/quote/quote-salesrep-process.xml" />
+	</bean>
+
+
+	<bean id="quoteSellerApprovalProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/quote/quote-seller-approval-process.xml" />
+	</bean>
+
+	<bean id="quotePostCancellationProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/quote/quote-post-cancellation-process.xml" />
+	</bean>
+
+	<bean id="quoteToExpireSoonProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/grocerycore/processes/quote/quote-to-expire-soon-email-process.xml" />
+	</bean>
+
+	<bean id="quoteExpiredProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/quote/quote-expired-email-process.xml" />
+	</bean>
+
+	<!-- Quotes email notification jobs -->
+	<bean id="quoteToExpireSoonJobPerformable" class="org.grocery.core.job.QuoteToExpireSoonJobPerformable"
+		parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao" />
+		<property name="eventService" ref="eventService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<bean id="quoteExpiredJobPerformable" class="org.grocery.core.job.QuoteExpiredJobPerformable"
+		parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao" />
+		<property name="eventService" ref="eventService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<import resource="/grocerycore/processes/quote/quote-buyer-process-spring.xml" />
+	<import resource="/grocerycore/processes/quote/quote-salesrep-process-spring.xml" />
+	<import resource="/grocerycore/processes/quote/quote-seller-approval-process-spring.xml" />
+
+	<import resource="/grocerycore/processes/quote/quote-to-expire-soon-email-process-spring.xml" />
+	<import resource="/grocerycore/processes/quote/quote-expired-email-process-spring.xml" />
+
+	<import resource="/grocerycore/processes/quote/quote-post-cancellation-process-spring.xml" />
+
+	<!-- Customer cleanup -->
+	<alias name="defaultCustomerCleanupRelatedObjectsAction" alias="customerCleanupRelatedObjectsAction" />
+	<bean id="defaultCustomerCleanupRelatedObjectsAction"
+		class="org.grocery.core.retention.impl.DefaultCustomerCleanupRelatedObjectsAction"
+		parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks" />
+	</bean>
+
+	<!-- Cleanup the customers not owning any order currently and the current date has past deactivation date+retention date. 
+		Also removes customers audit records. -->
+	<alias name="defaultCustomerNotOwningOrdersRemoveCleanupAction"
+		alias="customerNotOwningOrdersRemoveCleanupAction" />
+	<bean id="defaultCustomerNotOwningOrdersRemoveCleanupAction"
+		class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction"
+		parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks" />
+	</bean>
+
+	<!-- Order cleanup -->
+	<!-- Cleanup the order related objects and then remove order and its audit records. -->
+	<alias name="defaultOrderRemoveCleanupAction" alias="orderRemoveCleanupAction" />
+	<bean id="defaultOrderRemoveCleanupAction"
+		class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction"
+		parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="orderCleanupHooks" />
+	</bean>
+
+	<!-- CsTicket Remove action -->
+	<alias name="defaultCSTicketRemoveCleanupAction" alias="csTicketRemoveCleanupAction" />
+	<bean id="defaultCSTicketRemoveCleanupAction"
+		class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction"
+		parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketCleanupHooks" />
+	</bean>
+
+	<!-- CsTicket Stagnation action -->
+	<alias name="defaultCSTicketStagnationAction" alias="csTicketStagnationAction" />
+	<bean id="defaultCSTicketStagnationAction" class="org.grocery.core.retention.impl.DefaultCSTicketStagnationAction"
+		parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketRetentionHooks" />
+		<property name="ticketBusinessService" ref="ticketBusinessService" />
+	</bean>
+
+	<alias name="groceryCommerceAddToCartStrategy" alias="commerceAddToCartStrategy" />
+	<bean id="groceryCommerceAddToCartStrategy"
+		class="org.grocery.core.strategies.impl.GroceryCommerceAddToCartStrategy" parent="selectiveCartAddToCartStrategy" />
+
+	<alias name="groceryCommercePaymentAuthorizationStrategy" alias="commercePaymentAuthorizationStrategy" />
+	<bean id="groceryCommercePaymentAuthorizationStrategy"
+		class="org.grocery.core.strategies.impl.GroceryCommercePaymentAuthorizationStrategy"
+		parent="defaultPaymentAuthorizationStrategy" />
+
+	<alias alias="discountPriceService" name="discountPriceService" />
+	<bean id="discountPriceService" class="org.grocery.core.price.impl.GroceryPriceServiceImpl"
+		parent="defaultCommercePriceService">
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<alias name="groceryWarehouseService" alias="groceryWarehouseService" />
+	<bean id="groceryWarehouseService" class="org.grocery.core.warehouse.service.Impl.GroceryWarehouseServiceImpl">
+		<property name="groceryWarehouseDao" ref="groceryWarehouseDao" />
+	</bean>
+
+	<alias name="groceryWarehouseDao" alias="groceryWarehouseDao" />
+	<bean id="groceryWarehouseDao" class="org.grocery.core.warehouse.dao.impl.DefaultGroceryWarehouseDao" />
+
+	<bean id="groceryWarehouseInterceptor" class="org.grocery.core.warehouse.interceptor.GroceryWarehouseInterceptor">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="groceryWarehouseInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="groceryWarehouseInterceptor" />
+		<property name="typeCode" value="Warehouse" />
+	</bean>
+
+	<bean id="groceryWarehouseRemoveInterceptor"
+		class="org.grocery.core.warehouse.interceptor.GroceryWarehouseRemoveInterceptor">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="groceryWarehouseRemoveInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="groceryWarehouseRemoveInterceptor" />
+		<property name="typeCode" value="Warehouse" />
+	</bean>
+
+	<alias name="shipmentService" alias="shipmentService" />
+	<bean id="shipmentService" class="org.grocery.core.shipment.impl.ShipmentServiceImpl">
+		<property name="cartService" ref="cartService" />
+		<property name="commerceCartService" ref="commerceCartService" />
+		<property name="pointOfServiceService" ref="pointOfServiceService" />
+		<property name="commerceStockService" ref="commerceStockService" />
+	</bean>
+	<alias name="groceryMostPurchasedProductsService" alias="groceryMostPurchasedProductsService" />
+	<bean id="groceryMostPurchasedProductsService"
+		class="org.grocery.core.purchagehistory.service.impl.GroceryMostPurchasedProductsServiceImpl">
+		<property name="groceryMostPurchasedProductsDao" ref="groceryMostPurchasedProductsDao" />
+	</bean>
+	<alias name="groceryMostPurchasedProductsDao" alias="groceryMostPurchasedProductsDao" />
+	<bean id="groceryMostPurchasedProductsDao"
+		class="org.grocery.core.purchagehistory.dao.impl.GroceryMostPurchasedProductsDaoImpl">
+		<property name="userService" ref="userService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+	<alias name="groceryCommerceUpdateCartEntryStrategy" alias="commerceUpdateCartEntryStrategy" />
+	<bean id="groceryCommerceUpdateCartEntryStrategy"
+		class="org.grocery.core.strategies.impl.GroceryCommerceUpdateCartEntryStrategy"
+		parent="defaultCommerceUpdateCartEntryStrategy" />
+
+	<alias alias="deliverySlotService" name="groceryDeliverySlotService" />
+	<bean id="groceryDeliverySlotService" class="org.grocery.core.deliveryslots.services.impl.DeliverySlotServiceImpl">
+		<property name="modelService" ref="modelService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="deliverySlotDao" ref="deliverySlotDao" />
+	</bean>
+
+	<alias alias="deliverySlotDao" name="groceryDeliverySlotDao" />
+	<bean id="groceryDeliverySlotDao" class="org.grocery.core.deliveryslots.daos.impl.DeliverySlotDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<alias alias="storeFinderService" name="groceryStoreFinderService" />
+	<bean id="groceryStoreFinderService" class="org.grocery.core.warehouse.service.Impl.GroceryStoreFinderServiceImpl"
+		parent="defaultStoreFinderService">
+		<property name="groceryWarehouseDao" ref="groceryWarehouseDao" />
+		<property name="groceryStoreSessionService" ref="groceryStoreSessionService" />
+	</bean>
+
+	<alias name="groceryWishListService" alias="groceryWishListService" />
+	<bean id="groceryWishListService" class="org.grocery.core.wishlist.service.impl.GroceryWishListServiceImpl"
+		parent="wishlistService">
+	</bean>
+
+	<bean id="generateUpdatePasswordEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="UpdatePasswordEmailTemplate" />
+	</bean>
+
+	<bean id="updatePasswordEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/grocerycore/processes/updatePasswordEmailProcess.xml" />
+	</bean>
+
+	<bean id="updatePasswordEventListener" class="org.grocery.core.event.UpdatePasswordEventListener"
+		parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="groceryPublishEventService"
+		class="org.grocery.service.publish.event.impl.GroceryPublishEventServiceImpl" parent="customerAccountService">
+		<property name="eventService" ref="eventService" />
+	</bean>
+
+	<bean id="groceryServiceabilityAreaInterceptor"
+		class="org.grocery.core.warehouse.interceptor.GroceryServiceabilityAreaInterceptor">
+		<property name="groceryWarehouseService" ref="groceryWarehouseService" />
+	</bean>
+
+	<alias name="groceryDeliveryModeLookupStrategy" alias="deliveryModeLookupStrategy" />
+	<bean id="groceryDeliveryModeLookupStrategy"
+		class="org.grocery.core.strategies.impl.GroceryDeliveryModeLookupStrategy" parent="defaultDeliveryModeLookupStrategy">
+	</bean>
+
+	<bean id="groceryServiceabilityAreaInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="groceryServiceabilityAreaInterceptor" />
+		<property name="typeCode" value="GroceryServiceabilityArea" />
+	</bean>
+
+	<alias name="productDietSuitability" alias="productDietSuitability" />
+	<bean id="productDietSuitability"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductDietSuitabilityValueResolver"
+		parent="abstractValueResolver">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+    <alias name="productVariantLabel" alias="productVariantLabel" />
+	<bean id="productVariantLabel"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductVariantLabelValueResolver"
+		parent="abstractValueResolver">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+	
+	<bean id="groceryStoreSessionService" class="org.grocery.core.storesession.impl.DefaultGrocerySessionService">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="countryDao" ref="countryDao" />
+	</bean>
+
+    <alias name="hasOffersProvider" alias="hasOffersProvider" />
+	<bean id="hasOffersProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.HasOffersValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="timeService" ref="timeService" />
+		<property name="discountPriceService" ref="discountPriceService" />
+		<property name="priceService" ref="priceService" />
+	</bean>
+	
+	<alias name="productDiscountedPriceProvider" alias="productDiscountedPriceProvider" />
+	<bean id="productDiscountedPriceProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductDiscountedPriceValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="discountPriceService" ref="discountPriceService" />
+		<property name="priceService" ref="priceService" />
+	</bean>
+
+	<alias name="potentialPromotions" alias="potentialPromotions" />
+	<bean id="potentialPromotions"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.PotentialPromotionValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<alias name="productApprovalStatus" alias="productApprovalStatus" />
+	<bean id="productApprovalStatus"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductApprovalStatusValueResolver"
+		parent="abstractValueResolver">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<alias name="productStockInStore" alias="productStockInStore" />
+	<bean id="productStockInStore"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductStockInStoreValueResolver"
+		parent="abstractValueResolver">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="stockService" ref="stockService" />
+		<property name="warehouseSelectionStrategy" ref="warehouseSelectionStrategy" />
+		<property name="stockLevelStatusStrategy" ref="stockLevelStatusStrategy" />
+		<property name="commerceStockService" ref="commerceStockService" />
+	</bean>
+
+	<bean name="jspFragmentCacheRegion" class="org.grocery.core.cache.impl.DefaultGroceryManualCacheRegion">
+		<constructor-arg name="cacheName" value="cmsComponentCache" />
+		<property name="maxEntries" value="500" />
+		<property name="ttlSeconds" value="${jspFragmentCacheRegion.cache.ttl}" />
+	</bean>
+
+	<alias name="groceryCategoryService" alias="commerceCategoryService" />
+	<bean id="groceryCategoryService" class="org.grocery.core.category.GroceryCommerceCategoryServiceImpl"
+		parent="defaultCommerceCategoryService">
+		<property name="categoryService" ref="categoryService" />
+		<property name="catalogVersionService" ref="catalogVersionService" />
+	</bean>
+
+	<alias name="defaultRecipeService" alias="recipeService" />
+	<bean id="defaultRecipeService" class="org.grocery.core.recipe.service.impl.RecipeServiceImpl">
+		<property name="defaultRecipeDao" ref="defaultRecipeDao" />
+	</bean>
+
+	<alias name="defaultRecipeDao" alias="recipeDao" />
+	<bean id="defaultRecipeDao" class="org.grocery.core.recipe.dao.impl.RecipeDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<alias name="productPriceAdjustmentProvider" alias="productPriceAdjustmentProvider" />
+	<bean id="productPriceAdjustmentProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.ProductPriceAdjustmentValueProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="discountPriceService" ref="discountPriceService" />
+		<property name="priceService" ref="priceService" />
+	</bean>
+
+	<alias name="groceryCategoryNameValueProvider" alias="groceryCategoryNameValueProvider" />
+	<bean id="groceryCategoryNameValueProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.GroceryCategoryNameValueProvider"
+		parent="categoryNameValueProvider" />
+
+	<alias name="groceryPointOfServiceDao" alias="pointOfServiceDao" />
+	<bean id="groceryPointOfServiceDao" class="org.grocery.core.warehouse.dao.impl.GroceryPointOfServiceDao"
+		parent="abstractItemDao" />
+
+	<alias name="stockFacetDisplayNameProvider" alias="stockFacetDisplayNameProvider" />
+	<bean id="stockFacetDisplayNameProvider"
+		class="org.grocery.core.search.solrfacetsearch.provider.impl.StockFacetDisplayNameProvider">
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="groceryWarehouseService" ref="groceryWarehouseService" />
+
+	</bean>
+
+	<alias name="groceryCustomCartValidationStrategy" alias="cartValidationStrategy" />
+	<bean id="groceryCustomCartValidationStrategy"
+		class="org.grocery.core.strategies.impl.GroceryCustomCartValidationStrategy" parent="defaultCartValidationStrategy">
+	</bean>
+
+
+	<alias name="groceryStockLevelStatusJob" alias="stockLevelStatusJob" />
+	<bean id="groceryStockLevelStatusJob" class="org.grocery.core.job.GroceryStockLevelStatusJob"
+		parent="defaultStockLevelStatusJob" />
+
+	<bean id="socialMediaCustomerRestrictionDescription" class="org.grocery.core.socialmedia.restrictions.SocialMediaCustomerRestrictionDescription"/>
+
+	<!-- *** Restriction Evaluators *** -->
+	<bean id="socialMediaCustomerRestrictionEvaluator"
+		  class="org.grocery.core.socialmedia.restrictions.SocialMediaCustomerRestrictionEvaluator">
+		<property name="userService" ref="userService"/>
+	</bean>
+
+	<!-- *** Restriction Evaluator Mappings *** -->
+	<bean id="socialMediaCustomerRestrictionEvaluatorMapping"
+		  class="de.hybris.platform.cms2.servicelayer.services.evaluator.CMSRestrictionEvaluatorMapping">
+		<property name="restrictionTypeCode" value="SocialMediaCustomerRestriction"/>
+		<property name="restrictionEvaluator" ref="socialMediaCustomerRestrictionEvaluator"/>
+	</bean>
+	
+	<alias name="thresholdAuditService" alias="thresholdAuditService"/>
+	<bean id="thresholdAuditService" class="org.grocery.core.thresholdcheck.service.impl.ThresholdAuditServiceImpl">
+		<property name="thresholdAuditDao" ref="thresholdAuditDao" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<alias name="thresholdAuditDao" alias="thresholdAuditDao" />
+	<bean id="thresholdAuditDao"
+		class="org.grocery.core.thresholdcheck.dao.impl.ThresholdAuditDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<bean depends-on="processContextResolutionStrategyMap" parent="mapMergeDirective">
+		<property name="key">
+			<value type="java.lang.Class">de.hybris.platform.commerceservices.model.process.ForgottenPasswordProcessModel</value>
+		</property>
+		<property name="value" ref="storeFrontProcessContextStrategy" />
+	</bean>
+	<bean depends-on="processContextResolutionStrategyMap" parent="mapMergeDirective">
+		<property name="key">
+			<value type="java.lang.Class">de.hybris.platform.commerceservices.model.process.CustomerRegistrationEmailProcessModel</value>
+		</property>
+		<property name="value" ref="storeFrontProcessContextStrategy" />
+	</bean>
+	<bean depends-on="processContextResolutionStrategyMap" parent="mapMergeDirective">
+		<property name="key">
+			<value type="java.lang.Class">de.hybris.platform.commerceservices.model.process.AbandonedShoppingCartEmailProcessModel</value>
+		</property>
+		<property name="value" ref="storeFrontProcessContextStrategy" />
+	</bean>
+
+	<alias alias="groceryCommerceCartDao" name="defaultGroceryCommerceCartDao"/>
+	<bean id="defaultGroceryCommerceCartDao" class="org.grocery.core.order.dao.impl.DefaultGroceryCommerceCartDao"
+		  parent="commerceCartDao"/>
+
+	<bean id="abandonedShoppingCartJob" class="org.grocery.core.job.AbandonedShoppingCartJob"
+		  parent="abstractJobPerformable">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="userService" ref="userService"/>
+		<property name="groceryCommerceCartDao" ref="groceryCommerceCartDao"/>
+		<property name="eventService" ref="eventService"/>
+		<property name="timeService" ref="timeService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+</beans>

@@ -1,0 +1,5 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%store Name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE PriceRow;productId[unique=true];currency(isocode)[unique=true];price;minqtd[default=1];net[default=true];channel(code);giveAwayPrice[default=false];startTime[dateformat=yyyyMMdd];endTime[dateformat=yyyyMMdd];user(uid);ug(code)[unique=true];pg(code)[unique=true];unit(code[unique=true,default=pieces])

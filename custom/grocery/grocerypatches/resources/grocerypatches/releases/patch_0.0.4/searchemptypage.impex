@@ -1,0 +1,37 @@
+# USE CTRL-SPACE for type-ahead support
+$contentCatalog=spruceContentCatalog
+$contentCatalogName=Spruce Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+# Language
+$lang=en
+
+INSERT_UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true]                       ;categories(code,$productCV)                                          ;&componentRef                   
+									   ;                       ;GroceryMostFamousCategorisCarousel        ;fnv,dairy,bakery,personalcare,lqdr,household,bfc,mlp ;GroceryMostFamousCategorisCarousel
+
+INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];name;products(code,$productCV);scroll(code);popup;&componentRef
+;;GroceryMostSearchedProducts;Most Searched Products ; BBY001, PTC001, BBY003, PTC003, SCH003, BFC003, MSF003,SCH002, APC003, APC006, AHH001, AHH004, AGS003, APC008;allVisible;false;GroceryMostSearchedProducts
+
+#INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+#;;GroceryMostSearchedProducts;Most Searched Products 
+
+#INSERT_UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true]				;title[lang=en]
+#                                ;                    ;GroceryMostFamousCategorisCarousel;"Most Famous Categories"
+
+INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];
+;;GroceryMostSearchedProducts; 
+
+INSERT_UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true];
+                                ;                    ;GroceryMostFamousCategorisCarousel;
+	
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;MiddleContent-searchEmpty;Middle Slot for searchEmpty;true;GroceryMostSearchedProducts,GroceryMostFamousCategorisCarousel
+ 

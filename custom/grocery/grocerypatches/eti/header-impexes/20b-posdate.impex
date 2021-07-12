@@ -1,0 +1,1 @@
+INSERT_UPDATE StoreDeliverySlotDay; source(name)[unique=true]; target(&dayslotid)[unique=true]

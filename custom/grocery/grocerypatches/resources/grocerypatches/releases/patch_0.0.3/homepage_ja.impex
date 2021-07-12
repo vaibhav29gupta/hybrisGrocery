@@ -1,0 +1,51 @@
+$contentCatalog=spruceContentCatalog
+$contentCatalogName=Spruce Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$siteResource1=jar:org.grocery.core.constants.GroceryCoreConstants&/groceryinitialdata/import/sampledata/productCatalogs/$productCatalog
+
+
+# Language
+$lang=ja
+
+UPDATE BannerComponent;$contentCV[unique=true];uid[unique=true]	   ;$picture[lang=$lang]	;headline[lang=$lang]
+					  ;						  ;CarouselCyberBanner2;bannerImageLarge2_ja		;"Spruceデモ"
+					  ;						  ;CarouselCyberBanner3;bannerImageLarge3_ja		;"Spruceデモ"
+					  ;						  ;Banner1Section5	   ;LargeBannerImage1Section5_ja;"Spruceデモ"
+					  ;						  ;Banner2Section5	   ;LargeBannerImage2Section5_ja;"Spruceデモ"
+
+UPDATE BestSellersProductsComponent;$contentCV[unique=true];			uid[unique=true];		  title[lang=$lang];
+								   ;					   ;bestSellerProductsComponent ;"ベストセラー商品";
+                                
+UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true]				;title[lang=$lang]
+                                ;                       ;GroceryHomepageCategoryCarousel;"ステープルズセクション"
+                                ;                       ;categoryCarouselSection2B;"週の申し出"
+
+UPDATE ImageOverLayComponent ;$contentCV[unique=true]    ;uid[unique=true]             ;heading [lang=$lang]  				;subheading[lang=$lang]  										    ;btnText[lang=$lang]			                                 
+    						 ;			                 ;BannerSection2ImageOverLay   ;Spruceの新型コロナウイルスに対する試み         	;私たちのサービス、商品をお客様のもとへ安全にお届けするための取り組みについて、是非、ご一読ください。  	;もっと詳しく見る 
+
+             
+UPDATE CMSLinkComponent       ;$contentCV[unique=true];uid[unique=true]                 ;linkName[lang=$lang]
+                              ;                       ;SimpleBanner1ForSection2A        ;生活必需品
+                              ;                       ;SimpleBanner2ForSection2A        ;パントリー
+                              ;                       ;SimpleBanner3ForSection2A        ; リキュール・セレクション
+							  ;                       ;SimpleBanner4ForSection2A        ; 精肉 & 惣菜
+							  ;                       ;SimpleBanner5ForSection2A        ;チョコレート
+							  ;                       ;SimpleBanner6ForSection2A        ;飲料                              
+                                
+UPDATE Category;code[unique=true]; name[lang=$lang]  ;$productCV		
+					  ;fnv              ;"野菜、果物"  ;
+					  ;dairy            ;"乳製品"		 ;
+					  ;bakery           ;"ベーカリー"    ;		
+					  ;personalcare     ;"パーソナルケア" ;
+					  ;lqdr		        ;"飲料"	     ;
+					  ;household        ;"家事用品"	 ;
+					  ;chocolates       ;"チョコレート"   ;
+					  ;mlp              ;"牛乳、乳製品" ;

@@ -1,0 +1,21 @@
+$contentCatalog = spruceContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor] ; pk[unique = true]
+$emailResource = $config-emailResourceValue
+
+# Language
+$lang = ja
+
+#Site
+$site = spruce
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate ; code[unique = true]                   ; description[lang = $lang]                      ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                        ; Abandoned_Shopping_Cart_Email_Body    ; "Spruce Abandoned Shopping Cart Email Body"    ; $emailResource/email-abandonedShoppingCartBody.vm
+                        ; Abandoned_Shopping_Cart_Email_Subject ; "Spruce Abandoned Shopping Cart Email Subject" ; $emailResource/email-abandonedShoppingCartSubject.vm
+
+# Email Pages
+INSERT_UPDATE EmailPage ; $contentCV[unique = true] ; uid[unique = true]         ; fromEmail[lang = $lang]   ; fromName[lang = $lang]
+                        ;                           ; AbandonedShoppingCartEmail ; no-reply@sprucehybris.com ; Spruce Grocery Service

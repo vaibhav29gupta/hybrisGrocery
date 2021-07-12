@@ -1,0 +1,4 @@
+$baseStores=spruce
+
+# Zone Delivery Modes
+UPDATE ZoneDeliveryMode;code[unique=true];warehouses(code)[mode=append];stores(uid)[default=$baseStores]

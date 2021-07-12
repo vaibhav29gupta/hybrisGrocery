@@ -1,0 +1,17 @@
+#INSERT_UPDATE ConsentTemplate; id[unique = true]                   ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+#                             ; spruce_marketing_newsletter_consent ; 0                     ; ;
+
+
+#UPDATE ConsentTemplate; id[unique = true]                   ; name[lang = en]                                    ; description[lang = en]                                                                                                                                                                                                                                                              ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+#                      ; spruce_marketing_newsletter_consent ; "Promotional and Marketing Communication Preferences" ; "Yes, I would like to receive updates from Spruce online about products & services, promotions, special offers, news & events and marketing research via Email." ; 0                     ; ;
+
+#UPDATE ConsentTemplate; id[unique = true]                   ; name[lang = ja]                                    ; description[lang = ja]                                                                                                                                                                                                                                                              ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+#                      ; spruce_marketing_newsletter_consent ; "Promotional and Marketing Communication Preferences" ; "Yes, I would like to receive updates from Spruce online about products & services, promotions, special offers, news & events and marketing research via Email." ; 0                     ; ;
+
+
+INSERT_UPDATE ConsentTemplate; id[unique = true]                   ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+                             ; spruce_marketing_newsletter_consent ; 0                     ; ;
+
+
+UPDATE ConsentTemplate; id[unique = true]                   ;  version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+                      ; spruce_marketing_newsletter_consent ;  0                     ; ;

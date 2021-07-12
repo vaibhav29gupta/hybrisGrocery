@@ -1,0 +1,18 @@
+$defaultPassword=1234
+$siteUid=spruce
+$storefrontContextRoot=/grocerystorefront
+$lang=ja
+
+# Create Workflow user groups
+UPDATE UserGroup;UID[unique=true]		 ;locname[lang=$lang];
+				;cmsworkflowgroup		 ;"CMSワークフロー・グループ";
+				;cmsworkflowreadonlygroup;"CMSワークフロー参照のみグループ";
+				;cmseditorgroup			 ;"CMS 編集者グループ";
+				;cmsreviewergroup		 ;"CMSレビューワーグループ";
+				;cmspublishergroup		 ;"CMS発行者グループ";
+
+# Translator groups for workflow
+UPDATE UserGroup;		UID[unique=true];locname[lang=$lang];
+				; basecmstranslatorgroup;"ベース CMSトランスレーターグループ";
+				;  cmstranslatorgroup-JP;"日本語CMSトランスレーターグループ";
+				;	  cmstranslatorgroup;"CMSトランスレーターグループ";

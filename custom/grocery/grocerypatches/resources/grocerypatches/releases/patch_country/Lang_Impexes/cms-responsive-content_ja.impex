@@ -1,0 +1,183 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+$contentCatalog=spruceContentCatalog
+$contentCatalogName=Spruce Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+# Language
+$lang=__LANG__
+
+# Site Logo Component
+UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true];$picture[lang=$lang]
+;;SiteLogoComponent;/images/theme/Spruce.png
+
+# CMS Mini Cart Component
+UPDATE MiniCartComponent;$contentCV[unique=true];uid[unique=true];name;title[lang=$lang]
+;;MiniCart;Mini Cart;"ã�Šå®¢æ§˜ã�®ã‚·ãƒ§ãƒƒãƒ”ãƒ³ã‚°ã‚«ãƒ¼ãƒˆ"
+
+# CMS tabbed jsp include components
+UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;ProductDetailsTabComponent;"è£½å“�è©³ç´°"
+;;ProductReviewsTabComponent;"ãƒ¬ãƒ“ãƒ¥ãƒ¼"
+;;ProductSpecsTabComponent;"æ „é¤Šæˆ�åˆ†æƒ…å ±"
+;;ProductIngredientsTabComponent;"æ��æ–™"
+
+# CMS ProductReferences Components
+UPDATE ProductReferencesComponent;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;CrossSelling;"You may also like..."
+;;Others;"ã‚¢ã‚¯ã‚»ã‚µãƒªãƒ¼"
+;;Similar;"é¡žä¼¼å•†å“�"
+;;accessories;"ã‚¢ã‚¯ã‚»ã‚µãƒªãƒ¼"
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+#;;SAPCommerceNavNode;"SAPã‚³ãƒžãƒ¼ã‚¹ã‚¯ãƒ©ã‚¦ãƒ‰"
+#;;SAPCustomerExperienceNavNode;"SAPã‚«ã‚¹ã‚¿ãƒžãƒ¼ãƒ»ã‚¨ã‚¯ã‚¹ãƒšãƒªã‚¨ãƒ³ã‚¹"
+;;SiteRootNode;"SiteRoot"
+
+
+UPDATE StrapLineBannerComponent;$contentCV[unique=true];uid[unique=true]; textName[lang=$lang]
+#							  ;						   ;StraplineBanner; "Free delivery for all products over $150"    
+							  ;						   ;StraplineBanner; "Â¥150ãƒ‰ãƒ«ã‚’è¶…ã�ˆã‚‹ã�™ã�¹ã�¦ã�®è£½å“�ã�®ç„¡æ–™é…�é€�" 
+							  
+							  
+
+UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;ElectronicsHomepageProductCarouselComponent;"ãƒ™ã‚¹ãƒˆã‚»ãƒ©ãƒ¼å•†å“�"
+
+#My Changes-BestSelling Products
+;;GroceryHomepageProductCarouselComponent;"ãƒ™ã‚¹ãƒˆã‚»ãƒ©ãƒ¼å•†å“�"
+#My Changes-MostPopular Products
+;;NewGroceryHomepageProductCarouselComponent;"æœ€ã‚‚äººæ°—ã�®ã�‚ã‚‹"
+
+UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=$lang]
+;;EmptyCartParagraphComponent;"<h2>ã‚·ãƒ§ãƒƒãƒ”ãƒ³ã‚°ã‚«ãƒ¼ãƒˆã�¯ç©ºã�§ã�™</h2><p>æ��æ¡ˆ</p><ul><li>ä¸Šè¨˜ã�®ã‚«ãƒ†ã‚´ãƒªã‚’é�¸æŠžã�—ã�¦è£½å“�ã‚’å�‚ç…§ã�—ã�¦ã��ã� ã�•ã�„</li></ul>"
+;;NoSearchResultsParagraphComponent;"<h2>æ¤œç´¢ã�®çµ�æžœã�¯è¦‹ã�¤ã�‹ã‚Šã�¾ã�›ã‚“ã�§ã�—ã�Ÿ</h2><p>æ��æ¡ˆ:</p><ul><li>ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’é–“é�•ã�£ã�¦å…¥åŠ›ã�—ã�Ÿå�¯èƒ½æ€§ã�Œã�‚ã‚Šã�¾ã�™ - ã‚¹ãƒšãƒ«ãƒŸã‚¹ã‚’ãƒ�ã‚§ãƒƒã‚¯ã�—ã�¦ã��ã� ã�•ã�„.</li><li>ã�‚ã�ªã�Ÿã�¯å…·ä½“çš„ã�™ã�Žã‚‹ã�‹ã‚‚ã�—ã‚Œã�¾ã�›ã‚“ - ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’æ¸›ã‚‰ã�—ã�¦æ¤œç´¢ç¯„å›²ã‚’åºƒã�’ã�¦ã��ã� ã�•ã�„.</li><li>ä¸Šè¨˜ã�®ã‚«ãƒ†ã‚´ãƒªã‚’é�¸æŠžã�—ã�¦è£½å“�ã‚’å�‚ç…§ã�—ã�¦ã��ã� ã�•ã�„.</li></ul>"
+
+UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=$lang]
+;;EmptyCartParagraphComponent;"<h2>ã‚·ãƒ§ãƒƒãƒ”ãƒ³ã‚°ã‚«ãƒ¼ãƒˆã�¯ç©ºã�§ã�™</h2><p>æ��æ¡ˆ</p><ul><li>ä¸Šè¨˜ã�®ã‚«ãƒ†ã‚´ãƒªã‚’é�¸æŠžã�—ã�¦è£½å“�ã‚’å�‚ç…§ã�—ã�¦ã��ã� ã�•ã�„</li></ul>"
+#;;HelpParagraphComponent;"<strong>Need Help with your checkout process?</strong> <span>Contact Us or Call phone number.</span>"
+
+;;HelpParagraphComponent;"<strong>ãƒ�ã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆãƒ—ãƒ­ã‚»ã‚¹ã�®ãƒ˜ãƒ«ãƒ—ã�Œå¿…è¦�?</strong> <span>ã�Šå•�ã�„å�ˆã‚�ã�›ã�¾ã�Ÿã�¯é›»è©±ç•ªå�·.</span>"
+
+
+# CMS Paragraph Component (Contact information)
+UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=en];
+;;faqTextParagraph;"<div class=""global-alerts""><div class=""alert alert-info"" role=""alert""><strong>Information:</strong> Page Under Construction - Not Completely Functional</div></div><a name=""00""></a><div class=""textpage textpage-faqs""><div class=""item_container"">		<h2><a name=""a00""></a>Returns and refunds</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>		<div class=""item_container"">		<h2><a name=""b00""></a>Delivery information</h2>		<a class=""faq-menulink"" href=""#b01"">Delivery Options</a>		<a class=""faq-menulink"" href=""#b02"">Delivery times &amp; charges</a>		<a class=""faq-menulink"" href=""#b03"">Order tracking information</a>		<a class=""faq-menulink"" href=""#b04"">Courier status information</a>			<h3><a name=""b01""></a>Delivery Options</h3>		<p>			The delivery options available to you are shown in the Checkout area under Delivery Method.<br><br>			Based on your deliver address, these options may not all be available:			</p><ul>			<li>					<b>Home Delivery</b> - Free UK standard delivery on all orders over L50 within 4 working days (*exceptions may apply)				</li>				<li>					<b>Standard delivery</b> -  1 to 2 business days				</li>				<li>					<b>Other delivery method</b>  &ndash; 3 to 5 business days				</li>				<li>				<b>International delivery</b> &ndash; 7 to 10 business days (not all countries are available)				</li>			</ul>		<p></p>		<h3><a name=""b02""></a>Delivery times &amp; charges</h3>		<p>			We deliver the majority of our orders within 4 working days* for L3.99 or FREE on orders over L50 (*exceptions apply, see table below).			</p><ul>				<li>					Deliveries to UK addresses are made Monday to Friday between 9am to 6pm, excluding Bank Holidays. 				</li>				<li>					Deliveries to the Scottish Highlands and Islands, offshore locations and Northern Ireland may take a little longer.<br>					For delivery to ROI addresses please visit our Irish website at hybris.com				</li>				<li>					Multiple items may be delivered in more than one parcel and at different times.				</li>			</ul>		<p></p>	<h3><a name=""b03""></a>Order tracking information</h3>		<p>			We will send you email updates through every stage of your order. In each email your current order's status will be shown. Each order status is explained in the table below. We deliver most parcels via our courier. You can track these parcels by clicking on the parcel reference link on your email. Once you have clicked on the link you will be directed to the courier website. For information on courier statuses please <a href=""#b04"">click here</a>.		</p>		<table width=""100%"" cellspacing=""0"" cellpadding=""0"" border=""0"">			<tbody>				<tr>					<th>Status</th>					<th>Description</th>				</tr>				<!--ROW 1-->				<tr>					<td class=""blue3"">						<strong>Processing</strong><br>					</td>					<td class=""grey3"">						Your order is being processed.<br>					</td>				</tr>				<!--ROW 2-->	<tr>					<td class=""blue3"">						<strong>Despatched</strong><br>					</td>					<td class=""grey3"">						Your order has been despatched to the courier.<br><br>    For heavy and large products your order is ready to be despatched by our carrier. The carrier will contact you to arrange a suitable date for delivery.<br><br>For Collect from store orders you will receive a further order status update when your item(s) are ready to collect (see below for more information on collect from store statuses)<br><br>					</td>				</tr>				<!--ROW 3-->				<tr>					<td class=""blue3"">						<strong>Cancelled<br>Unable to fulfill<br> payment reversal</strong><br>					</td>					<td class=""grey3"">						Your order has been cancelled due to stock availability, no payment has been taken.<br><br>					</td>				</tr>				<!--ROW 4-->				<tr>					<td class=""blue3"">						<strong>Cancelled<br>Unable to fulfil<br>Payment refunded</strong><br>				</td>					<td class=""grey3"">						Your order has been cancelled due to stock availability. We have processed a refund to your payment card.<br><br>					</td>				</tr>				<!--ROW 5-->				<tr>					<td class=""blue3"">						<strong>Return received</strong><br>					</td>					<td class=""grey3"">Your return has been received. However, due to goods being addressed to the incorrect warehouse there may be a short delay in your refund being processes while the goods are being re-directed.<br><br>					</td>				</tr>				<!--ROW 6-->				<tr>					<td class=""blue3"">						<strong>Order ready for collection</strong><br>					</td>					<td class=""grey3"">						Your order is ready for collection at your chosen store.<br><br><strong><i>Please note:</i></strong> You must collect your order within 14 days of receiving your notification email.<br><br>					</td>				</tr>				<!--ROW 7-->				<tr>					<td class=""blue3"">						<strong>Collected</strong><br>					</td>					<td class=""grey3"">					Your order has been collected.<br><br>					</td>				</tr>				<!--ROW 8-->				<tr>					<td class=""blue3"">						<strong>Return in progress</strong><br>					</td>					<td class=""grey3"">						We are processing your return.<br><br>					</td>				</tr>				<!--ROW 9-->				<tr>					<td class=""blue3"">						<strong>Return refund complete</strong><br>					</td>					<td class=""grey3"">						We have processed your return.<br><br><strong><i>Please note:</i></strong>  Some banks may take longer than others to process refunds.<br><br>					</td>				</tr>			</tbody>		</table>		<p></p>		<h3><a name=""b04""></a>Courier status information</h3>		<p></p>		<table width=""100%"" cellspacing=""0"" cellpadding=""0"" border=""0"">			<tbody>				<tr>					<th>Status</th>					<th>Description</th>				</tr>			<!--ROW 1-->				<tr>					<td class=""blue3"">						<strong>Order generated</strong><br>					</td>					<td class=""grey3"">						Your order is ready for delivery and has entered into the courier system.<br>					</td>				</tr>				<!--ROW 2-->				<tr>					<td class=""blue3"">						<strong>Receipt at depot </strong><br>					</td>					<td class=""grey3"">					Your parcel has been received at the depot. <br><br>					</td>				</tr>				<!--ROW 3-->				<tr>					<td class=""blue3"">						<strong>Processed at depot</strong><br>					</td>					<td class=""grey3"">						Your parcel has processed through the depot operation and is ready for onward despatch to the courier.<br><br>					</td>				</tr>				<!--ROW 4-->				<tr>					<td class=""blue3"">						<strong>Out for delivery to courier</strong><br>					</td>					<td class=""grey3"">						Your parcel has left the depot for delivery to courier.<br><br>					</td>				</tr>				<!--ROW 5-->				<tr>					<td class=""blue3"">						<strong>Courier to re-attempt</strong><br>					</td>					<td class=""grey3"">						The courier has attempted to deliver your parcel and will try again. You will receive a card to confirm delivery has been attempted.<br><br>					</td>				</tr>			<!--ROW 6-->				<tr>					<td class=""blue3"">						<strong>Delivered to</strong><br>					</td>					<td class=""grey3"">						Your parcel has been delivered.<br><br>					</td>				</tr>			</tbody>		</table>		<p></p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>		<div class=""item_container"">		<h2><a name=""c00""></a>Registration</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""d00""></a>Your Online account</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""e00""></a>Orders</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""f00""></a>Promotions and discounts</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""g00""></a>Product and general informations</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""h00""></a>Store information</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>	<div class=""item_container"">		<h2><a name=""i00""></a>Business contacts</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>		<div class=""item_container"">		<h2><a name=""j00""></a>Buying guides</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>		<div class=""item_container"">		<h2><a name=""k00""></a>Size guides</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div>		<div class=""item_container"">		<h2><a name=""l00""></a>Privacy and security</h2>		<p>Text</p>		<a class=""pagetop-link"" href=""#00"">back to top</a>	</div></div>";
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;AddressBookLink;"ã‚¢ãƒ‰ãƒ¬ã‚¹å¸³"
+;;CloseAccountLink;"ã‚¢ã‚«ã‚¦ãƒ³ãƒˆé–‰éŽ–"
+;;ConsentManagementLink;"å�Œæ„�ç®¡ç�†"
+;;OrderHistoryLink;"æ³¨æ–‡å±¥æ­´"
+;;PaymentDetailsLink;"æ”¯æ‰•ã�„è©³ç´°"
+;;PersonalDetailsLink;"å€‹äººæƒ…å ±è©³ç´°"
+;;QuickOrderLink;"ã‚¯ã‚¤ãƒƒã‚¯ã‚ªãƒ¼ãƒ€ãƒ¼"
+;;SavedCartsLink;"ä¿�å­˜ã�•ã‚Œã�Ÿã‚«ãƒ¼ãƒˆ"
+;;UpdateEmailLink;"Eãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹"
+;;UpdatePasswordLink;"ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰"
+;;WishlistLink;"ã‚¦ã‚£ãƒƒã‚·ãƒ¥ãƒªã‚¹ãƒˆ"
+;;AccountSupportTicketHistoryLink;"ã‚µãƒ�ãƒ¼ãƒˆ ãƒ�ã‚±ãƒƒãƒˆ"
+;;LogoutLink;"ã‚µã‚¤ãƒ³ã‚¢ã‚¦ãƒˆ"
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;MyAccountNavNode;"ãƒžã‚¤ã€€ã‚¢ã‚«ã‚¦ãƒ³ãƒˆ"
+
+# Content Pages
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+# ;;importCSVSavedCartPage;"ä¿�å­˜ã�•ã‚Œã�Ÿã‚«ãƒ¼ãƒˆã‚’ã‚¤ãƒ³ãƒ�ãƒ¼ãƒˆ"
+ #;;saved-carts;"ä¿�å­˜ã�•ã‚Œã�Ÿã‚«ãƒ¼ãƒˆ"
+ #;;savedCartDetailsPage;"ä¿�å­˜ã�•ã‚Œã�Ÿã‚«ãƒ¼ãƒˆè©³ç´°"
+
+# CMS Paragraph Component
+UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=en];
+#;;QuickOrderInfoParagraphComponent;You can add up to 25 valid SKUs below and add to cart. Stock is reserved once products are added to cart.;
+
+# CMS Footer Navigation Component
+UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];notice[lang=en][translator=de.hybris.platform.acceleratorservices.dataimport.batch.converter.CopyrightTranslator,dateFormat=yyyy]
+
+# CMS Footer Navigation Component
+UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];notice[lang=en][translator=de.hybris.platform.acceleratorservices.dataimport.batch.converter.CopyrightTranslator,dateFormat=yyyy]
+;;FooterNavigationComponent;"è‘—ä½œæ¨© Â© {0} SAP SEã�¾ã�Ÿã�¯SAPé–¢é€£ä¼šç¤¾. å…¨è‘—ä½œæ¨©æ‰€æœ‰."
+
+
+#header component
+#CMSLinkComponents
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;ShopLink;"ã‚·ãƒ§ãƒƒãƒ—"
+;;OffersLink;"å¾—ç‚¹"
+;;PrescriptionLink;"å‡¦æ–¹"
+
+#mega menu
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;FruitAndVegLink;"é‡Žè�œã�¨æžœç‰©"
+;;GroceryAndStaplesLink;"é£Ÿæ–™å“�ã�¨ä¸»é£Ÿ"
+;;DairyLink;"ä¹³è£½å“�"
+;;BakeryLink;"ãƒ™ãƒ¼ã‚«ãƒªãƒ¼"
+;;PersonalCareLink;"ãƒ‘ãƒ¼ã‚½ãƒŠãƒ«ã‚±ã‚¢"
+;;BeveragesLink;"é£²æ–™"
+;;HouseHoldsLink;"å®¶äº‹è£½å“�"
+;;SeasonalFruitLink;"å­£ç¯€ã�®æžœç‰©"
+;;AllSeasonalFruitLink;"å­£ç¯€ã�®å…¨æžœç‰©"
+;;SeasonalVegetableLink;"å­£ç¯€ã�®é‡Žè�œ"
+;;AllSeasonalVegetableLink;"å­£ç¯€ã�®å…¨é‡Žè�œ"
+;;MineralLink;"ãƒŸãƒ�ãƒ©ãƒ«"
+;;FatsLink;"æ²¹è„‚"
+;;BoschRefrigeratorsLink;"ãƒœãƒƒã‚·ãƒ¥å†·è”µåº«"
+;;GodrejRefrigeratorLink;"Godrejå†·è”µåº«"
+;;SamsungRefrigeratorLink;"ã‚µãƒ ã‚¹ãƒ³å†·è”µåº«"
+;;FreshVegetableLink;"æ–°é®®ã�ªé‡Žè�œ"
+;;FreshFruitLink;"æ–°é®®ã�ªæžœç‰©"
+;;RefrigeratorsLink;"å†·è”µåº«"
+
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;FreshFruitNavNode;"æ–°é®®ã�ªæžœç‰©"
+;;FreshVegetableNavNode;"æ–°é®®ã�ªé‡Žè�œ"
+;;RefrigeratorsNavNode;"å†·è”µåº«"
+
+# Footer Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;UsefullLinksNavNode;"ã�Šå½¹ç«‹ã�¡ãƒªãƒ³ã‚¯"
+;;ReachOutNavNode;"é€£çµ¡å…ˆ"
+;;AboutUsNavNode;"å¼Šç¤¾ã�«ã�¤ã�„ã�¦"
+
+
+# Footer Link
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;TermsAndConditionsLink;"è¦�ç´„"
+;;PrivacyPolicyLink;"å€‹äººæƒ…å ±ä¿�è­·æ–¹é‡�"
+;;ReturnAndCancellationLink;"è¿”å“�ã�¨ã‚­ãƒ£ãƒ³ã‚»ãƒ«"
+;;ContactUsLink;"ã�Šå•�ã�„å�ˆã‚�ã�›"
+;;FAQLink;"ã‚ˆã��ã�‚ã‚‹è³ªå•�"
+;;CareerLink;"ã‚­ãƒ£ãƒªã‚¢"
+;;InNewsLink;"ãƒ‹ãƒ¥ãƒ¼ã‚¹"
+;;OurBlogLink;"å¼Šç¤¾ãƒ–ãƒ­ã‚°"
+
+# Sub-Footer
+#csm-responsive-content_en
+UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];bottomCenterMedia(code,$contentCV)
+;;FooterNavigationComponent;/images/theme/Spruce.png
+
+UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true];$picture[lang=$lang]
+;;YoutubeBanner;youtubeFollowLink
+;;FacebookBanner;facebookFollowLink
+;;TwitterBanner;twitterFollowLink
+;;InstagramBanner;instagramFollowLink
+
+UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];bottomLeftMedia(uid,$contentCV)
+;;FooterNavigationComponent;YoutubeBanner,FacebookBanner,TwitterBanner,InstagramBanner
+
+UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];bottomRightMedia(code,$contentCV)
+;;FooterNavigationComponent;/images/payment/visa-payment.png,/images/payment/phone-pay.png,/images/payment/paytm.png

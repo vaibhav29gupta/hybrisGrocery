@@ -1,0 +1,10 @@
+[
+    {
+        "headerFilePath": "./../../header-impexes",
+        "excelFilePath": "./../../",
+        "replaceTokensFilePath": "./../../tokens",
+        "impexFilePath": "./../../../resources/grocerypatches/releases/patch_0.0.3",
+		"excelFileName": "Product_Data",
+		"configFileName": "impexes"
+    }
+]

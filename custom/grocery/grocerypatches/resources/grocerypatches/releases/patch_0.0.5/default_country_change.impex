@@ -1,0 +1,8 @@
+$productCatalog=spruceProductCatalog
+$classificationCatalog=SpruceClassification
+$storeUid=spruce
+$defaultCurrency=AUD
+
+
+UPDATE BaseStore ; uid[unique=true] ; catalogs(id)                           ; ; ;  ; ; defaultCurrency(isocode) ; ; ; ; ; ; ; ; ; ; defaultcountry(isocode)
+                 ; $storeUid        ; $productCatalog,$classificationCatalog ; ; ;  ; ; $defaultCurrency         ; ; ; ; ; ; ; ; ; ; AU                    

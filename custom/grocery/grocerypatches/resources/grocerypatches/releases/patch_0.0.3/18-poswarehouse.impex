@@ -1,0 +1,18 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=spruce
+
+INSERT_UPDATE PoS2WarehouseRel;source(name)[unique=true];target(code)[unique=true]
+;POS1_AUS_SYDW;WH5_POS_ASYD1;
+;POS2_AUS_MLB;WH6_POS_AMEL;
+;POS3_AUS_CAN;WH7_POS_ACAN;
+;POS4_AUS_PRT;WH8_POS_APER;
+;POS5_AUS_SYDS;WH9_POS_ASYD2;
+;Pickup_AUS_SYDW01;WH2_AW01;
+;POS1_JP_Tokyo;WH3_POS_JP01;
+;POS2_JP_Nikko;WH4_POS_JP02;
+;POS3_JP_Kyoto;WH5_POS_JP03;
+;POS4_JP_Osaka;WH6_POS_JP04;
+;POS5_JP_Tokyo  02;WH7_POS_JP05;
+;POS5_JP_Tokyo  03;WH1_JP01;

@@ -1,0 +1,19 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the site emails
+#
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+#Site
+$site = spruce
+$lang=en
+
+UPDATE EmailPage;$contentCV[unique=true];		  uid[unique=true];fromEmail[lang=$lang];fromName[lang=$lang]
+				;						;CustomerRegistrationEmail;customerservices@spruce.com;"Customer Services Team"
+				;						;ForgottenPasswordEmail	  ;customerservices@spruce.com;"Customer Services Team"
+				;						;OrderConfirmationEmail	  ;customerservices@spruce.com;"Customer Services Team"
+				;						;ProductBackInStockNotificationEmail;customerservices@spruce.com;"Customer Services Team"
+				;						;UpdatePasswordEmail	  ;customerservices@spruce.com;"Customer Services Team"

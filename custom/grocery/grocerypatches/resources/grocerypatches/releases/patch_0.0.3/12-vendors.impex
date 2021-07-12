@@ -1,0 +1,8 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Vendor;code[unique=true];name[lang=en];name[lang=ja]
+;sfp-in;"Spruce food products-India";"Spruce food products-India";
+;sfp-aus;"Spruce food products-Australia";"Spruce food products-Australia";
+;sfp-jp;"Spruce food products-Japan";"Spruce food products-Japan";

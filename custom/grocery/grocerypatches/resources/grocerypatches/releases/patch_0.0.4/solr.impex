@@ -1,0 +1,29 @@
+# USE CTRL-SPACE for type-ahead support
+
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the Solr configuration for the store
+#
+$indexLanguage=en
+$indexCurrency=INR
+$facetSearchConfigName=spruceIndex
+
+
+
+INSERT_UPDATE SolrFacetSearchConfig ; name[unique=true]; languages(isocode)[mode=append] ; currencies(isocode)[mode=append]                             
+                                    ;$facetSearchConfigName; $indexLanguage    ; $indexCurrency
+
+# Define price ranges
+INSERT_UPDATE SolrValueRange ; &rangeValueRefID ; solrValueRangeSet(name)[unique=true] ; name[allowNull=true]   ; from   ; to      
+  							;rangeRef1$indexCurrency ;sprucePriceRange$indexCurrency;							;		;	
+#                             ; rangeRefAUD1     ; sprucePriceRangeAUD                  ; $0-$49.99            ; 0      ; 49.99   
+
+# Define price range set     
+INSERT_UPDATE SolrValueRangeSet ; name[unique=true]   ; qualifier ; type   ; solrValueRanges(&rangeValueRefID)                               
+								
+								;sprucePriceRange$indexCurrency;$indexCurrency;double;rangeRef1$indexCurrency;rangeRef2$indexCurrency;rangeRef3$indexCurrency;rangeRef4$indexCurrency;rangeRef5$indexCurrency
+#                                ; sprucePriceRangeAUD ; AUD       ; double ; rangeRefAUD1,rangeRefAUD2,rangeRefAUD3,rangeRefAUD4,rangeRefAUD5
+

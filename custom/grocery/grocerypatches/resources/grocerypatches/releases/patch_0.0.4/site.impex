@@ -1,0 +1,22 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS Site configuration for the store
+#
+$productCatalog=spruceProductCatalog
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$defaultLanguage=en
+$storeUid=spruce
+$siteUid=spruce
+$promoGrp=sprucePromoGrp
+$siteMapUrlLimitPerFile=50000
+$siteTheme=grocery
+$siteMapLangCur=enEur
+$siteMapPage=Homepage,Product,CategoryLanding,Category,Store,Content,Custom
+$customSiteMapUrls=${__CUSTOM_SITE_MAP_URLS__}
+
+# CMS Site
+INSERT_UPDATE CMSSite;uid[unique=true];urlPatterns[mode=append]
+;$siteUid;(?i)^https?://demo-spruce.nagarro.com?/rest/.*$,(?i)^https?://demo-spruce.nagarro.com\/?(\/[.\w]*)*/$storefrontContextRoot/*$,(?i)^https?://demo-spruce.nagarro.com\/?(\/[.\w]*)*/$storefrontContextRoot/$siteUid/*$;

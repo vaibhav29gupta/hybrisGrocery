@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImPex for Importing Product Media into Electronics Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$thumbnail=thumbnail(code, $catalogVersion)
+$picture=picture(code, $catalogVersion)
+$thumbnails=thumbnails(code, $catalogVersion)
+$detail=detail(code, $catalogVersion)
+$normal=normal(code, $catalogVersion)
+$others=others(code, $catalogVersion)
+$data_sheet=data_sheet(code, $catalogVersion)
+$medias=medias(code, $catalogVersion)
+$galleryImages=galleryImages(qualifier, $catalogVersion)
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/grocerycore/import/common/
+
+
+INSERT_UPDATE Media;mediaFormat(qualifier);code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/png'];$catalogVersion;folder(qualifier)
+
+;;payment-method-card.png;$siteResource/images/payment-method-card.png;;;images
+;;cash-on-delivery.png;$siteResource/images/cash-on-delivery.png;;;images
+
+
+Remove PaymentMode;code[unique=true]
+;invoice
+;debitentry
+;creditcard
+
+INSERT_UPDATE PaymentMode;code[unique=true];name[lang=en];description[lang=en];active;paymentinfotype(code);type(code);paymentModeImage(code,$catalogVersion)
+;creditcard;Card;creditcard payment mode;true;CreditCardPaymentInfo;PaymentGateway;payment-method-card.png
+;cod;Pay on Delivery;cashondelivery payment mode;true;CODPaymentInfo;COD;cash-on-delivery.png
+;advance;advance;advance payment mode;false;AdvancePaymentInfo;;
+

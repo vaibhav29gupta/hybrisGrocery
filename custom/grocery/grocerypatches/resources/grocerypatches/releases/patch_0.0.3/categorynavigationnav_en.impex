@@ -1,0 +1,23 @@
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=en]
+;;FruitAndVegLink;"Fruit and Veg"
+;;DECLink;"Dairy, eggs & cheese"
+;;BakeryLink;"Bakery"
+;;PersonalCareLink;"Personal Care"
+;;BeveragesLink;"Beverages"
+;;HouseHoldsLink;"Household"
+;;PantryLink;"Pantry"
+;;MSDLink;"Meat, Seafood & Deli"
+;;EssentialsLink;"Essentials"
+;;MilkProductLink;"Milk And Milk products"
+;;BabyCareLink;"Baby Care"
+;;PetCareLink;"Pet care"
+;;LiquorLink;"Liquor"
+;;ChocolatesLink;"Chocolates"
+;;BreakfastCerealsLink;"Breakfast cereals"
+;;SaSpSeLink;"Sauces-Spreads-Seasoning"
+;;PastaNoodlesLink;"Pasta & Noodles"
+;;FrozenFoodLink;"Frozen food"
+

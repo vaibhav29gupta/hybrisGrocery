@@ -1,0 +1,16 @@
+$productCatalog=spruceProductCatalog
+$catalogVersions=catalogVersions(catalog(id),version);
+$serverConfigName=spruceSolrServerConfig
+$indexConfigName=spruceSolrIndexConfig
+$searchConfigName=sprucePageSize
+$facetSearchConfigName=spruceIndex
+$facetSearchConfigDescription=Spruce Solr Index
+$searchIndexNamePrefix=spruce
+$solrIndexedType=spruceProductType
+$indexBaseSite=spruce
+$indexLanguages=__INDEX_LANGUAGES__
+$indexCurrencies=__INDEX_CURRENCIES__
+
+
+UPDATE SolrFacetSearchConfig ; name[unique=true]      ; description                   ; indexNamePrefix        ; languages(isocode) ; currencies(isocode) ; solrServerConfig(name) ; solrSearchConfig(description) ; solrIndexConfig(name) ; solrIndexedTypes(identifier) ; enabledLanguageFallbackMechanism ; $catalogVersions                             
+                                    ; $facetSearchConfigName ; $facetSearchConfigDescription ; $searchIndexNamePrefix ; $indexLanguages    ; $indexCurrencies    ; $serverConfigName      ; $searchConfigName             ; $indexConfigName      ; $solrIndexedType             ; true                             ; $productCatalog:Online,$productCatalog:Staged

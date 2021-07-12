@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="groceryImportPatchAction" class="org.grocery.patches.actions.GroceryImportPatchAction"
+        parent="importPatchAction"/>
+
+  <bean id="abstractPatch" class="de.hybris.platform.patches.AbstractPatch" abstract="true">
+    <property name="importPatchAction" ref="groceryImportPatchAction"/>
+    <property name="sqlCommandPatchAction" ref="sqlCommandPatchAction"/>
+  </bean>
+
+  <bean id="abstractGroceryPatch" class="org.grocery.patches.release.AbstractGroceryPatch" abstract="true"
+        parent="abstractPatch">
+    <property name="environment" value="#{configurationService.configuration.getProperty('env')}"/>
+  </bean>
+
+  <!-- Register your patch beans here and add them to grocerypatchesSystemSetup patches property below -->
+  <bean id="patch_001" class="org.grocery.patches.release.Patch001" parent="abstractGroceryPatch"/>
+  <bean id="patch_002" class="org.grocery.patches.release.Patch002" parent="abstractGroceryPatch"/>
+  <bean id="patch_003" class="org.grocery.patches.release.Patch003" parent="abstractGroceryPatch"/>
+  <bean id="patch_004" class="org.grocery.patches.release.Patch004" parent="abstractGroceryPatch"/>
+  <bean id="patch_005" class="org.grocery.patches.release.Patch005" parent="abstractGroceryPatch"/>
+
+  <bean id="grocerypatchesSystemSetup" class="org.grocery.patches.setup.GrocerypatchesSystemSetup"
+        parent="patchesSystemSetup">
+    <property name="patches">
+      <list>
+        <ref bean="patch_001"/>
+        <ref bean="patch_002"/>
+        <ref bean="patch_003"/>
+        <ref bean="patch_004"/>
+        <ref bean="patch_005"/>
+      </list>
+    </property>
+  </bean>
+</beans>

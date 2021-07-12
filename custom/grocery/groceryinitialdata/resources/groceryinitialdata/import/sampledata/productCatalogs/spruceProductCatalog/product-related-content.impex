@@ -1,0 +1,7 @@
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];products(code,$productCV)
+;;GroceryHomepageProductCarouselComponent;FV001, FV002, FV003, FV004, FV005, DY001, DY002
+;;NewGroceryHomepageProductCarouselComponent;BY005, GS001, GS002, GS003, GS004, GS005, DY001

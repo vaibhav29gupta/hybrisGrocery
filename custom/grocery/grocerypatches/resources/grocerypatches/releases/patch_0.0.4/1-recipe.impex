@@ -1,0 +1,315 @@
+$productCatalog=spruceProductCatalog
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])[unique=true,default=$contentCatalog:Staged]
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$lang=en
+
+
+######  Ingredient  ####
+#     INSERT_UPDATE Ingredient;$productCV ;  quantity[lang=en];   name[lang=en]   ;  specialInstruction[lang=en]  ; cutStyle[lang=en] ;   code[unique=true]; product(code,$productCV)  
+#							;           ;  2 1/2 cups       ;   plain flour     ;  plus extra for dusting       ;                   ;  IV001             ;     BFC002                               
+# 							;           ;  250g             ;   unsalted butter ;  chilled                      ; cubed             ;   IV002            ;                                         
+# 							;           ;  2 tbs            ;   caster sugar    ;                               ;                   ;   IV003            ;                                         
+#							;           ;  1 tbs            ;   white vinegar   ;	                            ;                   ;   IV004            ;     RW001                               
+# 							;           ;  500g             ;   strawberries    ;  hulled                       ; halved            ;  IV005             ;                                         
+# 							;           ;  3/4 cup          ;   caster sugar    ;                               ;                   ;   IV006            ;                                         
+#							;           ;  2 tbs            ;   cornflour       ;                               ;                   ;   IV007            ;     SCH003                               
+# 							;           ;  1 tbs            ;   vanilla extract ;                               ;                   ;   IV008            ;                                         
+#							;           ;  1 free range     ;   egg             ;  lightly beaten               ;                   ;   IV009            ;     WW001                                   
+# 							;           ;  1/2 cup          ;   flaked almonds  ;                               ;                   ;   IV0010           ;                                       
+ 
+INSERT_UPDATE Ingredient;$productCV ;  code[unique=true]; product(code,$productCV) ;isEssential 
+						;           ;  IV001            ;     BFC002               ;   true             
+						;           ;  IV002            ;                          ;               
+						;           ;  IV003            ;                          ;               
+						;           ;  IV004            ;     RW001                ;   false            
+						;           ;  IV005            ;                          ;               
+						;           ;  IV006            ;                          ;               
+						;           ;  IV007            ;     SCH003               ;   true             
+						;           ;  IV008            ;                          ;               
+						;           ;  IV009            ;     WW001                ;                   
+						;           ;  IV0010           ;                          ;             
+                        ;           ;  IV0011           ;     MSF004               ;   true
+                        ;           ;  IV0012           ;     SSS001               ;   true
+                        ;           ;  IV0013           ;     AGS004               ;   false
+                        ;           ;  IV0014           ;     CH004                ;   true
+                        ;           ;  IV0015           ;     CH002                ;   false
+                        ;           ;  IV0016           ;     FF003                ;   true
+                        ;           ;  IV0017           ;                          ;
+	
+	###### Ingredients group #####
+	#INSERT_UPDATE IngredientsGroup; code[unique=true]    ;  groupName[lang=en]  ;  ingredients(code,$productCV)             ;  $productCV      
+	#							   ; IG001               ;  Pastry              ;  IV001,IV002,IV003,IV004                  ;
+	#							   ; IG002               ;  Strawberry Galette  ;  IV005,IV007,IV006
+	#							   ; IG003               ;  Almond Base Filling ;  IV008                      ;
+	#							   ; IG004               ;  Cream Cheese Pastry ;  IV009                 ;
+	#							   ; IG005               ;  Strawberry Filling  ;  IV0010                 ;      
+								   
+		
+	###### Ingredients group #####
+	INSERT_UPDATE IngredientsGroup; code[unique=true]    ;  ingredients(code,$productCV)  ;  $productCV      
+								   ; IG001               ;  IV001,IV002,IV003,IV004       ;
+								   ; IG002               ;  IV005,IV007,IV006	          ;
+								   ; IG003               ;  IV008                         ;
+								   ; IG004               ;  IV009                         ;
+								   ; IG005               ;  IV0010                        ;  						   
+			                       ; IG006               ;  IV0013,IV0014,IV0016          ;
+			                       ; IG007               ;  IV0015                        ;
+			                       ; IG008               ;  IV0017                        ;
+								   
+	#### Recipes#####
+	INSERT_UPDATE Media;$productCV             ; code[unique=true]              ; realfilename  ; @media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator] ; mime[default='image/jpg']   ; altText         ; folder(qualifier)[default='images']
+					   ;                       ; /images/recipe/recipe1.jpg     ; recipe1.jpg   ; $siteResource/images/recipe/recipe1.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe2.jpg     ; recipe2.jpg   ; $siteResource/images/recipe/recipe2.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe3.jpg     ; recipe3.jpg   ; $siteResource/images/recipe/recipe3.jpg                                    ; image/jpg                   ; Recipe Loading  ; 
+                       ;                       ; /images/recipe/recipe4.jpg     ; recipe4.jpg   ; $siteResource/images/recipe/recipe4.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe5.jpg     ; recipe5.jpg   ; $siteResource/images/recipe/recipe5.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+					   ;                       ; /images/recipe/recipe6.jpg     ; recipe6.jpg   ; $siteResource/images/recipe/recipe6.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+			           ;                       ; /images/recipe/recipe7.jpg     ; recipe7.jpg   ; $siteResource/images/recipe/recipe7.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe8.jpg     ; recipe8.jpg   ; $siteResource/images/recipe/recipe8.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe9.jpg     ; recipe9.jpg   ; $siteResource/images/recipe/recipe9.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/recipe10.jpg    ; recipe10.jpg  ; $siteResource/images/recipe/recipe10.jpg                                   ; image/jpg                   ; Recipe Loading  ;
+   
+   
+   
+	#INSERT_UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=en];serves;cookingTime; prepTime  ; name[lang=en]                     ; description[lang=en]              ;  videoURL                        ;   media(code,$productCV)                   ; method[lang=en]
+	#					;                       ;RC001            ;                          ;   6  ;  45m      ; 10m       ; Shortcrust Pastry Strawberry Tart ; Shortcrust Pastry Strawberry Tart ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe1.jpg                           ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."								   
+	#					;                       ;RC002            ;                          ;   12 ;  29m	    ; 30m       ; Pineapple Cake	                ; Pineapple Cake                    ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe2.jpg                            ; "1. Take some pinapple and strawberies<br>2. Refrigerate them<br>3. Serve and Enjoy."
+	#					;                       ;RC003            ;                          ;   3  ;  21m      ; 17m       ; Mango Flavoured Icecream          ; Mango Flavouerd Icecream          ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe3.jpg                         ; "1. Take some raw mango<br>2. Take some mango essence<br>3. Add milk and mango and stir<br>4. Refrigerate"
+    #                    ;                       ;RC006            ;                          ;   6  ;  4m       ; 20m       ; Raspberry Sorbet                       ; Raspberry Sorbet                        ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe4.jpg                          ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."								   
+	#					;                       ;RC007            ;                          ;   5  ;  19m	    ; 30m       ; Oreo Shake	                    ; Oreo Shake	                    ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe5.jpg                    ; "1. Take some pineapple and strawberies<br>2. Refrigerate them<br>3. Serve and Enjoy."
+	#					;                       ;RC008            ;                          ;   7  ;  11m      ; 19m       ; Rasmalai                         ; Rasmalai                         ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe6.jpg                    ; "1. Take some raw mango<br>2. Take some mango essence<br>3. Add milk and mango and stir<br>4. Refrigerate"
+						
+						
+	
+	INSERT_UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=en];serves;cookingTime; prepTime  ;   videoURL                      ;   media(code,$productCV)  
+						;                       ;RC001            ;                          ;   6  ;  45m      ; 10m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe1.jpg 								   
+						;                       ;RC002            ;                          ;   12 ;  29m	    ; 30m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe2.jpg 
+						;                       ;RC003            ;                          ;   3  ;  21m      ; 17m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe3.jpg 
+                        ;                       ;RC006            ;                          ;   6  ;  4m       ; 20m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe4.jpg 								   
+						;                       ;RC007            ;                          ;   5  ;  19m	    ; 30m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe5.jpg 
+						;                       ;RC008            ;                          ;   7  ;  11m      ; 19m       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe6.jpg 
+						;                       ;RC009            ;                          ;   1  ;  90m      ; 10m       ;                                 ;  /images/recipe/recipe9.jpg 
+			            ;                       ;RC010            ;                          ;   4  ;  15m      ;  5m       ;                                 ;  /images/recipe/recipe10.jpg
+			
+			
+			
+	#INSERT_UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=en];serves;cookingTime; prepTime ; name[lang=en]        ; description[lang=en]    ;  videoURL                        ;   media(code,$productCV)            ; method[lang=en]
+	#					;                       ;RC004            ;                          ;   9  ;  15       ; 10       ; Butterscotch Cake    ; Butterscotch Cake       ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe7.jpg                                   ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl of a food processed and pulse to combine. Add vinegar and 1/2 cup of cold water and pulse until dough just starts to form. <br>3. Lightly flour a clean work surface. Form dough into a ball, dust with extra flour, then roll out to a 30 x 15cm rectangle. Fold dough into thirds (as you would a letter). Rotate 90 degrees, roll out to a 30 x 15cm rectangle, then fold into thirds. Wrap dough tightly in cling film, then refrigerate for 30 minutes. <br> 4. Preheat oven to 200°c/180°c fan-forced. Remove dough from fridge, then roll out to about 30cm round. Transfer to a baking paper-lined baking tray. Strain strawberry (reserving syrup), then gently toss with cornflour and vanilla. Pile into centre of dough, then roughly pleat edges, pinching to enclose. Brush dough with egg, then coat with almonds.<br>5. Bake for 45 minutes or until pastry is golden. Brush strawberries with reserved syrup. Dust with icing sugar and serve with cream."					
+	#					;                       ;RC005            ;                          ;   3  ;  27       ; 20       ; Chole bhature        ; Chole bhature           ;  "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe8.jpg                                     ; "1. To make the strawberry galette, toss strawberries with sugar, then set aside to macerate.<br>2. Meanwhile, place flour, butter, sugar and pinch of salt in the bowl and enjoy."							   
+								  
+
+	INSERT_UPDATE Recipe;$productCV             ;code[unique=true];ingredientsAsText[lang=en];serves;cookingTime; prepTime ; videoURL                        ;   media(code,$productCV)    ;
+						;                       ;RC004            ;                          ;   9  ;  15       ; 10       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe7.jpg ;					
+						;                       ;RC005            ;                          ;   3  ;  27       ; 20       ; "https://youtu.be/DEu4yvIBJUE"  ;  /images/recipe/recipe8.jpg ;							   
+						  
+
+
+
+     #### Recipe Category Component ######
+	INSERT_UPDATE Media ;$productCV            ;code[unique=true]                     ;realfilename          ;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator] ; mime[default='image/jpg'] ; altText       ; folder(qualifier)[default='images']
+					   ;                       ; /images/recipe/category4.jpg     ; category4.jpg   ; $siteResource/images/recipe/category4.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+					   ;                       ; /images/recipe/category1.jpg     ; category1.jpg   ; $siteResource/images/recipe/category1.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/category2.jpg     ; category2.jpg   ; $siteResource/images/recipe/category2.jpg                                    ; image/jpg                   ; Recipe Loading  ;
+                       ;                       ; /images/recipe/category3.jpg     ; category3.jpg   ; $siteResource/images/recipe/category3.jpg                                    ; image/jpg                   ; Recipe Loading  ; 
+                    	;                      ;/images/recipe/recipe-category1.jpg   ; recipe-category1.jpg ; $siteResource/images/recipe/recipe-category1.jpg                          ;image/jpg                   ; Recipe Loading; 
+	                    ;                      ;/images/recipe/recipe-category2.jpg   ; recipe-category2.jpg ; $siteResource/images/recipe/recipe-category2.jpg                          ;image/jpg                   ; food 1 Loading; 
+	                    ;                      ;/images/recipe/recipe-category3.jpg   ; recipe-category3.jpg ; $siteResource/images/recipe/recipe-category3.jpg                          ;image/jpg                   ; food 2 Loading;
+                     	;                      ;/images/recipe/recipe-category4.jpg   ; recipe-category4.jpg ; $siteResource/images/recipe/recipe-category4.jpg                          ;image/jpg                   ; food 3 Loading;
+
+
+    #INSERT_UPDATE RecipesCategory;$productCV               ;code[unique=true];medias(code,$productCV)       ;name[lang=en]            ; thumbnail(code,$productCV)          ;description[lang=en]                  
+	#                            ;                         ;DC001                   ;/images/recipe/category1.jpg     ;"What's for Dinner live" ; /images/recipe/recipe-category1.jpg ;"Comfort food at its best"        
+    #                             ;                         ;DC002                   ;/images/recipe/category2.jpg     ;"Must-try slow cooking"  ; /images/recipe/recipe-category2.jpg ;"Italian Dishes with Mughalai effect" 
+	#                             ;                         ;DC003                   ;/images/recipe/category3.jpg    ;"Cosy baking ideas"      ; /images/recipe/recipe-category3.jpg ;"For your sweet tooth"                       
+	#                             ;                         ;DC004                   ;/images/recipe/category4.jpg    ;"In a jiffy"     ; /images/recipe/recipe-category4.jpg ;"Easy to Cook, Easy to prepare"           
+    #                             ;                         ;allRecipes              ;/images/recipe/category4.jpg    ;"Explore wide range of recipes with spruce"; /images/recipe/recipe-category4.jpg ;"Delightful, tasty, pleasant and distinct flavor"           
+
+	INSERT_UPDATE RecipesCategory;$productCV               ;code[unique=true];medias(code,$productCV)       	  ;thumbnail(code,$productCV)           ;                  
+	                             ;                         ;DC001                   ;/images/recipe/category1.jpg ; /images/recipe/recipe-category1.jpg ;        
+                                 ;                         ;DC002                   ;/images/recipe/category2.jpg ; /images/recipe/recipe-category2.jpg ; 
+	                             ;                         ;DC003                   ;/images/recipe/category3.jpg ; /images/recipe/recipe-category3.jpg ;                       
+	                             ;                         ;DC004                   ;/images/recipe/category4.jpg ; /images/recipe/recipe-category4.jpg ;           
+                                 ;                         ;allRecipes              ;/images/recipe/category4.jpg ; /images/recipe/recipe-category4.jpg ;           
+
+UPDATE RecipesCategory ; code[unique=true] ; $productCV ; recipes(code, $productCV)
+                       ; DC001             ;            ; RC001,RC002,RC006,RC010,RC007        
+                       ; DC002             ;            ; RC002,RC007,RC008        
+                       ; DC003             ;            ; RC003,RC007,RC009        
+                       ; DC004             ;            ; RC004,RC001,RC002  
+                       ; allRecipes        ;            ; RC001,RC002,RC003,RC004,RC005,RC006,RC007,RC008,RC009 
+                        
+UPDATE Recipe ; code[unique=true] ; $productCV ; group(code, $productCV)
+              ; RC001             ;            ; IG001, IG002           
+              ; RC002             ;            ; IG002, IG003           
+              ; RC003             ;            ; IG004, IG005           
+              ; RC006             ;            ; IG001, IG002           
+              ; RC007             ;            ; IG002, IG003,IG004     
+              ; RC008             ;            ; IG004, IG005,IG001  
+              ; RC010             ;            ; IG006,IG007,IG008      
+
+UPDATE Recipe ; code[unique=true] ; $productCV ; uncategorizedIngredient(code, $productCV)
+              ; RC004             ;            ; IV001, IV002                             
+              ; RC005             ;            ; IV003, IV004  
+              ; RC009             ;            ; IV0011, IV0012                           
+
+      #### Banner components #####
+INSERT_UPDATE Media ; mediaFormat(qualifier) ; $contentCV ; code[unique=true]        ; @media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true] ; mime[default='image/jpg'] ; realfilename             ; folder(qualifier)[default='images'] ; altText                       
+                    ; widescreen             ;            ; bannerImage1ForSectionRA ; $siteResource/images/recipe/recipeBanner1.jpg                                               ;                           ; bannerImage1ForSectionRA ;                                     ; "banner Image 1 For SectionRA"
+                    ; widescreen             ;            ; bannerImage2ForSectionRB ; $siteResource/images/recipe/recipeBanner2.jpg                                               ;                           ; bannerImage2ForSectionRB ;                                     ; "banner Image 2 For SectionRB"
+                    ; widescreen             ;            ; bannerImage3ForSectionRC ; $siteResource/images/recipe/recipeBanner3.jpg                                               ;                           ; bannerImage3ForSectionRC ;                                     ; "banner Image 3 For SectionRC"
+
+                    ; mobile                 ;            ; bannerImage1ForSectionRD ; $siteResource/images/recipe/recipeBanner4.jpg                                               ;                           ; bannerImage1ForSectionRD ;                                     ; "banner Image 1 For SectionRD"
+                    ; mobile                 ;            ; bannerImage2ForSectionRE ; $siteResource/images/recipe/recipeBanner5.jpg                                               ;                           ; bannerImage2ForSectionRE ;                                     ; "banner Image 2 For SectionRE"
+                    ; mobile                 ;            ; bannerImage3ForSectionRF ; $siteResource/images/recipe/recipeBanner6.jpg                                               ;                           ; bannerImage3ForSectionRF ;                                     ; "banner Image 3 For SectionRF"
+
+                    ; tablet                 ;            ; bannerImage1ForSectionRJ ; $siteResource/images/recipe/recipeBanner1.jpg                                               ;                           ; bannerImage1ForSectionRJ ;                                     ; "banner Image 1 For SectionRJ"
+                    ; tablet                 ;            ; bannerImage2ForSectionRK ; $siteResource/images/recipe/recipeBanner2.jpg                                               ;                           ; bannerImage2ForSectionRK ;                                     ; "banner Image 2 For SectionRK"
+                    ; tablet                 ;            ; bannerImage3ForSectionRL ; $siteResource/images/recipe/recipeBanner3.jpg                                               ;                           ; bannerImage3ForSectionRL ;                                     ; "banner Image 3 For SectionRL"
+
+                    ; desktop                ;            ; bannerImage1ForSectionRM ; $siteResource/images/recipe/recipeBanner1.jpg                                               ;                           ; bannerImage1ForSectionRM ;                                     ; "banner Image 1 For SectionRM"
+                    ; desktop                ;            ; bannerImage2ForSectionRN ; $siteResource/images/recipe/recipeBanner2.jpg                                               ;                           ; bannerImage2ForSectionRN ;                                     ; "banner Image 2 For SectionRN"
+                    ; desktop                ;            ; bannerImage3ForSectionRO ; $siteResource/images/recipe/recipeBanner3.jpg                                               ;                           ; bannerImage3ForSectionRO ;                                     ; "banner Image 3 For SectionRO"
+
+
+INSERT_UPDATE MediaContainer ; qualifier[unique=true]      ; $medias                                                                                             ; $contentCV
+                             ; mediaContainer1ForSectionRA ; bannerImage1ForSectionRA,bannerImage1ForSectionRD,bannerImage1ForSectionRJ,bannerImage1ForSectionRM ;           
+                             ; mediaContainer2ForSectionRB ; bannerImage2ForSectionRB,bannerImage2ForSectionRE,bannerImage2ForSectionRK,bannerImage2ForSectionRN ;           
+                             ; mediaContainer3ForSectionRC ; bannerImage3ForSectionRC,bannerImage3ForSectionRF,bannerImage3ForSectionRL,bannerImage3ForSectionRO ;           
+
+
+INSERT_UPDATE ImageOverLayComponent   ; $contentCV ; uid[unique=true]          ; $mediaContainer             ; &componentRef              ; fontSize ;   position    ;  theme    	; btnUrlLink    ;  textAlign     ; btnColor
+                                      ;            ; SimpleBanner1ForSectionRA ; mediaContainer1ForSectionRA ; SimpleBanner1ForSectionRA  ; large        ;   center  ;   tertiary   ; /rc/allRecipes;   center       ; contrast
+                                      ;            ; SimpleBanner2ForSectionRB ; mediaContainer2ForSectionRB ; SimpleBanner2ForSectionRB  ; medium       ;   right   ;   tertiary   ;               ;   left         ; 
+                                      ;            ; SimpleBanner3ForSectionRC ; mediaContainer3ForSectionRC ; SimpleBanner3ForSectionRC  ; medium       ;   left    ;   neutral    ;               ;   left         ; 
+
+
+#UPDATE ImageOverLayComponent ;$contentCV    ;uid[unique=true]            ;heading [lang=en]  ;subheading[lang=en]        ;btnText[lang=en]			                                 
+#						     ;			    ;SimpleBanner1ForSectionRA   ;Inspiration        ;with a variety of recipes  ;View recipes & tips
+#						     ;			    ;SimpleBanner2ForSectionRB   ;Shop for Ingredients ;directly from Recipe  ;
+#						     ;			    ;SimpleBanner3ForSectionRC   ;Renowned chefs        ;right in your kitchen  ;
+
+UPDATE ImageOverLayComponent ;$contentCV    ;uid[unique=true]            ;
+						     ;			    ;SimpleBanner1ForSectionRA   ;
+						     ;			    ;SimpleBanner2ForSectionRB   ;
+						     ;			    ;SimpleBanner3ForSectionRC   ;
+						 						     
+
+    #### Recipes components #####             
+
+    ########  RecipeCategoryComponentcontroller  ########
+INSERT_UPDATE RecipeCategoryComponent ; $contentCV ; uid[unique=true] ; categories(code, $productCV) ; &componentRef
+                                      ;            ; RCC001           ; DC001,DC004,DC003            ; RCC001       
+
+
+	######  RecipeThemeComponent  #######
+#INSERT_UPDATE RecipeThemeComponent ; uid[unique=true] ; headline[lang=en]                                    ; recipes(code,$productCV)                  ; $contentCV ; &componentRef
+#                                   ; TC001            ; Lower the cost of dinner with these footy favourites ; RC007,RC002,RC003,RC004,RC005,RC006 ;            ; TC001        
+
+
+INSERT_UPDATE RecipeThemeComponent ; uid[unique=true] ; recipes(code,$productCV)                  ; $contentCV ; &componentRef
+                                   ; TC001            ; RC007,RC002,RC003,RC004,RC005,RC006 	  ;            ; TC001        
+
+
+
+    ######  RecipeHighlightComponent  ########
+INSERT_UPDATE RecipeHighlightComponent ; uid[unique=true] ; highlightRecipe(code,$productCV) ; recipes(code,$productCV)      ; $contentCV ; &componentRef
+                                       ; HC001            ; RC001                            ; RC008,RC003,RC002,RC010       ;            ; HC001        
+									                              
+
+INSERT_UPDATE RecipeProductComponent;$contentCV; uid[unique=true]; products(code, $productCV); &componentRef
+									;			;RCCC001;		;DC001						; RCCC001
+
+									                              
+	#####  Contents Slots   ######									  
+INSERT_UPDATE ContentSlot ; $contentCV ; uid[unique=true]      ; active ; cmsComponents(&componentRef)
+                          ;            ; SectionRASlot-Recipes ; true   ; SimpleBanner1ForSectionRA   
+                          ;            ; SectionRBSlot-Recipes ; true   ; RCC001                      
+                          ;            ; SectionRCSlot-Recipes ; true   ; SimpleBanner2ForSectionRB   
+                          ;            ; SectionRDSlot-Recipes ; true   ; TC001                       
+                          ;            ; SectionRESlot-Recipes ; true   ; HC001                       
+                          ;            ; SectionRFSlot-Recipes ; true   ; SimpleBanner3ForSectionRC   
+					                     
+
+
+	######  Contents Slots for page #######
+INSERT_UPDATE ContentSlotForPage ; $contentCV ; uid[unique=true] ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='recipes'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;            ; SectionA-Recipes ; SectionRA             ;                                                      ; SectionRASlot-Recipes                   
+                                 ;            ; SectionB-Recipes ; SectionRB             ;                                                      ; SectionRBSlot-Recipes                   
+                                 ;            ; SectionC-Recipes ; SectionRC             ;                                                      ; SectionRCSlot-Recipes                   
+                                 ;            ; SectionD-Recipes ; SectionRD             ;                                                      ; SectionRDSlot-Recipes                   
+                                 ;            ; SectionE-Recipes ; SectionRE             ;                                                      ; SectionRESlot-Recipes                   
+                                 ;            ; SectionF-Recipes ; SectionRF             ;                                                      ; SectionRFSlot-Recipes                   
+
+
+
+
+	######## Attaching content slot for name #######
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='ContentPage1Template'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; SectionRA         ;                                                                       ;                           ; wide               
+                              ; SectionRB         ;                                                                       ;                           ;                    
+                              ; SectionRC         ;                                                                       ;                           ; wide               
+                              ; SectionRD         ;                                                                       ;                           ;                    
+                              ; SectionRE         ;                                                                       ;                           ;                    
+                              ; SectionRF         ;                                                                       ;                           ; wide               
+	                             
+	######## Search Restriction ########
+	                             
+#INSERT_UPDATE SearchRestriction ; code[unique=true]  ; name[lang=en]                         ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+#                                ; recipe_restriction ; Restrict Duplicate Recipes visibility ; customergroup  ; Recipe               ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+							                         
+
+#INSERT_UPDATE SearchRestriction ; code[unique=true]      ; name[lang=en]                            ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+#                                ; ingredient_restriction ; Restrict Duplicate Ingredient visibility ; customergroup  ; Ingredient           ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+#INSERT_UPDATE SearchRestriction ; code[unique=true]            ; name[lang=en]                                  ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+#                                ; ingredientsGroup_restriction ; Restrict Duplicate IngredientsGroup visibility ; customergroup  ; IngredientsGroup     ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+								                        
+#INSERT_UPDATE SearchRestriction ; code[unique=true]                ; name[lang=en]                                      ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+#                                ; recipeThemeComponent_restriction ; Restrict Duplicate RecipeThemeComponent visibility ; customergroup  ; RecipeThemeComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+	                               
+#INSERT_UPDATE SearchRestriction ; code[unique=true]                    ; name[lang=en]                                          ; principal(UID) ; restrictedType(code)     ; active ; generate ; query                                              
+#                                ; recipeHighlightComponent_restriction ; Restrict Duplicate RecipeHighlightComponent visibility ; customergroup  ; RecipeHighlightComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								    													       
+								                        
+#INSERT_UPDATE SearchRestriction ; code[unique=true]                   ; name[lang=en]                                         ; principal(UID) ; restrictedType(code)    ; active ; generate ; query                                              
+#                                ; recipeCategoryComponent_restriction ; Restrict Duplicate RecipeCategoryComponent visibility ; customergroup  ; RecipeCategoryComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								    													    							    
+								                        
+#INSERT_UPDATE SearchRestriction ; code[unique=true]                    ; name[lang=en]                                 ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+#                                ; recipesCategoryComponent_restriction ; Restrict Duplicate RecipesCategory visibility ; customergroup  ; RecipesCategory      ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+
+
+INSERT_UPDATE SearchRestriction ; code[unique=true]  ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+                                ; recipe_restriction ; customergroup  ; Recipe               ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+							                         
+
+INSERT_UPDATE SearchRestriction ; code[unique=true]      ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+                                ; ingredient_restriction ; customergroup  ; Ingredient           ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+INSERT_UPDATE SearchRestriction ; code[unique=true]            ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+                                ; ingredientsGroup_restriction ; customergroup  ; IngredientsGroup     ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+								                        
+INSERT_UPDATE SearchRestriction ; code[unique=true]                ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+                                ; recipeThemeComponent_restriction ; customergroup  ; RecipeThemeComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+	                               
+INSERT_UPDATE SearchRestriction ; code[unique=true]                    ; principal(UID) ; restrictedType(code)     ; active ; generate ; query                                              
+                                ; recipeHighlightComponent_restriction ; customergroup  ; RecipeHighlightComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								    													       
+								                        
+INSERT_UPDATE SearchRestriction ; code[unique=true]                   ; principal(UID) ; restrictedType(code)    ; active ; generate ; query                                              
+                                ; recipeCategoryComponent_restriction ; customergroup  ; RecipeCategoryComponent ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								    													    							    
+								                        
+INSERT_UPDATE SearchRestriction ; code[unique=true]                    ; principal(UID) ; restrictedType(code) ; active ; generate ; query                                              
+                                ; recipesCategoryComponent_restriction ; customergroup  ; RecipesCategory      ; true   ; true     ; {item:catalogVersion} IN (?session.catalogversions)
+								                        
+							                        

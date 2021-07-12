@@ -1,0 +1,29 @@
+INSERT_UPDATE Address;&addrID;streetname;streetnumber;postalcode[unique=true];town[unique=true];country(isocode);region(isocode);phone1;owner(PointOfService.name)[unique=true]
+
+;127;Ocean Street, Sydney South;40;2000;Sydney;AU;;+61 412 345 678;POS1_AUS_SYDW;;
+;128;Standium Avenue, Port Melbourne;200;3000;Melbourne;AU;;+61 412 345 965;POS2_AUS_MLB;;
+;129;Quayside Vista, Harman;320;2600;Canberra;AU;;+61 412 345 088;POS3_AUS_CAN;;
+;130;Moores Drive, City Delivery Centre;13;6000;Perth;AU;;+61 412 345 378;POS4_AUS_PRT;;
+;131;Brown Street, North Sydney Shopping World;697;2060;Sydney;AU;;+61 412 345 007;POS5_AUS_SYDS;;
+;132;Woodlands Avanue, Harris Park;16;2150;Sydney;AU;;+81 9583 8872;Pickup_AUS_SYDW01;;
+;133;東京都渋谷区渋谷2丁目２４－１;390A;150000;Tokyo;JP;;+81 9583 8873;POS1_JP_Tokyo;;
+;134;福岡県福岡市博多区６－６－２;220B;321000;Nikko;JP;;+81 9583 8874;POS2_JP_Nikko;;
+;135;京都府京都市下京区 塩小路下ル東塩小路町９０１;667D;520000;Kyoto;JP;;+81 9583 8875;POS3_JP_Kyoto;;
+;136;大阪府大阪市北区梅田３丁目１−１;448H;530000;Osaka;JP;;+81 9583 8876;POS4_JP_Osaka;;
+;137;東京都港区高輪３丁目２６−２７;788X;105000;Shinagawa;JP;;+81 9583 8877;POS5_JP_Tokyo  02;;
+;138;東京都港区台場２丁目３;12XE;141000;Tokyo;JP;;+81 9583 8878;POS5_JP_Tokyo  03;;
+
+UPDATE PointOfService;name[unique=true];address(&addrID)
+
+;POS1_AUS_SYDW;127;
+;POS2_AUS_MLB;128;
+;POS3_AUS_CAN;129;
+;POS4_AUS_PRT;130;
+;POS5_AUS_SYDS;131;
+;Pickup_AUS_SYDW01;132;
+;POS1_JP_Tokyo;133;
+;POS2_JP_Nikko;134;
+;POS3_JP_Kyoto;135;
+;POS4_JP_Osaka;136;
+;POS5_JP_Tokyo  02;137;
+;POS5_JP_Tokyo  03;138;

@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<alias alias="simpleSuggestionFacade"
+		name="defaultSimpleSuggestionFacade" />
+	<bean id="defaultSimpleSuggestionFacade"
+		class="org.grocery.facades.suggestion.impl.DefaultSimpleSuggestionFacade">
+		<property name="simpleSuggestionService"
+			ref="simpleSuggestionService" />
+		<property name="userService" ref="userService" />
+		<property name="categoryService" ref="categoryService" />
+		<property name="productService" ref="productService" />
+		<property name="productConverter"
+			ref="carouselProductConverter" />
+		<property name="cartService" ref="cartService" />
+	</bean>
+
+	<bean id="carouselProductConverter"
+		parent="defaultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="productPricePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorVariantOptionDataConverter"
+		alias="variantOptionDataConverter" />
+	<bean id="acceleratorVariantOptionDataConverter"
+		parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget"
+			bean="variantOptionData" />
+		<property name="populators">
+			<list>
+				<ref bean="acceleratorVariantOptionDataPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAcceleratorVariantOptionDataPopulator"
+		alias="acceleratorVariantOptionDataPopulator" />
+	<bean id="defaultAcceleratorVariantOptionDataPopulator"
+		class="org.grocery.facades.populators.AcceleratorVariantOptionDataPopulator"
+		parent="variantOptionDataPopulator">
+		<property name="mediaService" ref="mediaService" />
+		<property name="mediaContainerService"
+			ref="mediaContainerService" />
+		<property name="typeService" ref="typeService" />
+		<property name="imageFormatMapping" ref="imageFormatMapping" />
+		<property name="variantAttributeMapping">
+			<map>
+				<entry key="ApparelStyleVariantProduct.style"
+					value="styleSwatch" />
+			</map>
+		</property>
+	</bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="variantOptionDataConverter" />
+        <property name="add"
+            ref="groceryVariantProductPopulator" />
+    </bean>
+    
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="variantOptionDataConverter" />
+        <property name="add"
+             ref="variantDiscountPricePopulator" />
+    </bean>
+    
+	<alias name="groceryVariantProductPopulator"
+		alias="groceryVariantProductPopulator" />
+	<bean id="groceryVariantProductPopulator"
+		class="org.grocery.facades.populators.GroceryVariantProductPopulator">
+	</bean>
+	
+	<alias name="variantDiscountPricePopulator"
+		alias="variantDiscountPricePopulator" />
+	<bean id="variantDiscountPricePopulator"
+		class="org.grocery.facades.populators.VariantProductDiscountPricePopulator"
+		parent="variantOptionDataPopulator">
+		<property name="discountPriceService"
+			ref="discountPriceService" />
+	</bean>
+	
+	<alias name="acceleratorGenderConverter" alias="genderConverter" />
+	<bean id="acceleratorGenderConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="org.grocery.facades.product.data.GenderData" />
+		<property name="populators">
+			<list>
+				<ref bean="genderDataPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultGenderDataPopulator"
+		alias="genderDataPopulator" />
+	<bean id="defaultGenderDataPopulator"
+		class="org.grocery.facades.populators.GenderDataPopulator">
+		<property name="typeService" ref="typeService" />
+	</bean>
+
+	<bean id="apparelProductPopulator"
+		class="org.grocery.facades.populators.ApparelProductPopulator">
+		<property name="genderConverter" ref="genderConverter" />
+	</bean>
+
+	<!-- Add the apparelProductPopulator to the productConverter -->
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter" />
+		<property name="add" ref="apparelProductPopulator" />
+	</bean>
+
+	<!-- accelerator Image Format Mappings -->
+	<alias name="acceleratorImageFormatMapping"
+		alias="imageFormatMapping" />
+	<bean id="acceleratorImageFormatMapping"
+		parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" value="1200Wx1200H" />
+				<entry key="zoom" value="515Wx515H" />
+				<entry key="store" value="365Wx246H" />
+				<entry key="product" value="300Wx300H" />
+				<entry key="thumbnail" value="96Wx96H" />
+				<entry key="cartIcon" value="65Wx65H" />
+				<entry key="styleSwatch" value="30Wx30H" />
+			</map>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductPrimaryImagePopulator"
+		alias="productPrimaryImagePopulator" />
+	<bean id="acceleratorProductPrimaryImagePopulator"
+		parent="defaultProductPrimaryImagePopulator">
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+				<value>cartIcon</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductGalleryImagesPopulator"
+		alias="productGalleryImagesPopulator" />
+	<bean id="acceleratorProductGalleryImagesPopulator"
+		parent="defaultProductGalleryImagesPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>superZoom</value>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customerEmailContext"
+		class="org.grocery.facades.process.email.context.CustomerEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter" />
+	</bean>
+
+	<bean id="forgottenPasswordEmailContext"
+		class="org.grocery.facades.process.email.context.ForgottenPasswordEmailContext"
+		parent="customerEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter" />
+	</bean>
+
+	<bean id="orderNotificationEmailContext"
+		class="org.grocery.facades.process.email.context.OrderNotificationEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="quoteNotificationEmailContext"
+		class="org.grocery.facades.process.email.context.QuoteNotificationEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="quoteService" ref="quoteService" />
+		<property name="quoteConverter" ref="quoteConverter" />
+	</bean>
+
+	<bean id="deliverySentEmailContext"
+		class="org.grocery.facades.process.email.context.DeliverySentEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter"
+			ref="consignmentConverter" />
+	</bean>
+
+	<bean id="readyForPickupEmailContext"
+		class="org.grocery.facades.process.email.context.ReadyForPickupEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter"
+			ref="consignmentConverter" />
+	</bean>
+
+	<bean id="orderCancelledEmailContext"
+		class="org.grocery.facades.process.email.context.OrderCancelledEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="orderRefundEmailContext"
+		class="org.grocery.facades.process.email.context.OrderRefundEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+	<bean id="consignmentCollectionReminderEmailContext"
+		class="org.grocery.facades.process.email.context.ConsignmentCollectionReminderEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter"
+			ref="consignmentConverter" />
+		<property name="formatFactory" ref="formatFactory" />
+		<property
+			name="customerServiceUncollectedConsignmentStrategy"
+			ref="customerServiceUncollectedConsignmentStrategy" />
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="orderPartiallyModifiedEmailContext"
+		class="org.grocery.facades.process.email.context.OrderPartiallyModifiedEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+		<property name="orderEntryConverter"
+			ref="orderEntryConverter" />
+		<property name="priceDataFactory" ref="priceDataFactory" />
+	</bean>
+
+	<bean id="orderPartiallyCanceledEmailContext"
+		class="org.grocery.facades.process.email.context.OrderPartiallyCanceledEmailContext"
+		parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="orderPartiallyRefundedEmailContext"
+		class="org.grocery.facades.process.email.context.OrderPartiallyRefundedEmailContext"
+		parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="notPickedUpConsignmentCanceledEmailContext"
+		class="org.grocery.facades.process.email.context.NotPickedUpConsignmentCanceledEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter"
+			ref="consignmentConverter" />
+		<property name="priceDataFactory" ref="priceDataFactory" />
+	</bean>
+
+	<bean id="abandonedShoppingCartEmailContext"
+		  class="org.grocery.facades.process.email.context.AbandonedShoppingCartEmailContext"
+		  parent="abstractEmailContext" scope="prototype">
+		<property name="cartConverter" ref="cartConverter"/>
+	</bean>
+
+	<alias name="grocerySearchPagePointOfServiceDistancePopulator"
+		alias="searchPagePointOfServiceDistancePopulator" />
+	<bean id="grocerySearchPagePointOfServiceDistancePopulator"
+		class="org.grocery.facades.storefinder.populators.SearchPagePointOfServiceDistancePopulator">
+		<property name="pointOfServiceDistanceConverter"
+			ref="pointOfServiceDistanceConverter" />
+	</bean>
+
+	<bean id="genderData"
+		class="org.grocery.facades.product.data.GenderData" scope="prototype" />
+
+	<alias name="discountPricePopulator"
+		alias="discountPricePopulator" />
+	<bean id="discountPricePopulator"
+		class="org.grocery.facades.populators.ProductDiscountPricePopulator"
+		parent="productPricePopulator">
+		<property name="discountPriceService"
+			ref="discountPriceService" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productPricePopulatorList" />
+		<property name="add" ref="discountPricePopulator" />
+	</bean>
+
+	<alias name="productGroceryPopulator"
+		alias="productGroceryPopulator" />
+	<bean name="productGroceryPopulator" parent="baseProductPopulator"
+		class="org.grocery.facades.populators.ProductGroceryPopulator" />
+
+	<alias name="grocerySearchResultProductConverter"
+		alias="commerceSearchResultProductConverter" />
+	<bean id="grocerySearchResultProductConverter"
+		parent="defaultCommerceSearchResultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="grocerySearchResultProductPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="grocerySearchResultProductPopulator"
+		alias="grocerySearchResultProductPopulator" />
+	<bean id="grocerySearchResultProductPopulator"
+		class="org.grocery.facades.populators.GrocerySearchResultProductPopulator"
+		parent="defaultCommerceSearchResultProductPopulator">
+		<property name="wishlistService" ref="wishlistService" />
+		<property name="productService" ref="productService" />
+		<property name="shipmentFacade" ref="groceryshipmentFacade" />
+		<property name="groceryWarehouseService"
+			ref="groceryWarehouseService" />
+
+	</bean>
+
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productBasicPopulatorList" />
+		<property name="add" ref="productGroceryPopulator" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productBasicPopulatorList" />
+		<property name="add"
+			ref="productCartQuantityGroceryPopulator" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productBasicPopulatorList" />
+		<property name="add" ref="wishlistProductPopulator" />
+	</bean>
+
+	<alias name="groceryshipmentFacade" alias="shipmentFacade" />
+	<bean id="groceryshipmentFacade"
+		class="org.grocery.facades.shipment.impl.ShipmentFacadeImpl">
+		<property name="sessionService" ref="sessionService" />
+		<property name="serviceabilityAreaConverter"
+			ref="serviceabilityAreaConverter" />
+		<property name="groceryWarehouseService"
+			ref="groceryWarehouseService" />
+		<property name="pointOfServiceService"
+			ref="pointOfServiceService" />
+		<property name="productConverter" ref="productConverter" />
+		<property name="shipmentService" ref="shipmentService" />
+		<property name="groceryStoreFinderService"
+			ref="groceryStoreFinderService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="userService" ref="userService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<alias name="groceryStoreFinderStockFacade"
+		alias="groceryStoreFinderStockFacade" />
+	<bean id="groceryStoreFinderStockFacade"
+		class="org.grocery.facades.shipment.impl.GroceryStoreFinderStockFacadeImpl">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="groceryStoreFinderService"
+			ref="groceryStoreFinderService" />
+		<property name="storeFinderService" ref="storeFinderService" />
+		<property name="pointOfServiceConverter"
+			ref="pointOfServiceConverter" />
+		<property name="pointOfServiceDistanceDataConverter"
+			ref="pointOfServiceDistanceDataConverter" />
+	</bean>
+
+	<bean id="serviceabilityAreaConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.serviceability.data.ServiceabilityAreaData" />
+		<property name="populators">
+			<list>
+				<ref bean="serviceabilityAreaPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="serviceabilityAreaPopulator"
+		class="org.grocery.facades.populators.ServiceabilityAreaPopulator">
+		<property name="countryConverter" ref="countryConverter" />
+	</bean>
+
+	<alias name="productServiceabilityGroceryPopulator"
+		alias="productServiceabilityGroceryPopulator" />
+	<bean name="productServiceabilityGroceryPopulator"
+		parent="baseProductPopulator"
+		class="org.grocery.facades.populators.ProductServiceabilityGroceryPopulator">
+		<property name="shipmentFacade" ref="shipmentFacade" />
+		<property name="pointOfServiceService"
+			ref="pointOfServiceService" />
+		<property name="groceryWarehouseService"
+			ref="groceryWarehouseService" />
+		<property name="commerceStockService"
+			ref="commerceStockService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="groceryStoreFinderService"
+			ref="groceryStoreFinderService" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productStockPopulatorList" />
+		<property name="add"
+			ref="productServiceabilityGroceryPopulator" />
+	</bean>
+
+	<alias name="productCartQuantityGroceryPopulator"
+		alias="productCartQuantityGroceryPopulator" />
+	<bean name="productCartQuantityGroceryPopulator"
+		parent="productBasicPopulator"
+		class="org.grocery.facades.populators.ProductCartQuantityGroceryPopulator">
+		<property name="cartService" ref="cartService" />
+	</bean>
+
+	<alias name="wishlistProductPopulator"
+		alias="wishlistProductPopulator" />
+	<bean name="wishlistProductPopulator"
+		parent="baseProductPopulator"
+		class="org.grocery.facades.populators.WishlistProductPopulator">
+		<property name="wishlistService" ref="wishlistService" />
+	</bean>
+
+	<alias name="pointOfServiceIDPopulator"
+		alias="pointOfServiceIDPopulator" />
+	<bean id="pointOfServiceIDPopulator"
+		class="org.grocery.facades.populators.GroceryPointOfServiceIDPopulator">
+	</bean>
+
+	<alias name="pointOfServiceIDConverter"
+		alias="pointOfServiceConverter" />
+	<bean id="pointOfServiceIDConverter"
+		parent="defaultPointOfServiceConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="pointOfServiceIDPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter" />
+		<property name="add"
+			ref="productServiceabilityGroceryPopulator" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter" />
+		<property name="add" ref="productStockPopulator" />
+	</bean>
+
+	<alias alias="customerFacade" name="customerFacade" />
+	<bean id="customerFacade"
+		class="org.grocery.facades.controllers.GroceryCustomerFacade"
+		parent="defaultCustomerFacade">
+	</bean>
+
+	<alias name="groceryCheckoutFacade" alias="checkoutFacade" />
+	<bean id="groceryCheckoutFacade"
+		class="org.grocery.facades.checkout.impl.GroceryCheckoutFacadeImpl"
+		parent="defaultCheckoutFacade">
+		<property name="codPaymentInfoConverter"
+			ref="codPaymentInfoConverter" />
+	</bean>
+
+	<alias name="groceryCheckoutFlowFacade"
+		alias="checkoutFlowFacade" />
+	<bean id="groceryCheckoutFlowFacade"
+		class="org.grocery.facade.flow.impl.GroceryCheckoutFlowFacadeImpl"
+		parent="defaultCheckoutFlowFacade">
+	</bean>
+
+	<alias name="defaultCODPaymentInfoPopulator"
+		alias="codPaymentInfoPopulator" />
+	<bean id="defaultCODPaymentInfoPopulator"
+		class="org.grocery.facades.populators.CODPaymentInfoPopulator">
+		<property name="addressConverter" ref="addressConverter" />
+	</bean>
+
+	<alias name="defaultCODPaymentInfoConverter"
+		alias="codPaymentInfoConverter" />
+	<bean id="defaultCODPaymentInfoConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.payment.info.data.CODPaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="codPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="groceryCreditCardPaymentInfoPopulator"
+		alias="creditCardPaymentInfoPopulator" />
+	<bean id="groceryCreditCardPaymentInfoPopulator"
+		class="org.grocery.facade.payment.populators.GroceryPaymentInfoDataPopulator">
+		<property name="addressConverter" ref="addressConverter" />
+		<property name="cardTypeConverter" ref="cardTypeConverter" />
+	</bean>
+
+	<alias alias="wishListFacade" name="wishListFacade" />
+	<bean id="wishListFacade"
+        class="org.grocery.facades.wishlist.impl.WishListFacadeImpl">
+        <property name="wishlistEntryConverter" ref="wishlistEntryConverter"/>
+		<property name="groceryWishListService" ref="groceryWishListService"/>
+		<property name="wishlistConverter" ref="wishlistConverter"/>
+		<property name="productConverter" ref="productConverter"/>
+        <property name="cartFacade" ref="cartFacade"/>
+        <property name="productService" ref="productService"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="i18nService" ref="i18nService"/>
+	</bean>
+	
+	<alias name="groceryCustomerPopulator" alias="customerPopulator" />
+	<bean id="groceryCustomerPopulator"
+		class="org.grocery.facades.populators.GroceryCustomerPopulator"
+		parent="defaultCustomerPopulator" />
+
+
+	<!-- <bean id="groceryPublishEventFacade" class="org.grocery.facades.publish.event.impl.GroceryPublishEventFacadeImpl"> 
+		<property name="groceryPublishEventService" ref="groceryPublishEventService"/> 
+		</bean> -->
+
+	<bean id="updatePasswordEmailContext"
+		class="org.grocery.facades.process.email.context.UpdatePasswordEmailContext"
+		parent="customerEmailContext" scope="prototype" />
+
+	<bean id="customerRegisterEmailContext"
+				class="org.grocery.facades.process.email.context.CustomerRegisterEmailContext"
+				parent="customerEmailContext" scope="prototype" />
+
+	<bean id="groceryMostPurchasedproductsFacade"
+		class="org.grocery.facades.groceryProductRecommendation.impl.GroceryMostPurchasedProductsFacadeImpl">
+		<property name="groceryMostPurchasedProductsService"
+			ref="groceryMostPurchasedProductsService" />
+		<property name="productConverter" ref="productConverter" />
+		<property name="productConfiguredPopulator"
+			ref="productConfiguredPopulator" />
+	</bean>
+
+	<alias name="groceryDeliverySlotFacadeImpl"
+		alias="deliverySlotFacade" />
+	<bean id="groceryDeliverySlotFacadeImpl"
+		class="org.grocery.facade.deliveryslots.impl.DeliverySlotFacadeImpl">
+		<property name="deliverySlotService"
+			ref="deliverySlotService" />
+		<property name="cartService" ref="cartService" />
+		<property name="modelService" ref="modelService" />
+		<property name="deliverySlotDayConfigConverter"
+			ref="deliverySlotDayConfigConverter" />
+		<property name="deliverySlotTimeConfigConverter"
+			ref="deliverySlotTimeConfigConverter" />
+		<property name="deliverySlotInfoConverter"
+			ref="deliverySlotInfoConverter" />
+		<property name="pointOfServiceService"
+			ref="pointOfServiceService" />
+	</bean>
+
+	<alias name="defaultDeliverySlotDayConfigConverter"
+		alias="deliverySlotDayConfigConverter" />
+	<bean id="defaultDeliverySlotDayConfigConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.deliveryslot.data.DeliverySlotDayConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="deliverySlotDayConfigPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultDeliverySlotDayConfigPopulator"
+		alias="deliverySlotDayConfigPopulator" />
+	<bean id="defaultDeliverySlotDayConfigPopulator"
+		class="org.grocery.facade.deliveryslots.populators.DeliverySlotDayConfigPopulator">
+		<property name="zoneConverter" ref="zoneConverter" />
+	</bean>
+
+	<alias name="defaultDeliverySlotTimeConfigConverter"
+		alias="deliverySlotTimeConfigConverter" />
+	<bean id="defaultDeliverySlotTimeConfigConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.deliveryslot.data.DeliverySlotTimeConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="deliverySlotTimeConfigPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultDeliverySlotTimeConfigPopulator"
+		alias="deliverySlotTimeConfigPopulator" />
+	<bean id="defaultDeliverySlotTimeConfigPopulator"
+		class="org.grocery.facade.deliveryslots.populators.DeliverySlotTimeConfigPopulator">
+		<property name="zoneConverter" ref="zoneConverter" />
+	</bean>
+
+	<alias name="defaultZoneConverter" alias="zoneConverter" />
+	<bean id="defaultZoneConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.deliveryslot.data.ZoneData" />
+		<property name="populators">
+			<list>
+				<ref bean="zonePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultZonePopulator" alias="zonePopulator" />
+	<bean id="defaultZonePopulator"
+		class="org.grocery.facade.deliveryslots.populators.ZonePopulator">
+		<property name="countryConverter" ref="countryConverter" />
+	</bean>
+
+	<alias name="defaultDeliverySlotInfoConverter"
+		alias="deliverySlotInfoConverter" />
+	<bean id="defaultDeliverySlotInfoConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.deliveryslot.info.data.DeliverySlotInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="deliverySlotInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultDeliverySlotInfoPopulator"
+		alias="deliverySlotInfoPopulator" />
+	<bean id="defaultDeliverySlotInfoPopulator"
+		class="org.grocery.facade.deliveryslots.populators.DeliverySlotInfoPopulator">
+	</bean>
+
+	<alias name="groceryStockPopulator" alias="stockPopulator" />
+	<bean id="groceryStockPopulator"
+		class="org.grocery.facades.populators.GroceryStockPopulator">
+		<property name="stockLevelStatusStrategy"
+			ref="stockLevelStatusStrategy" />
+		<property name="shipmentFacade" ref="shipmentFacade" />
+		<property name="groceryWarehouseService"
+			ref="groceryWarehouseService" />
+		<property name="commerceStockService"
+			ref="commerceStockService" />
+		<property name="groceryStoreFinderService"
+			ref="groceryStoreFinderService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+
+	<alias name="groceryCountryConverter" alias="countryConverter" />
+	<bean id="groceryCountryConverter"
+		parent="defaultCountryConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="groceryCountryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="groceryCountryPopulator"
+		alias="groceryCountryPopulator" />
+	<bean id="groceryCountryPopulator"
+		class="org.grocery.facades.populators.GroceryCountryPopulator">
+		<property name="currencyConverter" ref="currencyConverter" />
+		<property name="languageConverter" ref="languageConverter" />
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+
+	<bean id="groceryStoreSessionFacade"
+		class="org.grocery.facade.storesession.impl.DefaultGroceryStoreSessionFacade">
+		<property name="groceryStoreSessionService"
+			ref="groceryStoreSessionService" />
+		<property name="countryConverter" ref="countryConverter" />
+	</bean>
+
+	<!-- <alias name="groceryOrderEntryProductConverter"
+		alias="orderEntryProductConverter" />
+	<bean id="groceryOrderEntryProductConverter"
+		parent="defaultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="productGroceryPopulator" />
+			</list>
+		</property>
+	</bean> -->
+
+    <bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryProductConverter" />
+		<property name="add" ref="productGroceryPopulator" />
+	</bean>
+	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryProductConverter" />
+		<property name="add" ref="productPricePopulator" />
+	</bean>
+	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryProductConverter" />
+		<property name="add" ref="discountPricePopulator" />
+	</bean>
+	
+	<alias name="groceryCustomerConverter" alias="customerConverter" />
+	<bean id="groceryCustomerConverter"
+		parent="defaultCustomerConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="guestCustomerPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="guestCustomerPopulator"
+		alias="guestCustomerPopulator" />
+	<bean id="guestCustomerPopulator"
+		class="org.grocery.facades.populators.GuestCustomerPopulator">
+	</bean>
+
+
+	<alias name="groceryWishlistEntryPopulator"
+		alias="wishlistEntryForSelectiveCartPopulator" />
+	<bean id="groceryWishlistEntryPopulator"
+		class="org.grocery.facades.populators.GroceryWishlistEntryPopulator"
+		parent="defaultWishlistEntryForSelectiveCartPopulator" />
+
+	<alias name="groceryCartPopulator" alias="extendedCartPopulator" />
+	<bean id="groceryCartPopulator"
+		class="org.grocery.facades.populators.GroceryCartPopulator"
+		parent="defaultCartPopulator" />
+
+	<alias name="groceryPaymentModePopulator"
+		alias="paymentModePopulator" />
+	<bean id="groceryPaymentModePopulator"
+		class="org.grocery.facades.populators.GroceryPaymentModePopulator"
+		parent="defaultPaymentModePopulator">
+		<property name="mediaModelConverter"
+			ref="mediaModelConverter" />
+	</bean>
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter" />
+		<property name="add"
+			ref="productCartQuantityGroceryPopulator" />
+	</bean>
+
+	<bean id="recipeConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="org.grocery.facades.recipe.data.RecipeData" />
+		<property name="populators">
+			<list>
+				<ref bean="recipePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="ingredientConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="org.grocery.facades.recipe.data.IngredientData" />
+		<property name="populators">
+			<list>
+				<ref bean="ingredientPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="ingredientsGroupConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="org.grocery.facades.recipe.data.IngredientsGroupData" />
+		<property name="populators">
+			<list>
+				<ref bean="ingredientsGroupPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="recipePopulator"
+		class="org.grocery.facades.populators.RecipePopulator">
+		<property name="recipeConverter" ref="recipeConverter" />
+		<property name="mediaModelConverter"
+			ref="mediaModelConverter" />
+		<property name="ingredientConverter"
+			ref="ingredientConverter" />
+		<property name="ingredientsGroupConverter"
+			ref="ingredientsGroupConverter" />
+		<property name="productFacade" ref="productFacade"/>
+	</bean>
+
+	<bean id="ingredientPopulator"
+		class="org.grocery.facades.populators.IngredientPopulator">
+	</bean>
+
+	<bean id="ingredientsGroupPopulator"
+		class="org.grocery.facades.populators.IngredientsGroupPopulator">
+		<property name="ingredientConverter"
+			ref="ingredientConverter" />
+	</bean>
+
+	<alias name="recipeFacade" alias="recipeFacade" />
+	<bean id="recipeFacade"
+		class="org.grocery.facade.recipe.impl.RecipeFacadeImpl">
+		<property name="recipeConverter" ref="recipeConverter" />
+		<property name="recipeService" ref="recipeService" />
+		<property name="cartFacade" ref="cartFacade" />
+		<property name="recipesCategoryConverter"
+			ref="recipesCategoryConverter" />
+	</bean>
+
+	<bean id="recipesCategoryConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="org.grocery.facades.recipe.data.RecipesCategoryData" />
+		<property name="populators">
+			<list>
+				<ref bean="defaultRecipeCategoryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="defaultRecipeCategoryPopulator"
+		class="org.grocery.facades.populators.RecipeCategoryPopulator">
+		<property name="recipesCategoryConverter"
+			ref="recipesCategoryConverter" />
+		<property name="recipeConverter" ref="recipeConverter" />
+		<property name="imageConverter" ref="defaultImageConverter" />
+		<property name="mediaModelConverter"
+			ref="mediaModelConverter" />
+	</bean>
+
+	<bean id="socialMediaLoginFacade" class="org.grocery.facades.security.impl.DefaultSocialMediaLoginFacade">
+		<property name="modelService" ref="modelService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="customerAccountService" ref="customerAccountService"/>
+	</bean>
+	
+	<bean id="categoryCarouselFacade" class="org.grocery.facade.category.carousel.impl.CategoryCarouselFacadeImpl">
+		<property name="categoryConverter" ref="categoryConverter"/>
+	</bean>
+
+	<alias name="defaultGroceryCheckoutFacade" alias="acceleratorCheckoutFacade"/>
+	<bean id="defaultGroceryCheckoutFacade" class="org.grocery.facade.order.impl.DefaultGroceryCheckoutFacade"
+				parent="defaultAcceleratorCheckoutFacade">
+		<property name="sessionService" ref="sessionService" />
+	</bean>
+	
+	<bean id="productInterestFacade" class="org.grocery.facade.productInterest.GroceryProductInterestFacade" primary="true">
+	    <property name="shipmentFacade" ref="shipmentFacade"/>
+	    <property name="pointOfServiceService" ref="pointOfServiceService"/>
+	    <property name="productInterestService" ref="productInterestService"/>
+    	<property name="productInterestConverter" ref="productInterestConverter"/>
+    	<property name="productInterestReverseConverter" ref="productInterestReverseConverter"/>
+    	<property name="productService" ref="productService"/>
+    	<property name="userService" ref="userService"/>
+    	<property name="baseStoreService" ref="baseStoreService"/>
+    	<property name="baseSiteService" ref="baseSiteService"/>
+    	<property name="productInterestRelationConverter" ref="productInterestRelationConverter"/>
+		<property name="productInterestEntryConverter" ref="productInterestEntryConverter"/>
+		<property name="productInterestsSortStrategies" ref="productInterestsSortStrategies"/>
+	</bean>
+	
+	 <alias name="groceryBreadcrumbPopulator" alias="breadcrumbPopulator"/>
+    <bean id="groceryBreadcrumbPopulator"
+          class="org.grocery.facade.search.populator.GroceryBreadcrumbPopulator" parent="defaultBreadcrumbPopulator">
+          <property name="facetDisplayName" value="#{configurationService.configuration.getProperty('grocery.facet.availability.display.name')}"/>
+    </bean>
+    
+     <bean id="thresholdAuditFacade" class="org.grocery.facades.thresholdcheck.impl.ThresholdAuditFacadeImpl">
+		<property name="thresholdAuditService" ref="thresholdAuditService" />
+	</bean>
+	
+	<alias name="defaultRecipeModelToSiteMapUrlDataPopulator" alias="recipeModelToSiteMapUrlDataPopulator" />
+	<bean id="defaultRecipeModelToSiteMapUrlDataPopulator"
+		class="org.grocery.facade.sitemap.populators.RecipeModelToSiteMapUrlDataPopulator">
+		<property name="urlResolver" ref="recipeModelUrlResolver" />
+	</bean>
+
+	<alias name="defaultRecipeModelToSiteMapUrlDataConverter" alias="recipeModelToSiteMapUrlDataConverter" />
+	<bean id="defaultRecipeModelToSiteMapUrlDataConverter"
+		parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="siteMapUrlData" />
+		<property name="populators">
+			<list>
+				<ref bean="recipeModelToSiteMapUrlDataPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultRecipePageSiteMapGenerator" alias="recipePageSiteMapGenerator" />
+	<bean id="defaultRecipePageSiteMapGenerator"
+		class=" org.grocery.facade.sitemap.generator.impl.RecipePageSiteMapGenerator"
+		parent="abstractSiteMapGenerator">
+		<property name="siteMapUrlDataConverter" ref="recipeModelToSiteMapUrlDataConverter" />	
+		<property name="siteMapPageEnum" value="RECIPE" />
+	</bean>
+
+	<alias name="extendedSiteMapMediaJob" alias="siteMapMediaJob" />
+	<bean id="extendedSiteMapMediaJob"
+		class="de.hybris.platform.acceleratorservices.cronjob.SiteMapMediaJob"
+		parent="abstractJobPerformable">
+		<property name="generators">
+			<list>
+				<ref bean="pointOfServicePageSiteMapGenerator" />
+				<ref bean="productPageSiteMapGenerator" />
+				<ref bean="categoryPageSiteMapGenerator" />
+				<ref bean="homePageSiteMapGenerator" />
+				<ref bean="contentPageModelSiteMapGenerator" />
+				<ref bean="categoryLandingPageSiteMapGenerator" />
+				<ref bean="customPageSiteMapGenerator" />
+				<ref bean="recipePageSiteMapGenerator" />
+			</list>
+		</property>
+		<property name="mediaService" ref="mediaService" />
+		<property name="activateBaseSiteInSession" ref="activateBaseSiteInSessionStrategy" />		
+		<property name="cmsSiteService" ref="cmsSiteService" />
+	</bean>
+
+	<alias name="defaultRecipeModelUrlResolver" alias="recipeModelUrlResolver" />		
+	<bean id="defaultRecipeModelUrlResolver"
+		class="org.grocery.facade.url.impl.DefaultRecipeModelUrlResolver">
+		<property name="threadContextService" ref="threadContextService" />	
+		<property name="pattern" value="/r/{recipe_code}" />
+	</bean>
+	
+	<alias name="orderDeliverySlotInfoPopulator" alias="orderDeliverySlotInfoPopulator" />		
+	<bean id="orderDeliverySlotInfoPopulator"
+		class="org.grocery.facades.populators.OrderDeliverySlotInfoPopulator">
+		<property name="deliverySlotInfoConverter"
+			ref="deliverySlotInfoConverter" />
+	</bean>
+	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="defaultOrderConverter" />
+		<property name="add"
+			ref="orderDeliverySlotInfoPopulator" />
+	</bean>
+</beans>

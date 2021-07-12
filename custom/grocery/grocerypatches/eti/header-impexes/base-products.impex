@@ -1,0 +1,8 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store name% Product Catalog
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+$approved=approvalstatus(code)[default='approved']
+
+
+UPDATE Product;code[unique=true];variantType(code)[default=GroceryVariantProduct];$catalogVersion

@@ -1,0 +1,3 @@
+$baseStores=spruce
+
+UPDATE PickUpDeliveryMode;code[unique=true];warehouses(code)[mode=append];stores(uid)[default=$baseStores]

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+    <extension abstractclassprefix="Generated" classprefix="Grocerypatches" jaloLogicFree="true" managername="GrocerypatchesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="grocerypatches" usemaven="false">
+
+        <requires-extension name="patches"/>
+        <requires-extension name="commerceservices"/>
+
+        <coremodule generated="true" manager="org.grocery.patches.jalo.GrocerypatchesManager" packageroot="org.grocery.patches"/>
+
+    </extension>
+
+</extensioninfo>

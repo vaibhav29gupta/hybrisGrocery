@@ -1,0 +1,43 @@
+$contentCatalog = spruceContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent = CMSImageComponent, BannerComponent, SimpleBannerComponent, CMSLinkComponent, CMSParagraphComponent
+$picture = media(code, $contentCV)
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang=$lang];
+$siteResource = jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$lang = en
+#Site
+$site = spruce
+
+#AbandonedShoppingCart
+INSERT_UPDATE Media ; mediaFormat(qualifier) ; $contentCV[unique = true] ; code[unique = true]                               ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator] ; mime[default = 'image/png'] ; realfilename                                      ; folder(qualifier)[default = 'images'] ; altText
+                    ; widescreen             ;                           ; AbandonedShoppingCartLargeBannerImageEmailContent ; $siteResource/images/banners/homepage/homepage/CovidBanner.png               ;                             ; AbandonedShoppingCartLargeBannerImageEmailContent ;                                       ; "Email Banner" ;
+
+INSERT_UPDATE SimpleBannerComponent ; $contentCV[unique = true] ; uid[unique = true]                           ; name                           ; &componentRef                                ; urlLink
+                                    ;                           ; AbandonedShoppingEmailBannerContentComponent ; Email Banner Content Component ; AbandonedShoppingEmailBannerContentComponent ; "/"
+
+UPDATE SimpleBannerComponent ; $contentCV[unique = true] ; uid[unique = true]                           ; $picture[lang = $lang]                            ; &componentRef ;
+                             ;                           ; AbandonedShoppingEmailBannerContentComponent ; AbandonedShoppingCartLargeBannerImageEmailContent ; AbandonedShoppingEmailBannerContentComponent
+
+INSERT_UPDATE ContentSlot ; $contentCV[unique = true] ; uid[unique = true]                ; cmsComponents(&componentRef)
+                          ;                           ; AbandonedShoppingCartEmailTopSlot ; AbandonedShoppingEmailBannerContentComponent
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique = true] ; uid[unique = true]                    ; position[unique = true] ; pageTemplate(uid, $contentCV)[unique = true][default = 'AbandonedShoppingCartEmailTemplate'] ; contentSlot(uid, $contentCV)[unique = true]
+                                     ;                           ; TopContent-AbandonedShoppingCartEmail ; TopContent              ;                                                                                              ; AbandonedShoppingCartEmailTopSlot
+
+
+#CustomerRegistration
+INSERT_UPDATE Media ; mediaFormat(qualifier) ; $contentCV[unique = true] ; code[unique = true]                              ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator] ; mime[default = 'image/png'] ; realfilename                                     ; folder(qualifier)[default = 'images'] ; altText
+                    ; widescreen             ;                           ; CustomerRegistrationLargeBannerImageEmailContent ; $siteResource/images/banners/homepage/homepage/CovidBanner.png               ;                             ; CustomerRegistrationLargeBannerImageEmailContent ;                                       ; "Email Banner" ;
+
+INSERT_UPDATE SimpleBannerComponent ; $contentCV[unique = true] ; uid[unique = true]                              ; name                           ; &componentRef                                   ; urlLink
+                                    ;                           ; CustomerRegistrationEmailBannerContentComponent ; Email Banner Content Component ; CustomerRegistrationEmailBannerContentComponent ; "/"
+
+UPDATE SimpleBannerComponent ; $contentCV[unique = true] ; uid[unique = true]                              ; $picture[lang = $lang]                           ; &componentRef ;
+                             ;                           ; CustomerRegistrationEmailBannerContentComponent ; CustomerRegistrationLargeBannerImageEmailContent ; CustomerRegistrationEmailBannerContentComponent
+
+INSERT_UPDATE ContentSlot ; $contentCV[unique = true] ; uid[unique = true]               ; cmsComponents(&componentRef)
+                          ;                           ; CustomerRegistrationEmailTopSlot ; CustomerRegistrationEmailBannerContentComponent
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique = true] ; uid[unique = true]                   ; position[unique = true] ; pageTemplate(uid, $contentCV)[unique = true][default = 'CustomerRegistrationEmailTemplate'] ; contentSlot(uid, $contentCV)[unique = true]
+                                     ;                           ; TopContent-CustomerRegistrationEmail ; TopContent              ;                                                                                              ; CustomerRegistrationEmailTopSlot

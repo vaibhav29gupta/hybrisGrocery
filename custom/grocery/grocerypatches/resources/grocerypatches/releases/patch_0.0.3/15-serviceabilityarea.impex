@@ -1,0 +1,13 @@
+INSERT_UPDATE ServiceabilityArea;code;startPostalCode[unique=true];endPostalCode[unique=true];region(isocode);warehouse(code)
+
+
+;1;2000;2025;NSW;WH3_AN01;
+;2;2600;2625;ACT;WH2_AW01;
+;3;3000;3025;VIC;WH1_AE01;
+;4;800;825;NT;WH3_AN01;
+;5;150000;1500999;Tokyo;WH1_JP01;
+;6;321000;321999;Tochigi;WH2_JP02;
+;7;530000;530999;Osaka-fu;WH2_JP02;
+;8;520000;520000;Kyoto-fu;WH2_JP02;
+;9;105000;105999;Tokyo;WH1_JP01;
+;10;140000;141999;Tokyo;WH1_JP01;

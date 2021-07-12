@@ -1,0 +1,276 @@
+.login-register-box {
+    display: flex;
+    margin: 5rem auto;
+    width: 50%;
+    background: @brand-tertiary-c;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @media @large {
+        width: 60%;
+    }
+
+    @media @medium {
+        width: 75%;
+    }
+
+    @media @small {
+        width: 90%;
+        margin: 2.5rem auto;
+    }
+
+    @media @xsmall {
+        width: 95%;
+        margin: 1rem auto;
+    }
+
+    .login-register-tiles {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 2rem;
+
+        @media @xsmall {
+            padding: 1rem 0;
+        }
+
+        .btn-toggler {
+            font-size: 2.5rem;
+            padding: 1rem 5rem;
+
+            @media @small {
+                font-size: 2rem;
+                padding: 1rem 3rem;
+            }
+
+            @media @xsmall {
+                font-size: 2rem;
+                padding: 1rem 2rem;
+            }
+
+            & > i {
+                position: relative;
+                font-size: 2rem;
+                margin-right: 1rem;
+
+                @media @xsmall {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+
+    .loginLeftContentSlot {
+        width: 100%;
+
+        .login-left-content-slot {
+            width: 100%;
+            margin: 0;
+
+            .login-left-content-component {
+                width: 100%;
+
+                .login-section,
+                .guest-login-section {
+                    width: 100%;
+                    margin: 2rem auto;
+
+                    #loginForm {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+
+                        .form-group {
+                            width: 50%;
+
+                            @media @small {
+                                width: 65%;
+                            }
+
+                            @media @xsmall {
+                                width: 95%;
+                            }
+
+                            .form-control {
+                                height: 45px;
+                            }
+                        }
+
+                        .login-actions {
+                            display: flex;
+                            flex-direction: column;
+                            width: 50%;
+
+                            @media @small {
+                                width: 65%;
+                            }
+
+                            @media @xsmall {
+                                width: 95%;
+                            }
+
+                            .login-checkout-btn{
+                                width: 100%;
+                            }
+
+                            .expressCheckoutButton {
+                                width: 100%;
+                            }
+
+                            .forgotten-password {
+                                margin: 0;
+                                font-weight: 600;
+                                text-align: left;
+                                margin: 5px 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .loginRightContentSlot {
+        width: 100%;
+
+        .login-right-content-slot {
+            width: 100%;
+            margin: 0;
+
+            .login-right-content-component {
+                width: 100%;
+
+                .register__section {
+                    width: 75%;
+                    margin: 0rem auto 2rem;
+
+                    @media @xsmall {
+                        width: 95%;
+                    }
+
+                    #registerForm {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 1rem;
+
+                        .form-group {
+                            width: 100%;
+                        }
+                    }
+
+                    #guestForm{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 1rem;
+
+                        .form-group {
+                            width: 100%;
+                        }
+                    }
+                }
+                .guest__section {
+                    width: 50%;
+                    margin: 0rem auto 2rem;
+
+                    @media @xsmall {
+                        width: 95%;
+                    }
+
+                    #guestForm{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 1rem;
+
+                        .form-group {
+                            width: 100%;
+                        }
+
+                        .new-user-actions{
+                            width: 100%;
+
+                            .guestCheckoutBtn{
+                                width: 100%;
+                            }
+
+                            .registeration-page{
+                                margin-top: 25px;
+                                border-top: 1px solid #f5f2f2;
+                                width: 100%;
+                                padding: 10px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.forgotten-password {
+    //margin: 2rem;
+    //margin-top: 60px;
+
+    .description {
+        color: @text-color-dark;
+        font-weight: 400;
+    }
+}
+
+.js-recaptcha-captchaaddon {
+    margin: 0;
+}
+
+.consent {
+    hr {
+        display: none;
+    }
+    .note {
+        display: block;
+        font-size: 1rem;
+    }
+    .help-block {
+        font-size: 1rem;
+        margin: 0;
+    }
+}
+
+.checkout-login {
+    .shownone {
+        display: block;
+    }
+
+    .login-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+
+        @media @small-and-xsmall {
+            width: 100%;
+        }
+
+        .forgotten-password {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            width: 180px;
+        }
+    }
+
+    .guestCheckoutBtn {
+        width: 180px;
+    }
+}

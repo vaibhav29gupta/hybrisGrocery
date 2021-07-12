@@ -1,0 +1,1127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list" />
+		<collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true"
+			type="set" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
+			<value code="BLACK" />
+			<value code="BLUE" />
+			<value code="BROWN" />
+			<value code="GREEN" />
+			<value code="GREY" />
+			<value code="ORANGE" />
+			<value code="PINK" />
+			<value code="PURPLE" />
+			<value code="RED" />
+			<value code="SILVER" />
+			<value code="WHITE" />
+			<value code="YELLOW" />
+		</enumtype>
+		<enumtype generate="true" code="DietSuitability" autocreate="true" dynamic="false">
+			<value code="Veg" />
+			<value code="NonVeg" />
+			<value code="Egg" />
+		</enumtype>
+
+		<enumtype generate="true" code="PaymentTypeEnum" autocreate="true" dynamic="false">
+			<value code="PaymentGateway" />
+			<value code="COD" />
+		</enumtype>
+
+		<enumtype generate="true" code="ShipmentTypeEnum" autocreate="true" dynamic="true">
+			<value code="DELIVERY" />
+			<value code="PICKUP" />
+		</enumtype>
+		
+		<enumtype generate="true" code="DependentFeature" autocreate="true" dynamic="true">
+			<value code="EMAIL" />
+			<value code="SMS" />
+			<value code="STORE_LOCATOR" />
+		</enumtype>
+		
+		<enumtype generate="false" code="SiteMapPageEnum" autocreate="false" dynamic="true">		
+			<value code="Recipe" />
+		</enumtype>	
+
+	</enumtypes>
+
+	<relations>
+		<relation code="IngredientGroup2IngredientRelation" generate="true" autocreate="true" localized="false">
+			<description>This relation links IngredientGroup with one or more Ingredients.</description>
+			<sourceElement qualifier="ingredientGroup" type="IngredientsGroup" cardinality="one" />
+			<targetElement qualifier="ingredients" type="Ingredient" cardinality="many" collectiontype="list" />
+		</relation>
+		<relation code="RecipesCategory2RecipesRelation" autocreate="true" generate="true" localized="false">
+			<deployment table="RC2RRel" typecode="26005"/>
+    		<sourceElement qualifier="category" type="RecipesCategory" cardinality="many" ordered="false">
+    		    <description>Recipes Category</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</sourceElement>
+    		<targetElement qualifier="recipes" type="Recipe" cardinality="many" collectiontype="list" ordered="true">
+    		    <description>Recipe</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</targetElement>
+    	</relation>
+		<relation code="Recipe2IngredientGroupsRelation" autocreate="true" generate="true" localized="false">
+			<deployment table="Recipe2InGrRel" typecode="26006"/>
+    		<sourceElement qualifier="recipes" type="Recipe" cardinality="many" ordered="false">
+    		    <description>Recipe</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</sourceElement>
+    		<targetElement qualifier="group" type="IngredientsGroup" cardinality="many" collectiontype="list" ordered="true">
+    		    <description>Ingredients Group</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</targetElement>
+    	</relation>
+    	<relation code="Recipe2IngredientsRelation" autocreate="true" generate="true" localized="false">
+			<deployment table="Recipe2InRel" typecode="26007"/>
+    		<sourceElement qualifier="recipes" type="Recipe" cardinality="many" ordered="false">
+    		    <description>Recipe</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</sourceElement>
+    		<targetElement qualifier="uncategorizedIngredient" type="Ingredient" cardinality="many" collectiontype="list" ordered="true">
+    		    <description>Ingredients Group</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</targetElement>
+    	</relation>
+		<relation code="RecipeCategoryComponent2CategoryRelation" generate="true" autocreate="true" localized="false">
+			<description>This relation links Recipe Category Component with one or more Recipe Categories.</description>
+			<sourceElement qualifier="recipeCategoryComponent" type="RecipeCategoryComponent" cardinality="one" />
+			<targetElement qualifier="categories" type="RecipesCategory" cardinality="many" collectiontype="list" />
+		</relation>
+		<relation code="RecipeHighlightComponent2RecipeRelation" generate="true" autocreate="true" localized="false">
+			<description>This relation links Recipe Highlight Component with one or more Recipe .</description>
+			<sourceElement qualifier="recipeHighlightComponent" type="RecipeHighlightComponent" cardinality="one" />
+			<targetElement qualifier="recipes" type="Recipe" cardinality="many" collectiontype="list" />
+		</relation>
+		<relation code="RecipeThemeComponent2RecipeRelation" generate="true" autocreate="true" localized="false">
+			<description>This relation links Recipe Theme Component with one or more Recipe .</description>
+			<sourceElement qualifier="recipeThemeComponent" type="RecipeThemeComponent" cardinality="one" />
+			<targetElement qualifier="recipes" type="Recipe" cardinality="many" collectiontype="list" />
+		</relation>
+		<relation code="FooterNavigationComponent2RightImageRelation" generate="true" autocreate="true"
+			localized="false">
+			<description>This relation links Recipe Theme Component with one or more Recipe .</description>
+			<sourceElement qualifier="subFooterRight" type="FooterNavigationComponent" cardinality="one" />
+			<targetElement qualifier="bottomRightMedia" type="Media" cardinality="many" collectiontype="set" />
+		</relation>
+		<relation code="FooterNavigationComponent2LeftImageRelation" generate="true" autocreate="true"
+			localized="false">
+			<description>This relation links Recipe Theme Component with one or more Recipe .</description>
+			<sourceElement qualifier="subFooterLeft" type="FooterNavigationComponent" cardinality="one" />
+			<targetElement qualifier="bottomLeftMedia" type="SimpleBannerComponent" cardinality="many"
+				collectiontype="set" />
+		</relation>
+		<relation code="CategoryNavigationComponentIcon" generate="true" autocreate="true" localized="false">
+			<description>This relation links between CMSLinkComponent and media .</description>
+			<sourceElement qualifier="linkIcon" type="CMSLinkComponent" cardinality="one" />
+			<targetElement qualifier="linkMedia" type="Media" cardinality="many" collectiontype="set" />
+		</relation>
+		<relation code="StoreDeliverySlotDay" generate="true" autocreate="true" localized="false">
+			<description>This relation links between DeliverySlotDayConfig and PointOfService</description>
+			<deployment table="Store2DeliveryDaySlot" typecode="25002" />
+			<sourceElement qualifier="pointOfServices" type="PointOfService" cardinality="many" />
+			<targetElement qualifier="deliveryDaySlots" type="DeliverySlotDayConfig" cardinality="many"
+				collectiontype="list" />
+		</relation>
+		<relation code="StoreDeliverySlotTime" generate="true" autocreate="true" localized="false">
+			<description>This relation links between DeliverySlotTimeConfig and PointOfService</description>
+			<deployment table="Store2DeliveryTimeSlot" typecode="25003" />
+			<sourceElement qualifier="pointOfServices" type="PointOfService" cardinality="many" />
+			<targetElement qualifier="deliveryTimeSlots" type="DeliverySlotTimeConfig" cardinality="many"
+				collectiontype="list" />
+		</relation>
+		<relation code="MonthlyAuditForThreshold" generate="true" autocreate="true" localized="false">
+			<description>This relation links between featureThreshold and thresholdAudit</description>
+			<sourceElement qualifier="featureThreshold" type="FeatureThreshold" cardinality="one" />
+			<targetElement qualifier="thresholdAudit" type="ThresholdAudit" cardinality="many" collectiontype="list" />
+		</relation>
+	</relations>
+
+	<itemtypes>
+
+		<!-- Add your item definitions here -->
+		<typegroup name="Grocery">
+			<itemtype code="Product" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="brand" type="java.lang.String">
+						<description>Brand Name for the Product</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="expiry" type="java.lang.String">
+						<description>Expiry for the Product</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dietSuitability" type="DietSuitability">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="weight" type="java.lang.String">
+						<description>Weight of the product</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ingredients" type="localized:java.lang.String">
+						<persistence type="property">
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<custom-properties>
+							<property name="hmcIndexField">
+								<value>"thefield"</value>
+							</property>
+						</custom-properties>
+					</attribute>
+					<attribute qualifier="usageGuidelines" type="localized:java.lang.String">
+						<persistence type="property">
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<custom-properties>
+							<property name="hmcIndexField">
+								<value>"thefield"</value>
+							</property>
+						</custom-properties>
+					</attribute>
+					<attribute qualifier="availableForDelivery" type="boolean">
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="availableForPickUp" type="boolean">
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Cart" autocreate="false" generate="false">
+				<description>Extending Cart type with additional attributes for cart abandoned email notification functionality</description>
+				<attributes>
+					<attribute autocreate="true" qualifier="abandonedShoppingCartEmailSent" type="java.lang.Boolean">
+						<description>set the status of the email sent</description>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ServiceabilityArea" autocreate="true" generate="true">
+				<deployment table="ServiceabilityArea" typecode="25005" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="startPostalCode" type="java.lang.Long">
+						<description>Beginning postal code for serviceability area</description>
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="endPostalCode" type="java.lang.Long">
+						<description>End postal code for serviceability area</description>
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="region" type="Region">
+						<description>region of the area</description>
+						<modifiers unique="false" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="warehouse" type="Warehouse">
+						<description>warehouse of the postal code</description>
+						<modifiers unique="false" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Warehouse" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="defaultPOS" type="PointOfService">
+						<description>Default Point of service</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PointOfService" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="isExternal" type="boolean">
+						<modifiers />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Category" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="isRootCategory" type="boolean">
+						<modifiers />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RecipesCategory" generate="true" extends="Category" autocreate="true">
+				<description>It represents recipes category.</description>
+			</itemtype>
+			<itemtype code="Recipe" autocreate="true" generate="true">
+				<deployment table="Recipe" typecode="26002" />
+				<custom-properties>
+					<property name="catalogItemType">
+						<value>java.lang.Boolean.TRUE</value>
+					</property>
+					<property name="catalogVersionAttributeQualifier">
+						<value>"catalogVersion"</value>
+					</property>
+					<property name="uniqueKeyAttributeQualifier">
+						<value>"code"</value>
+					</property>
+					<property name="catalog.sync.default.root.type">
+						<value>Boolean.TRUE</value>
+					</property>
+					<property name="catalog.sync.default.root.type.order">
+						<value>Integer.valueOf(47)</value>
+					</property>
+				</custom-properties>
+				<attributes>
+					<attribute qualifier="method" type="localized:java.lang.String">
+						<persistence type="property" />
+						<modifiers dontOptimize="true" />
+					</attribute>
+					<attribute qualifier="ingredientsAsText" type="localized:java.lang.String">
+						<persistence type="property" />
+						<modifiers dontOptimize="true" />
+					</attribute>
+					<attribute qualifier="serves" type="java.lang.String">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cookingTime" type="java.lang.String">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="prepTime" type="java.lang.String">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property" />
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute type="localized:Media" qualifier="media">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="code">
+						<persistence type="property" />
+						<modifiers optional="false" unique="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="videoURL">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="catalogVersion" type="CatalogVersion">
+						<modifiers read="true" write="true" search="true" optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="versionIdx" unique="false">
+						<key attribute="catalogVersion" />
+					</index>
+					<index name="codeIdx" unique="true">
+						<key attribute="catalogVersion" />
+						<key attribute="code" />
+					</index>
+				</indexes>
+			</itemtype>
+			<itemtype code="IngredientsGroup" autocreate="true" generate="true">
+				<description>Group of Ingredients</description>
+				<deployment table="IngredientsGroup" typecode="26001" />
+				<custom-properties>
+					<property name="catalogItemType">
+						<value>java.lang.Boolean.TRUE</value>
+					</property>
+					<property name="catalogVersionAttributeQualifier">
+						<value>"catalogVersion"</value>
+					</property>
+					<property name="uniqueKeyAttributeQualifier">
+						<value>"code"</value>
+					</property>
+					<property name="catalog.sync.default.root.type">
+						<value>Boolean.TRUE</value>
+					</property>
+					<property name="catalog.sync.default.root.type.order">
+						<value>Integer.valueOf(48)</value>
+					</property>
+				</custom-properties>
+				<attributes>
+					<attribute qualifier="groupName" type="localized:java.lang.String">
+						<description>Name of Ingredients Group</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="code">
+						<persistence type="property" />
+						<modifiers optional="false" unique="true" />
+					</attribute>
+					<attribute qualifier="catalogVersion" type="CatalogVersion">
+						<modifiers read="true" write="true" search="true" optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="versionIdx" unique="false">
+						<key attribute="catalogVersion" />
+					</index>
+					<index name="codeIdx" unique="true">
+						<key attribute="catalogVersion" />
+						<key attribute="code" />
+					</index>
+				</indexes>
+			</itemtype>
+			<itemtype code="Ingredient" autocreate="true" generate="true" jaloclass="org.grocery.core.jalo.Ingredient">
+				<description>Ingredient</description>
+				<deployment table="Ingredient" typecode="26000" />
+				<custom-properties>
+					<property name="catalogItemType">
+						<value>java.lang.Boolean.TRUE</value>
+					</property>
+					<property name="catalogVersionAttributeQualifier">
+						<value>"catalogVersion"</value>
+					</property>
+					<property name="uniqueKeyAttributeQualifier">
+						<value>"code"</value>
+					</property>
+					<property name="catalog.sync.default.root.type">
+						<value>Boolean.TRUE</value>
+					</property>
+					<property name="catalog.sync.default.root.type.order">
+						<value>Integer.valueOf(49)</value>
+					</property>
+				</custom-properties>
+				<attributes>
+					<attribute qualifier="quantity" type="localized:java.lang.String">
+						<description>Quantity</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<description>Ingredient Name</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="specialInstruction" type="localized:java.lang.String">
+						<description>Special Instruction</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cutStyle" type="localized:java.lang.String">
+						<description>Cut Style</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="product" type="Product">
+						<description>Product sellable on Website</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="isEssential" type="java.lang.Boolean">
+					    <description>Flag indicating whether product is essential</description>
+					    <defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="code">
+						<persistence type="property" />
+						<modifiers optional="false" unique="true" />
+					</attribute>
+					<attribute qualifier="catalogVersion" type="CatalogVersion">
+						<modifiers read="true" write="true" search="true" optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="versionIdx" unique="false">
+						<key attribute="catalogVersion" />
+					</index>
+					<index name="codeIdx" unique="true">
+						<key attribute="catalogVersion" />
+						<key attribute="code" />
+					</index>
+				</indexes>
+			</itemtype>
+			<itemtype code="Country" extends="C2LItem" jaloclass="de.hybris.platform.jalo.c2l.Country"
+				autocreate="false" generate="true">
+				<attributes>
+					<!-- replaced by Country2RegionRelation relation <attribute autocreate="true" qualifier="regions" type="RegionCollection">
+						<modifiers read="true" write="true" search="false" optional="true" partof="true"/> <persistence type="jalo"/> </attribute> -->
+
+					<attribute autocreate="true" qualifier="currency" type="Currency">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" optional="true" />
+					</attribute>
+
+					<attribute autocreate="true" qualifier="language" type="Language">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="latitude">
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="longitude">
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!-- Old Purchases Component -->
+			<itemtype code="MostPurchasedProductsComponent" extends="ProductReferencesComponent" generate="true"
+				autocreate="true">
+				<description>It represents options for Most Purchased Products method.</description>
+			</itemtype>
+
+			<itemtype code="Customer" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="preferredShipmentMode" type="ShipmentTypeEnum">
+						<description>Preferred mode of shipment for customer</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="preferredPostalCode" type="java.lang.String">
+						<description>Preferred postal code</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="preferredPos" type="java.lang.String">
+						<description>Preferred point of sale</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currentShipmentMode" type="ShipmentTypeEnum">
+						<description>current mode of shipment for customer for placing order</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currentPostalCode" type="java.lang.String">
+						<description>current postal code for placing order</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currentPos" type="java.lang.String">
+						<description>current point of sale for placing order</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="socialMediaRegistered" type="java.lang.Boolean">
+						<description>Flag indicating whether the customer has been registered by Social Media (Facebook
+							/ Google) Sign In.
+						</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CODPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
+			</itemtype>
+
+			<itemtype code="PaymentMode" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="type" type="PaymentTypeEnum" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="paymentModeImage" type="Media" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ProductInterest" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="pointOfService" type="PointOfService" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="FeatureThreshold" autocreate="true" generate="true" 
+				jaloclass="org.grocery.core.jalo.FeatureThreshold">
+				<description>Threshold feature</description>
+				<deployment table="FeatureThreshold" typecode="11009" />
+				<attributes>
+					<attribute qualifier="feature" type="DependentFeature">
+						<description>Threshold feature-email, SMS or Store_locator</description>
+						<persistence type="property" />
+						<modifiers unique="true" optional="false" />
+					</attribute>
+					<attribute qualifier="monthlyThreshold" type="java.lang.Long">
+						<description>monthly Threshold value</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+						<defaultvalue>Long.valueOf(0)</defaultvalue>
+					</attribute>
+					<attribute qualifier="enableFeature" type="boolean">
+						<description>monthly Threshold value</description>
+						<persistence type="property" />
+						<modifiers optional="true"  write="true" search="true"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ThresholdAudit" autocreate="true" generate="true" 
+				jaloclass="org.grocery.core.jalo.ThresholdAudit">
+				<description>Threshold Audit</description>
+				<deployment table="ThresholdAudit" typecode="11010" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="month" type="java.lang.String">
+						<description>month for threshold</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="counter" type="java.lang.Long">
+						<description>number of API requests made</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+						<defaultvalue>Long.valueOf(0)</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbandonedShoppingCartCronJob" autocreate="true" generate="true" extends="CronJob"
+					  jaloclass="de.hybris.platform.cronjob.jalo.AbandonedShoppingCartCronJob">
+				<attributes>
+					<attribute type="BaseSiteCollection" qualifier="sites">
+						<modifiers/>
+						<persistence type="property"/>
+						<description>BaseSites for which old carts should be removed</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="GroceryCMS">
+			<itemtype code="ShipmentMethodComponent" generate="true" extends="SimpleCMSComponent" autocreate="true"
+				jaloclass="org.grocery.core.jalo.ShipmentMethodComponent">
+				<description>It represents options for selecting shipment method.</description>
+				<attributes>
+					<attribute qualifier="title" type="localized:java.lang.String" generate="true" autocreate="true">
+						<description>It is localized title of the component.</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="emptyCartImage" type="Media" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RecipeCategoryComponent" generate="true" extends="SimpleCMSComponent" autocreate="true"
+				jaloclass="org.grocery.core.jalo.RecipeCategoryComponent">
+				<description>It represents options for selecting shipment method.</description>
+				<attributes>
+					<attribute qualifier="viewAllLink" type="localized:java.lang.String" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RecipeHighlightComponent" generate="true" extends="SimpleCMSComponent" autocreate="true"
+				jaloclass="org.grocery.core.jalo.RecipeHighlightComponent">
+				<description>It represents options for selecting shipment method.</description>
+				<attributes>
+					<attribute qualifier="highlightRecipe" type="Recipe" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RecipeThemeComponent" generate="true" extends="SimpleCMSComponent" autocreate="true"
+				jaloclass="org.grocery.core.jalo.RecipeThemeComponent">
+				<description>It represents options for selecting shipment method.</description>
+				<attributes>
+					<attribute qualifier="headline" type="localized:java.lang.String" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="linkName" type="localized:java.lang.String" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+					<attribute qualifier="linkURL" type="java.lang.String" generate="true" autocreate="true">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RecipeProductComponent" autocreate="true" generate="true" jaloclass="org.grocery.core.jalo.RecipeProductComponent">
+			<description>This is for testing purpose.</description>
+			<attributes>
+			<attribute qualifier="productName" type="localized:java.lang.String" autocreate="true" generate="true">
+			<persistence type="property"/>
+			<modifiers read="true" write="true" />
+			</attribute>
+			</attributes>
+			</itemtype>
+			
+			<itemtype code="StrapLineBannerComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+				jaloclass="org.grocery.core.jalo.StrapLineBannerComponent">
+				<description>Used to Show StrapLine</description>
+				<deployment table="StrapLineComponent" typecode="11008" />
+				<attributes>
+					<attribute type="CMSLinkComponent" qualifier="urlLink">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="backgroundColor">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="textColor">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="textName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isCrossButtonRequired">
+						<description>to check cross button required or not</description>
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ImageOverLayComponent"
+				extends="SimpleResponsiveBannerComponent" generate="true"
+				autocreate="true"
+				jaloclass="org.grocery.core.jalo.ImageOverLayComponent">
+				<description>Used to show content over image</description>
+				<attributes>
+					<attribute type="localized:java.lang.String"
+						qualifier="heading">
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String"
+						qualifier="subheading">
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String"
+						qualifier="btnText">
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="btnUrlLink">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="fontSize">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String"
+						qualifier="position">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="theme">
+					 <description>Represents text color</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="textAlign">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="btnColor">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+             </itemtype>
+			<itemtype code="FooterNavigationComponent" autocreate="false" generate="false">
+				<description>CMS component for footer navigation in the accelerator.</description>
+				<attributes>
+					<attribute type="Media" qualifier="bottomCenterMedia">
+						<persistence type="property" />
+						<modifiers />
+						<description>Media for footer.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CMSNavigationNode" autocreate="false" generate="false">
+				<description>use to add icon and sideBanner.</description>
+				<attributes>
+					<attribute type="Media" qualifier="navigationIcon">
+						<persistence type="property" />
+						<modifiers />
+						<description>Icon for navigation node</description>
+					</attribute>
+					<attribute type="SimpleBannerComponent" qualifier="sideBanner">
+						<persistence type="property" />
+						<modifiers />
+						<description>Side banner for navigation node</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CMSSite" autocreate="false" generate="false">
+				<description>Extending CMSSite type with additional attributes.</description>
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="enableGoogleSignUp">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+						<description>It is property representing a google login is enable or not </description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="enableFacebookSignup">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+						<description>It is property representing a facebook login is enable or not </description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="enableOTPSignup">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+						<description>It is property representing a otp login is enable or not </description>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BestSellersProductsComponent" autocreate="true" generate="true"
+				extends="ProductCarouselComponent">
+				<description>Best seller products</description>
+				<attributes>
+					<attribute qualifier="numberOfDays" type="java.lang.Integer">
+						<description>Number Of Days</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="numberOfOrders" type="java.lang.Integer">
+						<description>Number Of Orders</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="CategoryCarouselComponent" extends="ProductCarouselComponent" autocreate="true"
+				generate="true">
+				<description>Extends existing type.</description>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Email">
+			<itemtype code="UpdatePasswordEmailProcess" extends="StoreFrontCustomerProcess" autocreate="true"
+				generate="true" jaloclass="de.hybris.platform.commerceservices.jalo.process.UpdatePasswordProcess">
+				<description>Represents process that is used when password is updated.</description>
+				<attributes>
+					<attribute qualifier="firstName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Attribute contains token that is used in this process.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="StoreFrontCustomerProcess" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="generatedCouponCode" type="java.lang.String">
+						<persistence type="property" />
+						<description>Attribute contains a generated coupon code to be used in customer related processes</description>
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="promotionMessage" type="java.lang.String">
+						<persistence type="property" />
+						<description>Attribute contains a promotion message to be used in customer related processes</description>
+						<modifiers optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<!-- ItemType empty - used only to bypass the code from getStrategy method from DefaultProcessContextResolutionStrategy -->
+			<!-- As the processContextResolutionStrategyMap configured in acceleratorservices-items.xml is a HashMap and due to this
+			     the code from DefaultProcessContextResolutionStrategy::getStrategy provides random results -->
+			<itemtype code="CustomerRegistrationEmailProcess" extends="StoreFrontCustomerProcess" autocreate="true"
+								generate="true" jaloclass="de.hybris.platform.commerceservices.jalo.process.CustomerRegistrationEmailProcess">
+				<description>Represents process that is used when customer is registered.</description>
+			</itemtype>
+			<itemtype code="AbandonedShoppingCartEmailProcess" extends="StoreFrontCustomerProcess" autocreate="true"
+					  generate="true" jaloclass="de.hybris.platform.commerceservices.jalo.process.AbandonedShoppingCartEmailProcess">
+				<description>Represents process that is used when email notifications are sent for abandoned shopping carts.</description>
+				<attributes>
+					<attribute qualifier="abandonedCart" type="Cart">
+						<persistence type="property" />
+						<description>The cart for which the email is being sent.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<!-- TypeGroups are for structure of this file only -->
+
+		<typegroup name="Apparel">
+			<itemtype code="ApparelProduct" extends="Product" autocreate="true" generate="true"
+				jaloclass="org.grocery.core.jalo.ApparelProduct">
+				<description>Base apparel product extension that contains additional attributes.</description>
+				<attributes>
+					<attribute qualifier="genders" type="GenderList">
+						<description>List of genders that the ApparelProduct is designed for</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ApparelStyleVariantProduct" extends="VariantProduct" autocreate="true" generate="true"
+				jaloclass="org.grocery.core.jalo.ApparelStyleVariantProduct">
+				<description>Apparel style variant type that contains additional attribute describing variant style.
+                </description>
+				<attributes>
+					<attribute qualifier="style" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Color/Pattern of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute qualifier="swatchColors" type="SwatchColorSet">
+						<description>A normalized color mapping to a standardized front-end navigable name.
+                        </description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+
+			</itemtype>
+
+			<itemtype code="ApparelSizeVariantProduct" extends="ApparelStyleVariantProduct" autocreate="true"
+				generate="true" jaloclass="org.grocery.core.jalo.ApparelSizeVariantProduct">
+				<description>Apparel size variant type that contains additional attribute describing variant size.
+                </description>
+				<attributes>
+					<attribute qualifier="size" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Size of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="GroceryVariantProduct"
+				extends="VariantProduct" autocreate="true" generate="true"
+				jaloclass="org.grocery.core.jalo.GroceryVariantProduct">
+				<description>Grocery variant type that contains additional attributes describing variants.
+                </description>
+				<attributes>
+					 <attribute qualifier="packSizeLabel" type="localized:java.lang.String">
+                        <description>Pack size label of the product.</description>
+                        <modifiers/>
+                        <persistence type="property"/>
+                    </attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<!-- <typegroup name="Electronics">
+			<itemtype code="ElectronicsColorVariantProduct" extends="VariantProduct" autocreate="true" generate="true"
+				jaloclass="org.grocery.core.jalo.ElectronicsColorVariantProduct">
+				<description>Electronics color variant type that contains additional attribute describing variant color.
+                </description>
+				<attributes>
+					<attribute qualifier="color" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Color of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup> -->
+
+		<typegroup name="DeliverySlot">
+			<itemtype code="DeliverySlotInfo">
+				<description>Delivery Slot Availability for orders.</description>
+				<deployment table="DlvrySlotInfo" typecode="23702" />
+				<attributes>
+					<attribute qualifier="deliveryDate" type="java.util.Date">
+						<description>Date on order will be delivered</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="deliveryStartTime" type="java.util.Date">
+						<description>Time at which the order will be delivered
+						</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="deliveryEndTime" type="java.util.Date">
+						<description>Time at which the order will be delivered
+						</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DeliverySlotTimeConfig" extends="GenericItem" autocreate="true" generate="true">
+				<description>Contains delivery time slot information</description>
+				<deployment table="DlvrySlotTimeCfg" typecode="23701" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<description>Code for which this delivery time slot belongs.</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="openingTime" type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="closingTime" type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="carrierCode" type="java.lang.String">
+						<description>Carrier code for which the delivery time slot
+							belongs.
+						</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="zone" type="Zone">
+						<description>Zone for which this delivery time slot belongs.
+						</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DeliverySlotDayConfig">
+				<description>Contains delivery day slot information</description>
+				<deployment table="DlvrySlotDayCfg" typecode="23700" />
+				<attributes>
+					<attribute qualifier="carrierCode" type="java.lang.String">
+						<description>Carrier code for which the delivery slots is
+							applicable
+						</description>
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="orderingDayStartTime" type="java.util.Date">
+						<description>Ordering date time after which the delivery slot is
+							valid
+						</description>
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="orderingDayEndTime" type="java.util.Date">
+						<description>Ordering date time until which the delivery slot is
+							valid
+						</description>
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="deliveryDate" type="java.util.Date">
+						<description>Delivery Date available for selection</description>
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="zone" type="Zone">
+						<description>Zone for which this delivery time slot belongs.
+						</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BaseStore" autocreate="false" generate="false">
+				<description>Extending BaseStore type with additional attributes.</description>
+				<attributes>
+					<attribute type="OpeningSchedule" qualifier="openingSchedule">
+						<persistence type="property" />
+						<modifiers partof="true" />
+						<description>It is property representing a schedule of holidays for the BaseStore </description>
+					</attribute>
+					<attribute autocreate="true" qualifier="defaultcountry" type="Country">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" optional="false" />
+					</attribute>
+					<attribute qualifier="registrationCouponEnabled" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="registrationCoupon" type="MultiCodeCoupon">
+						<persistence type="property" />
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="registrationPromotion" type="PromotionSourceRule">
+						<persistence type="property" />
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="abandonedShoppingCartCouponEnabled" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="abandonedShoppingCartCoupon" type="MultiCodeCoupon">
+						<persistence type="property" />
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="abandonedShoppingCartPromotion" type="PromotionSourceRule">
+						<persistence type="property" />
+						<modifiers optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractOrder" autocreate="false" generate="false">
+				<description>Abstract Order additional attributes for Delivery Slot
+					Information
+				</description>
+				<attributes>
+					<attribute qualifier="deliverySlotInfo" type="DeliverySlotInfo">
+						<description>Delivery Slot Selected</description>
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Restrictions">
+			<itemtype code="SocialMediaCustomerRestriction" jaloclass="org.grocery.core.jalo.restrictions.SocialMediaCustomerRestriction" extends="CMSUserRestriction"
+					  autocreate="true" generate="true">
+				<attributes>
+					<attribute qualifier="description" redeclare="true" type="java.lang.String">
+						<persistence type="dynamic" attributeHandler="socialMediaCustomerRestrictionDescription" />
+						<modifiers write="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

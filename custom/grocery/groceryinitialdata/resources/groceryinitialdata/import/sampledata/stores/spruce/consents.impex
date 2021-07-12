@@ -1,0 +1,3 @@
+$siteUid = spruce
+INSERT_UPDATE ConsentTemplate; id[unique = true]                   ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+                             ; spruce_marketing_newsletter_consent ; 0                     ; ;

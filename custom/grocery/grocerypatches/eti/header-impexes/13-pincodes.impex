@@ -1,0 +1,5 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store Name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Pincode;pincode[unique=true];area;state;country(isocode)

@@ -1,0 +1,1 @@
+INSERT_UPDATE DeliverySlotDayConfig ; zone(code)[unique=true] ; deliverydate[unique=true][dateformat=dd.MM.yyyy HH:mm:ss] ; orderingdaystarttime[dateformat=dd.MM.yyyy HH:mm:ss] ; orderingdayendtime[dateformat=dd.MM.yyyy HH:mm:ss] ; carrierCode; &dayslotid

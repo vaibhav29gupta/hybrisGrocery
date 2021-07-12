@@ -1,0 +1,23 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=spruce
+
+INSERT_UPDATE Warehouse;code[unique=true];name[lang=en];name[lang=ja];vendor(code);default;baseStores(uid)[default=$baseStores];
+
+;WH1_AE01;"AUS East Warehouse";"オーストラリア東倉庫";sfp-aus;true;;
+;WH2_AW01;"AUS West Warehouse";"オーストラリア西倉庫";sfp-aus;false;;
+;WH3_AN01;"AUS North Warehouse";"オーストラリア北倉庫";sfp-aus;true;;
+;WH4_AS01;"AUS South Warehouse";"オーストラリア南倉庫";sfp-aus;true;;
+;WH5_POS_ASYD1;"Aus-Sydney West POS Warehouse";"オーストラリア-シドニー　西POS倉庫　";sfp-aus;false;;
+;WH6_POS_AMEL;"Aus-Melbourne POS Warehouse";"オーストラリア - メルボルンPOS倉庫";sfp-aus;false;;
+;WH7_POS_ACAN;"Aus-Canberra POS Warehouse";"オーストラリア - キャンベラPOS倉庫　";sfp-aus;false;;
+;WH8_POS_APER;"Aus-Perth POS Warehouse";"オーストラリア - パースPOS倉庫";sfp-aus;false;;
+;WH9_POS_ASYD2;"Aus-Sydney South POS Warehouse";"オーストラリア-シドニー　南POS倉庫 　";sfp-aus;false;;
+;WH1_JP01;"Japan Central Warehouse";"日本 - 中央倉庫";sfp-jp;true;;
+;WH2_JP02;"Japan Aux Warehouse";"日本 - 補助倉庫";sfp-jp;true;;
+;WH3_POS_JP01;"Japan - Shibuya Tokyo Store WH";"日本 - 東京渋谷店倉庫";sfp-jp;false;;
+;WH4_POS_JP02;"Japan-Nikko Store WH";"日本 - 福岡店倉庫";sfp-jp;false;;
+;WH5_POS_JP03;"Japan-Kyoto Store WH";"日本 - 京都店倉庫";sfp-jp;false;;
+;WH6_POS_JP04;"Japan-Osaka Store WH";"日本 - 大阪店倉庫";sfp-jp;false;;
+;WH7_POS_JP05;"Japan - Shinagawa Tokyo Store WH";"日本 - 東京品川店倉庫";sfp-jp;false;;

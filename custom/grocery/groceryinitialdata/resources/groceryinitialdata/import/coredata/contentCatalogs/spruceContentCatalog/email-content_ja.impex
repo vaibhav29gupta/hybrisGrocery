@@ -1,0 +1,44 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the site emails
+#
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$emailResource=$config-emailResourceValue
+
+# Language
+$lang=ja
+
+#Site
+$site = spruce
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+; $site-BannerComponent-template                      ; "CMSBannerComponent Template"                      ; $emailResource/email-bannerComponentTemplate.vm
+; $site-CMSImageComponent-template                    ; "CMSImageComponent Template"                       ; $emailResource/email-cmsImageComponentTemplate.vm
+; $site-CMSLinkComponent-template                     ; "CMSLinkComponent Template"                        ; $emailResource/email-cmsLinkComponentTemplate.vm
+; $site-CMSParagraphComponent-template                ; "CMSParagraphComponent Template"                   ; $emailResource/email-cmsParagraphComponentTemplate.vm
+; $site-SimpleBannerComponent-template                ; "CMSSimpleBannerComponent Template"                ; $emailResource/email-bannerComponentTemplate.vm
+;Customer_Registration_Email_Body;"Spruce Customer Registration Email Body";$emailResource/email-customerRegistrationBody.vm
+;Customer_Registration_Email_Subject;"Spruce Customer Registration Email Subject";$emailResource/email-customerRegistrationSubject.vm
+;Order_confirmation_Email_Body;"Spruce Order Confirmation Email Body";$emailResource/email-orderConfirmationBody.vm
+;Order_confirmation_Email_Subject;"Spruce Order Confirmation Email Subject";$emailResource/email-orderConfirmationSubject.vm
+;email_Forgotten_Password_Body;"Spruce Forgotten Password Email Body";$emailResource/email-forgottenPasswordBody.vm
+;email_Forgotten_Password_Subject;"Spruce Forgotten Password Email Subject";$emailResource/email-forgottenPasswordSubject.vm
+;$site_Email_Product_Back_In_Stock_Body;"Spruce Product Back in Stock Email Body";$emailResource/email-productBackInStockBody.vm
+;$site_Email_Product_Back_In_Stock_Subject;"Spruce Product Back in Stock Email Subject";$emailResource/email-productBackInStockSubject.vm
+; Abandoned_Shopping_Cart_Email_Body    ; "Spruce Abandoned Shopping Cart Email Body"    ; $emailResource/email-abandonedShoppingCartBody.vm
+; Abandoned_Shopping_Cart_Email_Subject ; "Spruce Abandoned Shopping Cart Email Subject" ; $emailResource/email-abandonedShoppingCartSubject.vm
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];fromEmail[lang=$lang];fromName[lang=$lang]
+;;CustomerRegistrationEmail;no-reply@sprucehybris.com;Spruce Grocery Service
+;;OrderConfirmationEmail;no-reply@sprucehybris.com;Spruce Grocery Service
+;;ForgottenPasswordEmail;no-reply@sprucehybris.com;Spruce Grocery Service
+;;ProductBackInStockNotificationEmail;no-reply@sprucehybris.com;Spruce Grocery Service
+;;AbandonedShoppingCartEmail;no-reply@sprucehybris.com;Spruce Grocery Service

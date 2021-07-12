@@ -1,0 +1,4 @@
+INSERT_UPDATE FeatureThreshold; 	  feature[unique=true](code); monthlyThreshold;
+							  ;				STORE_LOCATOR;					  1000;
+							  ;						EMAIL;					  1000;	
+							  ;			  			  SMS;					  1000;

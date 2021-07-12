@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.
+ All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+        
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+      
+    <import resource="groceryordermanagement-process-definitions-spring.xml" />
+    <import resource="classpath:/groceryordermanagement/hot-folder-warehousing-score-spring.xml"/>
+    
+    <context:annotation-config/>
+    
+    <!-- Listeners -->
+    <bean id="pickupConfirmationEventListener" class="org.grocery.ordermanagement.listeners.impl.PickupConfirmationEventListener" parent="abstractEventListener">
+        <property name="businessProcessService" ref="businessProcessService"/>
+    </bean>
+    
+    <bean id="createReturnEventListener" class="org.grocery.ordermanagement.events.CreateReturnEventListener" parent="abstractSiteEventListener">
+        <property name="businessProcessService" ref="businessProcessService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="baseStoreService" ref="baseStoreService"/>
+        <property name="supportedSiteChannels" ref="returnEventListenerSupportedSiteChannels"/>
+    </bean>
+
+    <bean id="sendReturnLabelEventListener" class="org.grocery.ordermanagement.events.SendReturnLabelEventListener" parent="abstractSiteEventListener">
+        <property name="businessProcessService" ref="businessProcessService"/>
+        <property name="modelService" ref="modelService"/>
+    </bean>
+    
+	<util:set id="returnEventListenerSupportedSiteChannels" value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+		<value>B2C</value>
+		<value>B2B</value>
+	</util:set>
+    
+    <!-- Converters -->
+    <bean id="deliveryAddressGeocodeConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.storelocator.data.AddressData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="deliveryAddressGeocodePopulator"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="deliveryAddressGeocodePopulator" class="org.grocery.ordermanagement.converters.AddressPopulator" />
+        
+    <!-- Order Check Service -->
+    <!-- Performs some basic validation for the order as part of the first stage of the process. -->
+    <alias name="defaultCheckOrderService" alias="checkOrderService"/>
+    <bean id="defaultCheckOrderService" class="org.grocery.ordermanagement.impl.DefaultCheckOrderService" />
+
+    <!-- Cancellation -->
+    <bean id="warehouseProcessingCancelRequestExecutor"
+          class="de.hybris.platform.ordercancel.impl.executors.WarehouseProcessingCancelRequestExecutor"
+          scope="prototype">
+        <property name="modelService" ref="modelService"/>
+        <property name="orderStatusChangeStrategy" ref="enterCancellingStrategy"/>
+        <property name="warehouseAdapter" ref="omsWarehouseAdapter"/>
+        <!--
+            THESE DEPENDENCIES MUST BE PROVIDED BY USERS OF THE ORDER CANCEL
+            SERVICE <property name="notificationServiceAdapter"
+            ref="orderCancelNotificationServiceAdapter"/>
+        -->
+    </bean>
+
+    <bean id="omsWarehouseAdapter"
+          class="org.grocery.ordermanagement.impl.OmsWarehouseAdapter"
+          scope="tenant">
+        <property name="businessProcessService" ref="businessProcessService"/>
+    </bean>
+
+    <!-- Returns -->
+    <alias alias="returnActionAdapter" name="omsReturnActionAdapter"/>
+    <bean id="omsReturnActionAdapter" class="org.grocery.ordermanagement.impl.OmsReturnActionAdapter">
+        <property name="businessProcessService" ref="businessProcessService"/>
+    </bean>
+
+    <bean id="returnLabelEmailContext" class="org.grocery.ordermanagement.email.ReturnLabelEmailContext" parent="abstractEmailContext" scope="prototype" >
+        <property name="orderConverter" ref="orderConverter"/>
+    </bean>
+    
+    <alias alias="allocationService" name="groceryAllocationService"/>
+    	<bean id="groceryAllocationService" class="org.grocery.ordermanagement.allocation.impl.GroceryAllocationService" parent="defaultAllocationService">
+    </bean>
+    
+    <bean id="vendorSourcingStrategyMapper"
+          class="org.grocery.ordermanagement.sourcing.strategy.mapper.impl.VendorSourcingStrategyMapper">
+        <property name="strategy" ref="vendorSourcingStrategy"/>
+    </bean>
+    
+    <alias name="defaultSourcingVendorStrategy" alias="vendorSourcingStrategy"/>
+    <bean id="defaultSourcingVendorStrategy"
+          class="org.grocery.ordermanagement.sourcing.strategy.impl.VendorSourcingStrategy"
+          parent="abstractSourcingStrategy">
+    </bean>
+    
+    <bean id="defaultVendorSourcingStrategyMergeDirective"
+		depends-on="sourcingStrategyMappers" parent="listMergeDirective">
+		<property name="add" ref="vendorSourcingStrategyMapper" />
+		<property name="beforeBeanNames">
+       		<list value-type="java.lang.String">
+       			<value>deliverySourcingStrategyMapper</value>
+       		</list>
+       </property>
+	</bean>
+	
+	<bean id="deliverySourcingStrategyMapper"
+          class="org.grocery.ordermanagement.sourcing.strategy.mapper.impl.DeliverySourcingStrategyMapper">
+        <property name="strategy" ref="deliverySourcingStrategy"/>
+    </bean>
+    
+    <alias name="defaultSourcingDeliveryStrategy" alias="deliverySourcingStrategy"/>
+    <bean id="defaultSourcingDeliveryStrategy"
+          class="org.grocery.ordermanagement.sourcing.strategy.impl.DeliveryStrategy"
+          parent="abstractSourcingStrategy">
+    </bean>
+    
+    <bean id="defaultDeliverySourcingStrategyMergeDirective"
+		depends-on="sourcingStrategyMappers" parent="listMergeDirective">
+		<property name="add" ref="deliverySourcingStrategyMapper" />
+		<property name="beforeBeanNames">
+       		<list value-type="java.lang.String">
+       			<value>pickupSourcingStrategyMapper</value>
+       		</list>
+       </property>
+	</bean>
+	
+	<alias name="grocerySourcingPickupStrategy" alias="pickupSourcingStrategy"/>
+    <bean id="grocerySourcingPickupStrategy"
+          class="org.grocery.ordermanagement.sourcing.strategy.impl.GroceryPickupStrategy"
+          parent="defaultSourcingPickupStrategy">
+    </bean>
+    
+    <alias alias="commerceStockService" name="groceryCommerceStockService"/>
+    <bean id="groceryCommerceStockService"
+          class="org.grocery.ordermanagement.services.stock.impl.GroceryCommerceStockService"
+          parent="warehousingCommerceStockService">
+    </bean>
+</beans>

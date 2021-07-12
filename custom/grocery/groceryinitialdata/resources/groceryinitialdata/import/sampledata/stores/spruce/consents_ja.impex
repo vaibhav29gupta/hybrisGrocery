@@ -1,0 +1,4 @@
+$siteUid = spruce
+$lang = ja
+UPDATE ConsentTemplate; id[unique = true]                   ; name[lang = $lang]                                    ; description[lang = $lang]                                                                                                                                                                                                                                                              ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]
+                      ; spruce_marketing_newsletter_consent ; "Promotional and Marketing Communication Preferences" ; "Yes, I would like to receive updates from Spruce online about products & services, promotions, special offers, news & events and marketing research via Email.<hr><span class='note'>*Please note, you can change these preferences at any time by logging into your account.</span>" ; 0                     ; ;

@@ -1,0 +1,4 @@
+$lang=ja
+
+UPDATE ConsentTemplate; id[unique = true]                   ; name[lang = $lang]                                    ; description[lang = $lang];
+                      ; spruce_marketing_newsletter_consent ; "プロモーション、マーケティングコミュニケーションの設定" ; "はい、商品、サービス、プロモーション、特別オファー、ニュース、イベント、マーケティング調査についてメールでSpruceからオンラインで最新情報を受け取りたいです。" ;

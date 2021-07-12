@@ -1,0 +1,12 @@
+INSERT_UPDATE Region;country(isocode);isocode[unique=true];isocodeShort;name[lang=en];active[default=true]
+
+;AU;NSW;NSW;NSW;
+;AU;ACT;ACT;ACT;
+;AU;VIC;VIC;VIC;
+;AU;NT;NT;NT;
+;JP;Tokyo;Tokyo;Tokyo;
+;JP;Tochigi;Tochigi;Tochigi;
+;JP;Osaka-fu;Osaka-fu;Osaka-fu;
+;JP;Kyoto-fu;Kyoto-fu;Kyoto-fu;
+;JP;Tokyo;Tokyo;Tokyo;
+;JP;Tokyo;Tokyo;Tokyo;

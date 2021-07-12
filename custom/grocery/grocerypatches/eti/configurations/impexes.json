@@ -1,0 +1,319 @@
+[
+	{
+		"name": "1-categories",
+		"sheet_in_excel": "Categories",
+		"columns": [1,2,3,4,5,7],
+		"stringColumns": [2,3,4,5],
+		"header": "1-categories",
+		"replacable_tokens": "replacable",
+		"semicolons_at_end": "1",
+		"rowsToSkip": []
+	},
+	{
+		"name": "2-categorycategoryrelation",
+		"sheet_in_excel": "Categories",
+		"columns": [1,6],
+		"stringColumns": [],
+		"header": "2-categorycategoryrelation",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [1]
+	}, 
+	{
+		"name": "Keyword_EN",
+		"sheet_in_excel": "Keyword EN",
+		"columns": [1,2],
+		"stringColumns": [1],
+		"header": "Keyword_EN",
+		"replacable_tokens": "",
+		"semicolons_at_end": "3",
+		"rowsToSkip": []
+	},
+	{
+		"name": "Keyword_JP",
+		"sheet_in_excel": "Keyword JP",
+		"columns": [1,2],
+		"stringColumns": [1],
+		"header": "Keyword_JP",
+		"replacable_tokens": "",
+		"semicolons_at_end": "3",
+		"rowsToSkip": []
+	},
+	{
+		"name": "3-products",
+		"sheet_in_excel": "Products",
+		"columns": [1,2,3,4,5,6,7,8,10,13,14,15,16,17,18,19,20],
+		"stringColumns": [2,3,4,5,6,7,17,18],
+		"header": "3-products",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [],
+		"skipIfColumnIsNotEmpty" : [12]
+	},	
+	{
+		"name": "base-products",
+		"sheet_in_excel": "Products",
+		"columns": [1],
+		"stringColumns": [],
+		"header": "base-products",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": [],
+		"skipIfColumnIsEmpty" : [11]
+	}, 
+	{
+		"name": "variant-products",
+		"sheet_in_excel": "Products",
+		"columns": [1,2,3,4,5,6,7,8,10,12,13,14,15,16,17,18,19,20,21],
+		"stringColumns": [2,3,4,5,6,7,17,18],
+		"header": "variant-products",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [],
+		"skipIfColumnIsEmpty" : [12]
+	}, 
+	{
+		"name": "4-productcategoryrelation",
+		"sheet_in_excel": "Products",
+		"columns": [1,9],
+		"stringColumns": [],
+		"header": "4-productcategoryrelation",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "5-prices",
+		"sheet_in_excel": "Prices",
+		"columns": [1,2,3,4,5,6,7,8,9,10,11,12],
+		"stringColumns": [],
+		"header": "5-prices",
+		"replacable_tokens": "",
+		"semicolons_at_end": "2",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "6-productreferences",
+		"sheet_in_excel": "Product References",
+		"columns": [1,2,3,4,5,6,7,8,9],
+		"stringColumns": [2,3],
+		"header": "6-productreferences",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "7-taxarea",
+		"sheet_in_excel": "Tax Areas",
+		"columns": [1,2,3],
+		"stringColumns": [],
+		"header": "7-taxarea",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "8-tax",
+		"sheet_in_excel": "Taxes",
+		"columns": [1,2,3,4,5],
+		"stringColumns": [2,3],
+		"header": "8-tax",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "9-producttax",
+		"sheet_in_excel": "Product-Tax",
+		"columns": [1,2,3,4,6,7,8,9],
+		"stringColumns": [],
+		"header": "9-producttax",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "10-discounts",
+		"sheet_in_excel": "Discounts",
+		"columns": [1,2,3,4,5,6],
+		"stringColumns": [2,3],
+		"header": "10-discounts",
+		"replacable_tokens": "",
+		"semicolons_at_end": "3",
+		"rowsToSkip": []
+	}, 
+		{
+		"name": "11-productdiscounts",
+		"sheet_in_excel": "Product-Discount",
+		"columns": [1,2,3,4,5,6,7,8],
+		"stringColumns": [],
+		"header": "11-productdiscounts",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": [1]
+	}, 
+	{
+		"name": "12-vendors",
+		"sheet_in_excel": "Vendors",
+		"columns": [1,2,3],
+		"stringColumns": [2,3],
+		"header": "12-vendors",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	}, 
+		
+	{
+		"name": "13-warehouses",
+		"sheet_in_excel": "Warehouses",
+		"columns": [1,2,3,4,5],
+		"stringColumns": [2,3],
+		"header": "14-warehouses",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": []
+	}, 
+	{
+		"name": "14-regions",
+		"sheet_in_excel": "Post Code Master",
+		"columns": [4,5,5,5],
+		"stringColumns": [],
+		"header": "13a-regions",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+		
+	},
+{
+		"name": "15-serviceabilityarea",
+		"sheet_in_excel": "Post Code Master",
+		"columns": [1,2,3,5,7],
+		"stringColumns": [],
+		"header": "13b-serviceabilityarea",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+		
+	},
+	
+	{
+		"name": "16-pos",
+		"sheet_in_excel": "Point Of Service",
+		"columns": [1,2,3,4,5,6,9],
+		"stringColumns": [],
+		"header": "16-pos",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": []
+	},
+	{
+		"name": "17a-address",
+		"sheet_in_excel": "Point Of Service",
+		"columns": [10,11,12,13,14,15,16,17,1],
+		"stringColumns": [],
+		"header": "17a-address",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": [],
+		"output_to_header_file": "17-temp-address"
+	},
+	{
+		"name": "17b-posaddress",
+		"sheet_in_excel": "Point Of Service",
+		"columns": [1,10],
+		"stringColumns": [],
+		"header": "17b-posaddress",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [],
+		"prepend_data": "17-temp-address"
+	}, 
+{
+		"name": "18-poswarehouse",
+		"sheet_in_excel": "Point Of Service",
+		"columns": [1,7],
+		"stringColumns": [],
+		"header": "17-poswarehouse",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	},	
+	{
+		"name": "19-Stocks",
+		"sheet_in_excel": "Stocks",
+		"columns": [1,2,3,4,5,6,7,8],
+		"stringColumns": [],
+		"header": "18-Stock",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	},
+	{
+		"name": "warehouse-delivery-modes",
+		"sheet_in_excel": "Warehouse_Delivery_mode",
+		"columns": [1,2],
+		"stringColumns": [],
+		"header": "warehouse-delivery-modes",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	},
+	{
+		"name": "warehouse-pickup-modes",
+		"sheet_in_excel": "Warehouse_Pickup_mode",
+		"columns": [1,2],
+		"stringColumns": [],
+		"header": "warehouse-pickup-modes",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": []
+	},
+	{
+		"name": "20a-date",
+		"sheet_in_excel": "Delivery_Pickup_Day_Slot",
+		"columns": [1,2,3,4,6,7],
+		"stringColumns": [],
+		"header": "20a-date",
+		"replacable_tokens": "",
+		"semicolons_at_end": "1",
+		"rowsToSkip": [],
+		"output_to_header_file": "20-temp-date"
+	},
+	{
+		"name": "20b-posdate",
+		"sheet_in_excel": "Delivery_Pickup_Day_Slot",
+		"columns": [5,7],
+		"stringColumns": [],
+		"header": "20b-posdate",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [],
+		"prepend_data": "20-temp-date"
+	}, 
+	{
+		"name": "21a-time",
+		"sheet_in_excel": "Delivery_Pickup_Time_Slot",
+		"columns": [1,2,4],
+		"stringColumns": [],
+		"header": "21a-time",
+		"replacable_tokens": "",
+		"semicolons_at_end": "2",
+		"rowsToSkip": [],
+		"output_to_header_file": "21-temp-time"
+	},
+	{
+		"name": "21b-postime",
+		"sheet_in_excel": "Delivery_Pickup_Time_Slot",
+		"columns": [3,4],
+		"stringColumns": [],
+		"header": "21b-postime",
+		"replacable_tokens": "",
+		"semicolons_at_end": "",
+		"rowsToSkip": [],
+		"prepend_data": "21-temp-time"
+	}
+]
+
+
+
+

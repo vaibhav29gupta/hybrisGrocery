@@ -1,0 +1,15 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImPex for Importing Product Media into Electronics Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=spruceProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+
+UPDATE PaymentMode;code[unique=true];name[lang=en];description[lang=en]
+;creditcard;Card;creditcard payment mode;;;;
+;cod;Pay on Delivery;cashondelivery payment mode;;;;
+;advance;advance;advance payment mode;;;;
+

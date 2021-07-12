@@ -1,0 +1,2 @@
+UPDATE BaseStore; uid[unique = true]; expressCheckoutEnabled;
+                ; $siteUid         ; true                  ;

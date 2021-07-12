@@ -1,0 +1,16 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE DiscountRow;  product(code,$catalogVersion)[unique=true];currency(isocode)[unique=true];discount(code)[unique=true];startTime[dateformat=yyyyMMdd];endTime[dateformat=yyyyMMdd];user(uid);ug(code)[unique=true];pg(code)[unique=true];$catalogVersion ;
+;APC006;AUD;AU_DIS_002;20200515;21001201;;;;;
+#;APC007;AUD;AU_DIS_003;20200515;21001201;;;;;
+#;APC008;AUD;AU_DIS_004;20200515;21001201;;;;;
+;ABV001;JPY;JP_DIS_001;20200515;21001201;;;;;
+#;APC006;JPY;JP_DIS_001;20200515;21001201;;;;;
+;APC007;JPY;JP_DIS_001;20200515;21001201;;;;;
+#;APC008;JPY;JP_DIS_001;20200515;21001201;;;;;
+#;ABV001;INR;IN_DIS_001;20200515;21001201;;;;;
+#;APC006;INR;IN_DIS_001;20200515;21001201;;;;;
+#;APC007;INR;IN_DIS_001;20200515;21001201;;;;;
+;APC008;INR;IN_DIS_001;20200515;21001201;;;;;

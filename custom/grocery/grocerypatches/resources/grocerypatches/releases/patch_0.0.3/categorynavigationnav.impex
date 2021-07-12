@@ -1,0 +1,99 @@
+$contentCatalog=spruceContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+INSERT_UPDATE CategoryNavigationComponent;$contentCV[unique=true];uid[unique=true];name;styleClass;&componentRef;navigationNode(&nodeRef);wrapAfter
+;;GroceryCategoryNavComponent;Category Navigation Component;;GroceryCategoryNavComponent;GroceryCategoryNavNode;10
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;NavigationBarSlot;GroceryCategoryNavComponent,breadcrumbComponent
+
+# Attached child node to parent
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);&nodeRef
+;FruitAndVegNavNode;;Fruits & Vegtables Navigation Node;;FruitAndVegNavNode
+;DECNavNode;;Dairy, eggs & cheese Navigation Node;GroceryNavNode;DECNavNode
+;BakeryNavNode;;Bakery Navigation Node;;BakeryNavNode
+;PersonalCareNavNode;;Personal Care Navigation Node;GroceryNavNode;PersonalCareNavNode
+;BeveragesNavNode;;Beverages Navigation Node;GroceryNavNode;BeveragesNavNode
+;HouseHoldsNavNode;;HouseHolds Navigation;;HouseHoldsNavNode
+;PantryNavNode;;Pantry Navigation Node;GroceryNavNode;PantryNavNode
+;MSDNavNode;;Meat Seafood & Deli;;MSDNavNode
+;EssentialsNavNode;;Essentials Navigation Node;;EssentialsNavNode
+# level 2
+;MilkProductNavNode;;Milk and Milk Product Navigation Node;DECNavNode;MilkProductNavNode
+;BabyCareNavNode;;Baby Care Navigation Node;PersonalCareNavNode;BabyCareNavNode
+;PetCareNavNode;;Pet Care Navigation Node;PersonalCareNavNode;PetCareNavNode
+;LiquorNavNode;;Liquor Navigation Node;BeveragesNavNode;LiquorNavNode
+;ChocolatesNavNode;;Chocolates Navigation Node;PantryNavNode;ChocolatesNavNode
+;BreakfastCerealsNavNode;;Breakfast Cereals Navigation Node;PantryNavNode;BreakfastCerealsNavNode
+;SaSpSeNavNode;;Sauces-Spreads-Seasoning Navigation Node;PantryNavNode;SaSpSeNavNode
+;PastaNoodlesNavNode;;Pasta & Noodles Navigation Node;PantryNavNode;PastaNoodlesNavNode
+;FrozenFoodNavNode;;Frozen Food Navigation Node;PantryNavNode;FrozenFoodNavNode
+
+# level 1. SiteRoot #
+# level 2. children of SiteRoot #
+# the following order of children is the display order on the site #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);&nodeRef;children(uid,$contentCV)
+;GroceryCategoryNavNode;;Categories;GroceryNavNode;GroceryCategoryNavNode;FruitAndVegNavNode,DECNavNode,BakeryNavNode,PersonalCareNavNode,BeveragesNavNode,HouseHoldsNavNode,PantryNavNode,MSDNavNode,EssentialsNavNode
+
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV)
+;FruitAndVegNavNode;;Fruits & Vegtables Navigation Node;FruitAndVegNavNode
+;DECNavNode;;Dairy eggs & cheese Navigation Node;DECNavNode;MilkProductNavNode
+;BakeryNavNode;;Bakery Navigation Node;BakeryNavNode
+;PersonalCareNavNode;;Personal Care Navigation Node;PersonalCareNavNode;BabyCareNavNode,PetCareNavNode
+;BeveragesNavNode;;Beverages Navigation Node;BeveragesNavNode;LiquorNavNode
+;HouseHoldsNavNode;;HouseHolds Navigation Node;HouseHoldsNavNode
+;PantryNavNode;;Pantry Navigation Node;PantryNavNode;ChocolatesNavNode,BreakfastCerealsNavNode,SaSpSeNavNode,PastaNoodlesNavNode,FrozenFoodNavNode
+;MSDNavNode;;Meat Seafood & Deli Navigation Node;MSDNavNode
+;EssentialsNavNode;;Essentials Navigation Node;EssentialsNavNode
+# level 2
+;MilkProductNavNode;;Milk and Milk Product Navigation Node;MilkProductNavNode
+;BabyCareNavNode;;Baby Care Navigation Node;BabyCareNavNode
+;PetCareNavNode;;Pet Care Navigation Node;PetCareNavNode
+;LiquorNavNode;;Liquor Navigation Node;LiquorNavNode
+;ChocolatesNavNode;;Chocolates Navigation Node;ChocolatesNavNode
+;BreakfastCerealsNavNode;;Breakfast Cereals Navigation Node;BreakfastCerealsNavNode
+;SaSpSeNavNode;;Sauces-Spreads-Seasoning Navigation Node;SaSpSeNavNode
+;PastaNoodlesNavNode;;Pasta & Noodles Navigation Node;PastaNoodlesNavNode
+;FrozenFoodNavNode;;Frozen Food Navigation Node;FrozenFoodNavNode
+
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;FruitAndVegNavNodeEntry;;Fruits & Vegtable Navigation Node Entry;FruitAndVegNavNode;FruitAndVegLink
+;DECNavNodeEntry;;Dairy eggs & cheese Navigation Node Entry;DECNavNode;DECLink
+;BakeryNavNodeEntry;;Bakery Navigation Node Entry;BakeryNavNode;BakeryLink
+;PersonalCareNavNodeEntry;;Personal Care Navigation Node Entry;PersonalCareNavNode;PersonalCareLink
+;BeveragesNavNodeEntry;;Beverages Navigation Node Entry;BeveragesNavNode;BeveragesLink
+;HouseHoldsNavNodeEntry;;HouseHolds Navigation Node Entry;HouseHoldsNavNode;HouseHoldsLink
+;PantryNavNodeEntry;;Pantry Navigation Node Entry;PantryNavNode;PantryLink
+;MSDNavNodeEntry;;Meat Seafood & Deli Navigation Node Entry;MSDNavNode;MSDLink
+;EssentialsNavNodeEntry;;Essentials Navigation Node Entry;EssentialsNavNode;EssentialsLink
+# level 2
+;MilkProductNavNodeEntry;;Milk and Milk Product Navigation Node Entry;MilkProductNavNode;MilkProductLink
+;BabyCareNavNodeEntry;;Baby Care Navigation Node Entry;BabyCareNavNode;BabyCareLink
+;PetCareNavNodeEntry;;Pet care Navigation Node Entry;PetCareNavNode;PetCareLink
+;LiquorNavNodeEntry;;Liquor Navigation Node Entry;LiquorNavNode;LiquorLink
+;ChocolatesNavNodeEntry;;Chocolates Navigation Node Entry;ChocolatesNavNode;ChocolatesLink
+;BreakfastCerealsNavNodeEntry;;Breakfast Cereals Navigation Node Entry;BreakfastCerealsNavNode;BreakfastCerealsLink
+;SaSpSeNavNodeEntry;;Sauces-Spreads-Seasoning Navigation Node Entry;SaSpSeNavNode;SaSpSeLink
+;PastaNoodlesNavNodeEntry;;Pasta Noodles Navigation Node Entry;PastaNoodlesNavNode;PastaNoodlesLink
+;FrozenFoodNavNodeEntry;;Frozen Food Navigation Node Entry;FrozenFoodNavNode;FrozenFoodLink
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow']
+;;FruitAndVegLink;Fruits & Vegtable Link;/c/fnv;FruitAndVegLink;FruitAndVegLink;;
+;;DECLink;Dairy eggs & cheese Link;/c/dairy;DECLink;DECLink;;
+;;MilkProductLink;Milk and Milk Product Link;/c/mlp;MilkProductLink;MilkProductLink;;
+;;BakeryLink;Bakery Link;/c/bakery;BakeryLink;BakeryLink;;
+;;PersonalCareLink;Personal Care Link;/c/personalcare;PersonalCareLink;PersonalCareLink;;
+;;BabyCareLink;Baby Care Link;/c/bc;BabyCareLink;BabyCareLink;;
+;;PetCareLink;Pet Care Link;/c/pc;PetCareLink;PetCareLink;;
+;;BeveragesLink;Beverages Link;/c/lqdr;BeveragesLink;BeveragesLink;;
+;;LiquorLink;Liquor Link;/c/lqr;LiquorLink;LiquorLink;;
+;;HouseHoldsLink;HouseHolds Link;/c/household;HouseHoldsLink;HouseHoldsLink;;
+;;PantryLink;Pantry Link;/c/pantry;PantryLink;PantryLink;;
+;;ChocolatesLink;Chocolates Link;/c/chocolates;ChocolatesLink;ChocolatesLink;;
+;;BreakfastCerealsLink;Breakfast Cereals Link;/c/bfc;BreakfastCerealsLink;BreakfastCerealsLink;;
+;;SaSpSeLink;Sauces-Spreads-Seasoning Link;/c/sss;SaSpSeLink;SaSpSeLink;;
+;;PastaNoodlesLink;Pasta Noodles Link;/c/pn;PastaNoodlesLink;PastaNoodlesLink;;
+;;FrozenFoodLink;Frozen Food Link;/c/ff;FrozenFoodLink;FrozenFoodLink;;
+;;MSDLink;Meat Seafood & Deli Link;/c/msd;MSDLink;MSDLink;;
+;;EssentialsLink;Essentials Link;/c/essentials;EssentialsLink;EssentialsLink;;

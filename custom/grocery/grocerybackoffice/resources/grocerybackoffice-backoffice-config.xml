@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+	xmlns:na="http://www.hybris.com/cockpitng/config/notifications">
+
+<context merge-by="module" parent="auto" component="explorer-tree">
+        <explorer-tree:explorer-tree xmlns:explorer-tree="http://www.hybris.com/cockpitng/config/explorertree">
+            
+            <explorer-tree:navigation-node id="hmc.group.Ingredient">
+                <explorer-tree:type-node id="Ingredient" code="Ingredient" />
+                <explorer-tree:type-node id="IngredientsGroup" code="IngredientsGroup" />
+            </explorer-tree:navigation-node>
+            <explorer-tree:navigation-node id="hmc.group.basecommerce">
+           		 <explorer-tree:type-node code="ServiceabilityArea" id="ServiceabilityArea" />   
+            </explorer-tree:navigation-node>
+            
+            <explorer-tree:navigation-node id="hmc_treenode_catalog">
+                <explorer-tree:type-node code="ProductInterest" id="ProductInterest"/>
+			</explorer-tree:navigation-node>
+			
+			<explorer-tree:navigation-node id="hmc.group.DeliverySlot">
+                <explorer-tree:type-node code="DeliverySlotInfo" id="DeliverySlotInfo"/>
+                <explorer-tree:type-node code="DeliverySlotTimeConfig" id="DeliverySlotTimeConfig"/>
+                 <explorer-tree:type-node code="DeliverySlotDayConfig" id="DeliverySlotDayConfig"/>
+			</explorer-tree:navigation-node>
+			
+			 <explorer-tree:navigation-node id="hmc.group.recipe">
+                <explorer-tree:type-node code="Recipe" id="Recipe"/>
+                <explorer-tree:type-node code="RecipesCategory" id="RecipesCategory"/>
+			</explorer-tree:navigation-node>
+
+			<explorer-tree:navigation-node id="hmc.group.threshold">
+                <explorer-tree:type-node code="FeatureThreshold" id="FeatureThreshold"/>
+                <explorer-tree:type-node code="ThresholdAudit" id="ThresholdAudit"/>
+			</explorer-tree:navigation-node>
+
+        </explorer-tree:explorer-tree>
+    </context>
+
+	<context merge-by="module" component="editorareaactions" type="Consignment">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>				
+				<y:action action-id="org.grocery.backoffice.actions.confirmpickupaction" property="currentObject"/>				
+			</y:group>
+		</y:actions>
+    </context>
+
+	<!-- Notification Area-->
+	<context component="notification-area">
+	    <na:notification-area>	        
+	        <na:notifications eventType="grocerybackoffice.confirmpickup.event" level="SUCCESS">
+	            <na:message>hmc.action.confirmpickup.success</na:message>
+	        </na:notifications>
+	   </na:notification-area>
+	</context>
+	
+	<!-- List View   -->
+    <context merge-by="type" parent="GenericItem" type="ServiceabilityArea" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="code"/>
+            <list-view:column qualifier="startPostalCode"/>
+            <list-view:column qualifier="endPostalCode"/>
+            <list-view:column qualifier="region"/>
+            <list-view:column qualifier="warehouse"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Recipe" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+        	<list-view:column qualifier="name"/>
+            <list-view:column qualifier="code"/>
+        	<list-view:column qualifier="serves"/>
+            <list-view:column qualifier="cookingTime"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Ingredient" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="name"/>
+            <list-view:column qualifier="code"/>
+            <list-view:column qualifier="quantity"/>
+            <list-view:column qualifier="product"/>
+            <list-view:column qualifier="isEssential"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="IngredientsGroup" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="code"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="DeliverySlotInfo" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="deliveryDate"/>
+            <list-view:column qualifier="deliveryStartTime"/>
+            <list-view:column qualifier="deliveryEndTime"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="DeliverySlotTimeConfig" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="code"/>
+            <list-view:column qualifier="carrierCode"/>
+            <list-view:column qualifier="zone"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="DeliverySlotDayConfig" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="carrierCode"/>
+            <list-view:column qualifier="deliveryDate"/>
+            <list-view:column qualifier="zone"/>
+        </list-view:list-view>
+    </context>
+
+
+    <context merge-by="type" parent="GenericItem" type="FeatureThreshold" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="feature"/>
+            <list-view:column qualifier="monthlyThreshold"/>
+            <list-view:column qualifier="enableFeature"/>
+        </list-view:list-view>
+    </context>
+
+    <context merge-by="type" parent="GenericItem" type="ThresholdAudit" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="code"/>
+            <list-view:column qualifier="month"/>
+            <list-view:column qualifier="counter"/>
+        </list-view:list-view>
+    </context>
+
+	<!-- Editor Area  -->
+	<context merge-by="module" type="ServiceabilityArea" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="code"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="startPostalCode"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="endPostalCode"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="region"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="warehouse"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+    
+	<context merge-by="module" type="Warehouse" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+	        <editorArea:tab name="hmc.properties">
+	              <editorArea:section name="hmc.section.warehouse.properties">
+	                  <editorArea:attribute qualifier="defaultPOS"/>
+	              </editorArea:section>
+	          </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+	<context merge-by="module" type="Category" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="hmc.tab.category.common">
+                <editorArea:section name="hmc.section.category.general">
+                    <editorArea:attribute qualifier="isRootCategory"/>
+                    <editorArea:attribute qualifier="recipes"/>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+	<context merge-by="module" type="Product" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+                <editorArea:tab name="hmc.tab.product.extendedattributes" position="26">
+	                <editorArea:section name="hmc.section.product.others">
+	                    <editorArea:attribute qualifier="brand"/>
+	                    <editorArea:attribute qualifier="expiry"/>
+	                    <editorArea:attribute qualifier="dietSuitability"/>
+	                    <editorArea:attribute qualifier="weight"/>
+	                    <editorArea:attribute qualifier="ingredients"/>
+	                    <editorArea:attribute qualifier="usageGuidelines"/>
+	                    <editorArea:attribute qualifier="availableForDelivery"/>
+	                    <editorArea:attribute qualifier="availableForPickUp"/>
+	                </editorArea:section>
+            	</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="type" parent="AbstractOrder" type="Cart" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="hmc.properties">
+                <editorArea:section name="hmc.common">
+                    <editorArea:attribute qualifier="abandonedShoppingCartEmailSent"/>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="type" parent="User" type="Customer" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="socialMediaRegistered" readonly="true"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+
+	<context merge-by="module" type="Recipe" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                	<editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="code"/>
+                	<editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="name"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+	        <editorArea:tab name="hmc.tab.Recipe.ingredients" position="2">
+				<editorArea:section name="hmc.section.Recipe.ingredients">
+					<editorArea:attribute qualifier="method" />
+					<editorArea:attribute qualifier="ingredientsAsText" />
+				</editorArea:section>
+			</editorArea:tab>
+	        <editorArea:tab name="hmc.tab.Recipe.description" position="2">
+				<editorArea:section name="hmc.section.Recipe.description">
+					<editorArea:attribute qualifier="serves" />
+					<editorArea:attribute qualifier="cookingTime" />
+					<editorArea:attribute qualifier="prepTime" />
+					<editorArea:attribute qualifier="description" />
+					<editorArea:attribute qualifier="media" />
+					<editorArea:attribute qualifier="videoURL" />
+					<editorArea:attribute qualifier="group" />
+					<editorArea:attribute qualifier="uncategorizedIngredient" />					
+				</editorArea:section>
+			</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="IngredientsGroup" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="groupName"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="code"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+	        <editorArea:tab name="hmc.tab.IngredientsGroup.ingredients" position="2">
+				<editorArea:section name="hmc.section.IngredientsGroup.ingredients">
+					<editorArea:attribute qualifier="ingredients" />
+				</editorArea:section>
+			</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="Ingredient" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                	<editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="name"/>
+                	<editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="code"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+	        <editorArea:tab name="hmc.tab.Ingredient.method" position="2">
+				<editorArea:section name="hmc.section.Ingredient.method">
+					<editorArea:attribute qualifier="quantity" />
+					<editorArea:attribute qualifier="specialInstruction" />
+					<editorArea:attribute qualifier="cutStyle" />
+					<editorArea:attribute qualifier="product" />
+		        	<editorArea:attribute qualifier="isEssential" />		
+				</editorArea:section>
+			</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    <context merge-by="type" type="ProductInterest" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+	        <editorArea:tab name="hmc.tab.ProductInterest.properties" position="2">
+				<editorArea:section name="hmc.section.ProductInterest.properties">
+					<editorArea:attribute qualifier="pointOfService" />
+				</editorArea:section>
+			</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+	
+	 <context merge-by="module" type="Country" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="currency"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="language"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+            <editorArea:tab name="hmc.tab.country.metadata" position="2">
+				<editorArea:section name="hmc.section.country.metadata">
+					<editorArea:attribute qualifier="latitude" />
+					<editorArea:attribute qualifier="longitude" />
+				</editorArea:section>
+			</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="PointOfService" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+	        <editorArea:tab name="hmc.tab.PointOfService.type" position="2">
+	              <editorArea:section name="hmc.section.PointOfService.type">
+	                  <editorArea:attribute qualifier="deliveryDaySlots"/>
+	                  <editorArea:attribute qualifier="deliveryTimeSlots"/>
+	                  <editorArea:attribute qualifier="isExternal"/>
+	              </editorArea:section>
+	          </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="module" type="DeliverySlotInfo" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="deliveryDate"/>
+                    <editorArea:attribute qualifier="deliveryStartTime"/>
+                    <editorArea:attribute qualifier="deliveryEndTime"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="DeliverySlotTimeConfig" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="code"/>
+                    <editorArea:attribute qualifier="carrierCode"/>
+                    <editorArea:attribute qualifier="zone"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+            <editorArea:tab name="hmc.tab.DeliverySlotTimeConfig.region" position="2">
+	              <editorArea:section name="hmc.section.DeliverySlotTimeConfig.region">
+	                  <editorArea:attribute qualifier="openingTime"/>
+	                  <editorArea:attribute qualifier="closingTime"/>
+	              </editorArea:section>
+	          </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="DeliverySlotDayConfig" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="carrierCode"/>
+                    <editorArea:attribute qualifier="deliveryDate"/>
+                    <editorArea:attribute qualifier="zone"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+            <editorArea:tab name="hmc.tab.DeliverySlotDayConfig.region" position="2">
+	              <editorArea:section name="hmc.section.DeliverySlotDayConfig.region">
+	                  <editorArea:attribute qualifier="orderingDayStartTime"/>
+	                  <editorArea:attribute qualifier="orderingDayEndTime"/>
+	              </editorArea:section>
+	          </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="module" type="BaseStore" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea"
+                                          qualifier="defaultCurrency" merge-mode="remove"/>
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea"
+                                          qualifier="defaultLanguage" merge-mode="remove"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+            <editorArea:tab name="hmc.locations">
+                <editorArea:section name="hmc.section.basecommerce.locations">
+                    <editorArea:attribute qualifier="openingSchedule"/>
+                </editorArea:section>
+            </editorArea:tab>
+            <editorArea:tab name="hmc.tab.BaseStore.general" position="2">
+                <editorArea:section name="hmc.section.BaseStore.general">
+                    <editorArea:attribute qualifier="defaultcountry"/>
+                    <editorArea:attribute qualifier="defaultCurrency"/>
+                    <editorArea:attribute qualifier="defaultLanguage"/>
+                </editorArea:section>
+            </editorArea:tab>
+            <editorArea:tab name="hmc.tab.BaseStore.storePromotionsFlags" position="3">
+                <editorArea:section name="hmc.section.BaseStore.registrationCouponEnabled">
+                    <editorArea:attribute qualifier="registrationCouponEnabled"/>
+                    <editorArea:attribute qualifier="registrationCoupon"/>
+                    <editorArea:attribute qualifier="registrationPromotion"/>
+                </editorArea:section>
+                <editorArea:section name="hmc.section.BaseStore.abandonedShoppingCartCouponEnabled">
+                    <editorArea:attribute qualifier="abandonedShoppingCartCouponEnabled"/>
+                    <editorArea:attribute qualifier="abandonedShoppingCartCoupon"/>
+                    <editorArea:attribute qualifier="abandonedShoppingCartPromotion"/>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="module" type="FeatureThreshold" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="feature"/>
+                    <editorArea:attribute qualifier="monthlyThreshold"/>
+                    <editorArea:attribute qualifier="enableFeature"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+
+    <context merge-by="module" type="ThresholdAudit" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:essentials>
+                <editorArea:essentialSection name="hmc.essential">
+                    <editorArea:attribute qualifier="code"/>
+                    <editorArea:attribute qualifier="month"/>
+                    <editorArea:attribute qualifier="counter"/>
+                </editorArea:essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+
+
+    <!-- Search Area  -->
+    <context merge-by="type" parent="GenericItem" type="PointOfService" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="isExternal" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+
+    <context merge-by="type" parent="GenericItem" type="Warehouse" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="defaultPOS" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Recipe" component="simple-search">
+        <simple-search:simple-search xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="name"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="code"/>
+        </simple-search:simple-search>
+    </context>
+    
+        <context merge-by="type" parent="GenericItem" type="Recipe" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>               
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="code" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="IngredientsGroup" component="simple-search">
+        <simple-search:simple-search xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="groupName"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="code"/>
+        </simple-search:simple-search>
+    </context>
+    
+        <context merge-by="type" parent="GenericItem" type="IngredientsGroup" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>               
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="code" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Ingredient" component="simple-search">
+        <simple-search:simple-search xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="name"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="product"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="code"/>
+        </simple-search:simple-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Ingredient" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>               
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="product" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+    
+     <context merge-by="type" parent="GenericItem" type="ServiceabilityArea" component="advanced-search">
+        <advanced-search:advanced-search xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch">
+            <advanced-search:field-list>               
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="code" selected="false"/>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="startPostalCode" selected="false"/>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="endPostalCode" selected="false"/>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="region" selected="false"/>
+                <advanced-search:field xmlns="http://www.hybris.com/cockpitng/config/advancedsearch" name="warehouse" selected="false"/>
+            </advanced-search:field-list>
+        </advanced-search:advanced-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="Product" component="simple-search">
+        <simple-search:simple-search  xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="brand"/>
+        </simple-search:simple-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="ServiceabilityArea" component="simple-search">
+        <simple-search:simple-search xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="warehouse"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="code"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="region"/>
+        </simple-search:simple-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="DeliverySlotTimeConfig" component="simple-search">
+        <simple-search:simple-search  xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="code"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="zone"/>
+        </simple-search:simple-search>
+    </context>
+    
+    <context merge-by="type" parent="GenericItem" type="DeliverySlotDayConfig" component="simple-search">
+        <simple-search:simple-search  xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch">
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="carrierCode"/>
+            <simple-search:field xmlns="http://www.hybris.com/cockpitng/config/simplesearch" name="zone"/>
+        </simple-search:simple-search>
+    </context>
+	
+	<context merge-by="type" parent="User" type="Customer" component="listview">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="preferredShipmentMode"/>
+            <list-view:column qualifier="preferredPostalCode"/>
+            <list-view:column qualifier="preferredPos"/>
+            <list-view:column qualifier="currentShipmentMode"/>
+            <list-view:column qualifier="currentPostalCode"/>
+            <list-view:column qualifier="currentPos"/>
+            <list-view:column qualifier="socialMediaRegistered"/>
+        </list-view:list-view>
+    </context>
+    
+    <context merge-by="module" type="Customer" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+                <editorArea:tab name="hmc.addresses" position="26">
+	                <editorArea:section name="hmc.section.customer.shipment">
+	                    <editorArea:attribute qualifier="preferredShipmentMode"/>
+	                    <editorArea:attribute qualifier="preferredPostalCode"/>
+	                    <editorArea:attribute qualifier="preferredPos"/>
+	                    <editorArea:attribute qualifier="currentShipmentMode"/>
+	                    <editorArea:attribute qualifier="currentPostalCode"/>
+	                    <editorArea:attribute qualifier="currentPos"/>
+	                </editorArea:section>
+            	</editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+</config>

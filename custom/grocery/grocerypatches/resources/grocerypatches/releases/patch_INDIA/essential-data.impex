@@ -1,0 +1,42 @@
+# USE CTRL-SPACE for type-ahead support
+
+
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import essential data for the Accelerator
+#
+# Includes:
+# * Languages
+# * Currencies
+# * Titles
+# * Vendors
+# * Warehouses
+# * Supported Credit/Debit cards
+# * User Groups
+# * DistanceUnits for Storelocator
+# * MediaFolders
+# * MediaFormats                               s
+# * Tax & Tax Groups
+# * Jobs
+#% impex.setLocale(Locale.GERMAN);
+$lang=en
+
+$currencyIsoCode=INR
+$languageIsoCode=en
+$fallbackLanguageIsoCode=en
+$symbol=$
+
+# Currencies
+INSERT_UPDATE Currency;isocode[unique=true];conversion;digits;symbol
+#;GBP;1;2;£
+;$currencyIsoCode;1;2;$symbol
+
+
+# SiteMap Language Currencies
+INSERT_UPDATE SiteMapLanguageCurrency;&siteMapLanguageCurrency;language(isoCode)[unique=true];currency(isocode)[unique=true]
+
+;siteMap_$languageIsoCode$currencyIsoCode;$languageIsoCode;$currencyIsoCode
+
+#;enUsd;en;USD

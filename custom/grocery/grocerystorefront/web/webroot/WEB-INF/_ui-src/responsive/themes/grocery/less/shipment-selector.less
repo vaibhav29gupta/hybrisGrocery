@@ -1,0 +1,403 @@
+.shipment-selector.static-box {
+    #cboxTitle {
+        padding: 30px 20px 15px;
+    }
+
+    #cboxTopLeft {
+        width: unset;
+        height: unset;
+    }
+
+    #cboxTopCenter {
+        height: unset;
+    }
+
+    #cboxTopRight {
+        width: unset;
+        height: unset;
+    }
+
+    #cboxBottomLeft {
+        width: unset;
+    }
+
+    #cboxBottomCenter {
+        height: unset;
+    }
+
+    #cboxBottomRight {
+        width: unset;
+    }
+
+    #cboxMiddleLeft {
+        width: unset;
+    }
+
+    #cboxMiddleRight {
+        width: unset;
+    }
+
+    #cboxContent {
+        clip: initial;
+        overflow: unset;
+    }
+
+    #cboxLoadedContent {
+        margin: unset;
+        padding: unset;
+    }
+}
+
+.pickupCookieNotification,
+.deliveryCookieNotification {
+    position: absolute;
+    z-index: 1;
+    background: @brand-tertiary;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 5px @brand-tertiary;
+    -moz-box-shadow: 0 0 5px @brand-tertiary;
+    box-shadow: 0 0 5px @brand-tertiary;
+    height: auto;
+    border: 0;
+    padding: 1rem;
+    width: 250%;
+    left: -62.5%;
+    animation: nudge 0.7s linear;
+    flex-direction: column;
+    display: flex;
+    top: 250%;
+    &.shownone {
+        display: none;
+    }
+    label {
+        font-weight: 400;
+        font-size: 1.25rem;
+    }
+
+    input {
+        color: @brand-secondary;
+        border: none;
+        pointer-events: none;
+        font-weight: 500;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: transparent;
+    }
+    .cookie-shipment-actions {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        a {
+            width: 40%;
+        }
+    }
+    @media @small {
+        & {
+            width: 100%;
+            left: 0;
+            margin-top: 7rem;
+            box-sizing: border-box;
+            text-align: center;
+        }
+    }
+}
+
+.sticky-border {
+    .pickupCookieNotification,
+    .deliveryCookieNotification {
+        top: 150%;
+    }
+}
+
+.shipment-selector {
+    #cboxTitle {
+        display: none !important;
+    }
+
+    .choose-shipment {
+        position: relative;
+        height: 100%;
+    }
+
+    .shipment-selector-box {
+        display: flex;
+        background: @brand-tertiary-c;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        height: 100vh;
+        position: relative;
+        padding: 3rem;
+
+        #cboxClose {
+            top: 7px;
+            color: @brand-secondary;
+            color: @brand-secondary-c;
+            padding: 5px;
+            font-size: 2.25rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .heading {
+            color: @brand-primary;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .sub-heading {
+            color: @brand-primary;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .shipment-options {
+            display: flex;
+            margin-top: 5rem;
+            justify-content: space-around;
+
+            .choose-option {
+                padding: 1.5rem;
+                .border(@brand-secondary, @border-width-n);
+                font-weight: 700;
+                color: @brand-secondary;
+                font-size: 1.5rem;
+                text-align: center;
+                width: 45%;
+                display: flex;
+                justify-content: center;
+
+                &:hover {
+                    color: @brand-secondary-c;
+                    border-color: @brand-secondary-c;
+                    cursor: pointer;
+                }
+
+                &.selected {
+                    color: @text-color-light;
+                    border-color: @brand-contrast;
+                    background-color: @brand-contrast;
+                    position: relative;
+
+                    &:hover {
+                        color: @text-color-light;
+                        border-color: @brand-contrast;
+                        cursor: unset;
+                    }
+
+                    &:after {
+                        content: "\f0d7";
+                        position: absolute;
+                        font: normal normal normal 14px/1 FontAwesome;
+                        bottom: -2.5rem;
+                        color: @brand-contrast;
+                        font-size: 4rem;
+                    }
+                }
+            }
+
+            .choose-pickup {
+            }
+
+            .choose-delivery {
+            }
+
+            .shipment-text {
+                margin-left: 1rem;
+            }
+        }
+
+        .shipment-section {
+            width: 100%;
+
+            .delivery-selection,
+            .pickup-selection {
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                margin-top: 2rem;
+                display: flex;
+
+                &.shownone {
+                    display: none;
+                }
+
+                .sub-text {
+                    color: @brand-primary;
+                    font-weight: 700;
+                    font-size: 1.25rem;
+                    margin-top: 1rem;
+                }
+
+                .searchPOSForm {
+                    width: 100%;
+                    flex-direction: row;
+                    align-items: center;
+                    display: flex;
+                    margin-top: 2.5rem;
+                    justify-content: center;
+                    position: relative;
+                }
+
+                .input-postalcode {
+                    width: 50%;
+                    font-size: 3rem;
+                    margin-top: 2.5rem;
+                    letter-spacing: 1rem;
+                    text-align: center;
+                    padding: 2rem;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    margin-bottom: 1rem;
+                }
+
+                .input-pickup {
+                    font-size: 2rem;
+                    letter-spacing: initial;
+                    width: 85%;
+                    text-align: center;
+                    padding: 2rem;
+                    &:focus {
+                        .border-bottom(@brand-secondary-c, @border-width-n);
+                        margin-bottom: 0;
+                        & + .submit-pickup {
+                            .border(@brand-secondary-c, @border-width-n);
+                            color: @brand-secondary-c;
+                            height: 42px;
+                        }
+                    }
+                }
+
+                .error-message-submit-delivery,
+                .error-message-submit-pickup {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: @brand-contrast;
+                }
+
+                .error-message-submit-pickup {
+                    margin-top: 1rem;
+                    position: absolute;
+                    top: 5rem;
+                }
+
+                .success-message-submit-delivery {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: @brand-primary;
+                }
+
+                .submit-delivery {
+                    margin-top: 4rem;
+                    line-height: 25px;
+                }
+
+                .submit-pickup {
+                    line-height: unset;
+                    height: 44px;
+                    width: 15%;
+                    font-size: 3rem;
+                    padding: 0;
+                    .border(@brand-secondary-c, @border-width-n);
+                    border-left: 0;
+                    color: @text-color;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    &:hover {
+                        color: @text-color-dark;
+                    }
+                }
+            }
+        }
+
+        .cart-screen {
+            width: 100%;
+            height: 100%;
+
+            .cart-heading {
+                color: @text-color-dark;
+                font-size: 2.5rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+            }
+
+            .selected-delivery,
+            .selected-pickup {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: center;
+                font-weight: 600;
+                font-size: 1.6rem;
+                color: @brand-secondary-c;
+
+                & > div {
+                    padding-right: 0.5rem;
+                }
+
+                .icon {
+                    width: 20%;
+                    display: flex;
+                    color: @text-color-dark;
+                    font-size: 5rem;
+                    font-weight: 700;
+                }
+
+                .change-shipment {
+                    font-size: 1.25rem;
+                    color: @brand-secondary;
+                    margin-left: 1rem;
+
+                    &:hover {
+                        color: @brand-secondary-c;
+                    }
+                }
+
+                &.shownone {
+                    display: none;
+                }
+            }
+        }
+
+        .prompt-login-footer {
+            width: 100%;
+            position: absolute;
+            bottom: -3%;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+@media @xlarge {
+    .shipment-selector-box {
+        width: 510px;
+    }
+}
+
+@media @large {
+    .shipment-selector-box {
+        width: 510px;
+    }
+}
+
+@media @medium {
+    .shipment-selector-box {
+        width: 500px;
+    }
+}
+
+@media @small {
+    .shipment-selector-box {
+        width: 90vw;
+    }
+}

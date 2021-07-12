@@ -1,0 +1,1 @@
+UPDATE PointOfService;name[unique=true];address(&addrID)

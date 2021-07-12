@@ -1,0 +1,155 @@
+$contentCatalog=spruceContentCatalog
+$contentCatalogName=Spruce Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$siteResource1=jar:org.grocery.core.constants.GroceryCoreConstants&/groceryinitialdata/import/sampledata/productCatalogs/$productCatalog
+
+
+# Language
+$lang=en
+
+#Section 1 & 5 - STARTS
+INSERT_UPDATE Media;mediaFormat(qualifier);$contentCV[unique=true];code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/png'];realfilename;folder(qualifier)[default='images'];altText
+ ;widescreen;;bannerImageLarge2; $siteResource/images/banners/homepage/homepage/healthAndFreshBanner.png;;bannerImageLarge2;;"rotating image2"; 
+ ;widescreen;;bannerImageLarge3; $siteResource/images/banners/homepage/homepage/organicallyGrownBanner.png;;bannerImageLarge3;;"rotating image3"; 
+ ;widescreen;;LargeBannerImage1Section5; $siteResource/images/banners/homepage/homepage/dailyNeedsBanner.png;;LargeBannerImage1Section5;;"Fixed image 1 Section 5";
+ ;widescreen;;LargeBannerImage2Section5; $siteResource/images/banners/homepage/homepage/ovenFreshBanner.png;;LargeBannerImage2Section5;;"Fixed image 2 Section 5"; 
+ 
+ INSERT_UPDATE Media;mediaFormat(qualifier);$contentCV[unique=true];code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/png'];realfilename;folder(qualifier)[default='images'];altText
+ ;widescreen;;bannerImageLarge2_ja; $siteResource/images/banners/homepage/homepage/healthAndFreshJPYBanner.png;;bannerImageLarge2_ja;;"rotating JPY image2"; 
+ ;widescreen;;bannerImageLarge3_ja; $siteResource/images/banners/homepage/homepage/organicallyGrownJPYBanner.png;;bannerImageLarge3_ja;;"rotating JPY image3"; 
+ ;widescreen;;LargeBannerImage1Section5_ja; $siteResource/images/banners/homepage/homepage/dailyNeedsJPYBanner.png;;LargeBannerImage1Section5_ja;;"Fixed image 1 JPY Section 5";
+ ;widescreen;;LargeBannerImage2Section5_ja; $siteResource/images/banners/homepage/homepage/ovenFreshJPYBanner.png;;LargeBannerImage2Section5_ja;;"Fixed image 2 JPY Section 5"; 
+ 
+
+INSERT_UPDATE BannerComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;$picture[lang=$lang]
+;;CarouselCyberBanner2;Carousel Cyber Banner2;CarouselCyberBanner2; ; bannerImageLarge2
+;;CarouselCyberBanner3;Carousel Cyber Banner3;CarouselCyberBanner3; ; bannerImageLarge3
+;;Banner1Section5;Carousel Cyber Banner2;Banner1Section5; ; LargeBannerImage1Section5
+;;Banner2Section5;Carousel Cyber Banner3;Banner2Section5; ; LargeBannerImage2Section5
+
+INSERT_UPDATE RotatingImagesComponent;$contentCV[unique=true];uid[unique=true];name;banners(&componentRef);&componentRef
+;;GroceryHomepageRotatingImageComponent;Grocery Homepage Rotating Image Component;  CarouselCyberBanner2, CarouselCyberBanner3; GroceryHomepageRotatingImageComponent
+;;GroceryImageComponentSection5;Grocery Homepage Rotating Image Component;  Banner1Section5, Banner2Section5; GroceryImageComponentSection5
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-Homepage;Section 1 slot for homepage ;true; GroceryHomepageRotatingImageComponent;
+;;Section5Slot-Homepage;Section 5 slot for homepage ; true; GroceryImageComponentSection5;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section1-Homepage;Section1;;Section1Slot-Homepage
+;;Section5-Homepage;Section5;;Section5Slot-Homepage
+
+#Section 1 & 5 - ENDS
+
+#For Section 2A - STARTS
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]          ;name                    ;url                 ;&linkRef     ;&componentRef             ;target(code)[default='sameWindow']
+                             ;                       ;SimpleBanner1ForSection2A ;SimpleBanner1ForSection2A;/c/essentials       ;SimpleBanner1ForSection2A ;SimpleBanner1ForSection2A ;              
+                             ;                       ;SimpleBanner2ForSection2A ;SimpleBanner2ForSection2A;/c/pantry           ;SimpleBanner2ForSection2A ;SimpleBanner2ForSection2A ; 
+                             ;                       ;SimpleBanner3ForSection2A ;SimpleBanner3ForSection2A;/c/lqr              ;SimpleBanner3ForSection2A ;SimpleBanner3ForSection2A ; 
+                             ;                       ;SimpleBanner4ForSection2A ;SimpleBanner4ForSection2A;/c/msd              ;SimpleBanner4ForSection2A ;SimpleBanner4ForSection2A ; 
+                             ;                       ;SimpleBanner5ForSection2A ;SimpleBanner5ForSection2A;/c/chocolates       ;SimpleBanner5ForSection2A ;SimpleBanner5ForSection2A ; 
+                             ;                       ;SimpleBanner6ForSection2A ;SimpleBanner6ForSection2A;/c/lqdr             ;SimpleBanner6ForSection2A ;SimpleBanner6ForSection2A ;
+
+							                            							  							  					  						                    							  
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+;;Section2ASlot-Homepage; true; SimpleBanner1ForSection2A, SimpleBanner2ForSection2A, SimpleBanner3ForSection2A, SimpleBanner4ForSection2A, SimpleBanner5ForSection2A, SimpleBanner6ForSection2A;
+ 
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section2A-Homepage;Section2A;;Section2ASlot-Homepage
+
+#SECTION 2A - ENDS
+
+#SECTION 2C - STARTS
+
+INSERT_UPDATE BestSellersProductsComponent;$contentCV[unique=true];uid[unique=true];numberOfOrders;numberOfDays;products(code,$productCV);&componentRef
+;;bestSellerProductsComponent ;15;10;CH004, CH005, ABV005, ABV002, ABV004, APC003;bestSellerProductsComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+;;Section2CSlot-Homepage; true; bestSellerProductsComponent;
+
+#SECTION 2C - ENDS
+
+#SECTION 3 -STARTS
+INSERT_UPDATE Media;mediaFormat(qualifier);$contentCV[unique=true];code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/png'];realfilename;folder(qualifier)[default='images'];altText
+ ;widescreen;;LargeBannerImageSection3; $siteResource/images/banners/homepage/homepage/CovidBanner.png;;LargeBannerImageSection3;;"Fixed image Section 3";
+ 
+INSERT_UPDATE MediaContainer;qualifier[unique=true];$medias;$contentCV[unique=true]
+;homepageSection3BannerMediaContainer; LargeBannerImageSection3
+
+INSERT_UPDATE ImageOverLayComponent   ; $contentCV[unique=true] ; uid[unique=true]          ; $mediaContainer                       ; &componentRef               ; fontSize      ;   position ;  theme    	; btnUrlLink      ;textAlign ; btnColor   
+                                      ;                         ; BannerSection2ImageOverLay ; homepageSection3BannerMediaContainer ; BannerSection2ImageOverLay  ; small         ;   right    ;  tertiary  ;   /c/essentials ;  center  ; neutral
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+;;Section3Slot-Homepage; true; BannerSection2ImageOverLay;
+ 
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section3-Homepage;Section3;;Section3Slot-Homepage
+	
+#SECTION 3  - ENDS
+
+#SECTION  4 - STARTS
+INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];name;products(code,$productCV);scroll(code);popup;&componentRef
+;;NewGroceryHomepageProductCarouselComponent; New Grocery Homepage Product Carousel;APC006, APC007, APC008, BFC001, AGS003, AGS004; allVisible; false; NewGroceryHomepageProductCarouselComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+;;Section4Slot-Homepage; true; NewGroceryHomepageProductCarouselComponent;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section2C-Homepage;Section2C;;Section2CSlot-Homepage
+;;Section4-Homepage;Section4;;Section4Slot-Homepage
+ 
+#SECTION  4 - ENDS
+
+#Section 2B & 6 - STARTS
+
+INSERT_UPDATE Media;$productCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator] ; mime[default='image/png']  ; altText         ; folder(qualifier)[default='images']
+;;freshFruits	   ;freshFruits		 ;$siteResource1/images/freshFruits.png		 ;image/png;"Fresh Fruits";
+;;dairyImage		   ;dairyImage			 ;$siteResource1/images/dairyImage.jpg			 ;image/jpg;"dairy Image";
+;;personalCareImage;personalCareImage;$siteResource1/images/personalCareImage.jpg;image/jpg;"Organic Vegetables";
+;;bakeryImage   ;bakeryImage   ;$siteResource1/images/bakeryImage.jpg	 ;image/jpg;"personal Care Image";
+;;beveragesImage   ;beveragesImage   ;$siteResource1/images/beveragesImage.jpg	 ;image/jpg;"Nuts And Raisins";
+
+;;householdImage;householdImage;$siteResource1/images/householdImage.jpg;image/jpg;"household Image";
+;;chocolates   ;chocolates	 ;$siteResource1/images/chocolates.png	 ;image/png;"Chocolates";
+;;fishImage    ;fishImage	 ;$siteResource1/images/fish.png		 ;image/png;"Fish";
+;;icecreams    ;icecreams	 ;$siteResource1/images/icecreams.png	 ;image/png;"icecreams";
+;;nutsNraisins ;nutsNraisins ;$siteResource1/images/nutsNraisins.png ;image/png;"Nuts And Raisins";
+
+
+
+UPDATE Category;code[unique=true]    ; logo(code,$productCV) ;$productCV
+					  ;fnv           ; freshFruits           ;
+					  ;dairy         ; dairyImage            ;
+					  ;bakery        ; bakeryImage           ;
+					  ;personalcare  ; personalCareImage     ;
+					  ;lqdr		     ; beveragesImage        ;
+					  ;household     ; householdImage        ;
+					  ;chocolates    ; chocolates            ;
+					  ;mlp           ; icecreams             ;
+
+					  
+INSERT_UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true]                       ;categories(code,$productCV)                                          ;&componentRef                   
+									   ;                       ;GroceryHomepageCategoryCarousel        ;fnv,dairy,bakery,personalcare,lqdr,household,mlp ;GroceryHomepageCategoryCarousel
+									   ;                       ;categoryCarouselSection2B        ;household,mlp,lqdr,personalcare,fnv,dairy,bakery ;categoryCarouselSection2B
+								
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='LandingPage2Template'];validComponentTypes(code);compTypeGroup(code)	
+;Section6;;;wide
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section6Slot-Homepage;Section6 Slot for Homepage;true;GroceryHomepageCategoryCarousel
+;;Section2BSlot-Homepage;Section2B Slot for Homepage; true; categoryCarouselSection2B
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section6a-Homepage;Section6;;Section6Slot-Homepage
+;;Section2B-Homepage;Section2B;;Section2BSlot-Homepage
+
+#Section 6 - ENDS

@@ -1,0 +1,40 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Delivery Modes / Zones
+#
+#% impex.setLocale(Locale.GERMAN)
+ 
+ 
+# Zone Delivery Modes
+INSERT_UPDATE ZoneDeliveryMode ; code[unique=true]      ; net   ; active[default=true] 
+                               ; premium-net            ; true 
+                               ; standard-net           ; true 
+                               ; premium-gross          ; false 
+                               ; standard-gross         ; false 
+                               ; free-standard-shipping ; true  
+                               
+# Pickup Delivery Mode         
+INSERT_UPDATE PickUpDeliveryMode ; code[unique=true] ; active[default=true] ; supportedMode(code) 
+                                 ; pickup            ;                      ; BUY_AND_COLLECT     
+                                 
+##############################   
+# Insert DeliveryMode taxes      
+##############################   
+INSERT_UPDATE ProductTaxCode ; productCode[unique=true] ; taxCode  ; taxArea[unique=true] 
+                             ; premium-net              ; FR000000 ; IN                   
+                             ; standard-net             ; FR000000 ; IN                   
+                             ; pickup                   ; FR000000 ; IN                   
+                             ; standard-net             ; FR000000 ; AU                   
+                             ; pickup                   ; FR000000 ; AU                   
+                             ; premium-net              ; FR000000 ; AU                   
+                             ; pickup                   ; FR000000 ; JP                   
+                             ; standard-net             ; FR000000 ; JP                   
+                             ; premium-net              ; FR000000 ; JP                   
+                             ; premium-gross            ; FR000000 ; IN                   
+                             ; standard-gross           ; FR000000 ; IN                   
+                             ; standard-gross           ; FR000000 ; AU                   
+                             ; premium-gross            ; FR000000 ; AU                   
+                             ; standard-gross           ; FR000000 ; JP                   
+                             ; premium-gross            ; FR000000 ; JP                   

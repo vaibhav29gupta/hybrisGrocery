@@ -1,0 +1,184 @@
+.page-recipe {
+    main {
+        background-color: @brand-tertiary-c;
+    }
+}
+
+.recipe-page {
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .heading {
+        margin: 2rem;
+        display: flex;
+        justify-content: center;
+        font-weight: 700;
+        width: 100%;
+        font-size: 3.5rem;
+
+        @media @small-and-xsmall {
+            text-align: center;
+            font-size: 2rem;
+        }
+    }
+
+    .recipeDetail-image {
+        margin: 0 8rem;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .recipeDetail-infotimes {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .recipeDetail-infoItem {
+            flex: 0 0 110px;
+            border: 2px solid @brand-tertiary-highlight;
+            border-radius: 50%;
+            width: 110px;
+            height: 110px;
+            flex-direction: column;
+            margin: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -ms-flex-direction: column;
+            -ms-flex-align: center;
+            -ms-flex-pack: center;
+
+            .recipeDetail-infoAmount {
+                font-size: 35px;
+                font-weight: 600;
+                line-height: 1;
+            }
+
+            @media @small-and-xsmall {
+                width: 80px;
+                height: 80px;
+                flex: 0 0 80px;
+
+                .recipeDetail-infoAmount {
+                    font-size: 2.5rem;
+                }
+            }
+        }
+    }
+
+    .recipe-instructions {
+        display: flex;
+        margin: 2rem 8rem;
+        width: ~"calc(100% - 32rem)";
+
+        @media @small-and-xsmall {
+            flex-direction: column;
+            margin: 2rem 4rem;
+        }
+
+        .recipe-ingredients {
+            flex: 1;
+
+            .recipe-ingredient {
+                border-collapse: collapse;
+                width: 100%;
+
+                td {
+                    border: 1px solid @brand-tertiary-c;
+                    padding: 8px;
+
+                    .recipe-product-none {
+                        pointer-events: none;
+                        font-weight: 600;
+                        color: @text-color-dark;
+                    }
+
+                    .recipe-product-link-element {
+                        font-weight: 600;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .recipe-ingredient-subheading {
+                    font-weight: 600;
+                    background-color: @brand-tertiary;
+                    color: @text-color-secondary;
+                }
+            }
+        }
+
+        .recipe-instr {
+            flex: 2;
+            margin-left: 4rem;
+
+            @media @small-and-xsmall {
+                flex: 1;
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .recipe-method {
+                padding: 1rem;
+                color: @text-color-secondary;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+        }
+
+        .recipe-heading {
+            font-weight: 600;
+            font-size: 2.5rem;
+        }
+    }
+
+    .recipe-carousel {
+        width: ~"calc(100% - 16rem)";
+        margin: 3rem 8rem;
+        display: flex;
+        flex-direction: column;
+
+        @media @small-and-xsmall {
+            width: ~"calc(100% - 8rem)";
+        }
+
+        .recipe-headline {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .owl-item {
+            max-width: 230px;
+        }
+    }
+}
+
+.recipe-add-to-cart-headline-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recipe-cart-message {
+    color: @brand-secondary;
+    text-align: center;
+    font-size: 1.5rem;
+    
+    .recipe-cart-failure-message,
+    .recipe-cart-partial-success-message {
+        color: @brand-contrast;
+    }
+}
+
+.recipe-affected-item {
+    background: #fef2f3;
+}

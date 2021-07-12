@@ -1,0 +1,156 @@
+
+$defaultPassword=1234
+$siteUid=spruce
+$storefrontContextRoot=/
+
+INSERT_UPDATE UserGroup;UID[unique=true];groups(uid)[mode=append];readableLanguages(isocode)[mode=append];writeableLanguages(isocode)[mode=append]
+;previewmanagergroup;employeegroup;en;
+;spruce-cmsmanagergroup;basecmsmanagergroup;en;en
+;cmsmanagergroup;basecmsmanagergroup;en,ja,de,zh;en,ja,de,zh
+
+# Create Workflow user groups
+INSERT_UPDATE UserGroup;UID[unique=true];groups(uid)[mode=append];locname[lang=en];description;readableLanguages(isocode)[mode=append];writeableLanguages(isocode)[mode=append]
+;cmsworkflowgroup;basecmsmanagergroup;CMS Workflow Group;Defines access rights to CMS workflow
+;cmsworkflowreadonlygroup;cmsworkflowgroup;CMS Workflow Read Only Group;Read only content for workflows
+;cmseditorgroup;cmsworkflowgroup;CMS Editor Group;Content Editors;en,ja,de,zh;en,ja,de,zh;
+;cmsreviewergroup;cmsworkflowreadonlygroup;CMS Reviewer Group;Content Reviewers;en,ja,de,zh;
+;cmspublishergroup;cmsworkflowreadonlygroup;CMS Publisher Group;Content Publishers
+
+# Translator groups for workflow
+INSERT_UPDATE UserGroup;UID[unique=true];groups(uid)[mode=append];locname[lang=en];description;readableLanguages(isocode)[mode=append];writeableLanguages(isocode)[mode=append]
+;basecmstranslatorgroup;cmsworkflowgroup;Base CMS Translator Group;Base CMS Translator Group;en;;
+;cmstranslatorgroup-DE;basecmstranslatorgroup;German CMS Translator Group;German CMS Translator Group;de;de
+;cmstranslatorgroup-JP;basecmstranslatorgroup;Japanese CMS Translator Group;Japanese CMS Translator Group;ja;ja
+;cmstranslatorgroup-ZH;basecmstranslatorgroup;Chinese CMS Translator Group;Chinese CMS Translator Group;zh;zh
+;cmstranslatorgroup;basecmstranslatorgroup;CMS Translator Group;Content Translators;;;
+
+# Enable workflow for cmsmanagergroup
+INSERT_UPDATE PrincipalGroupRelation;source(uid)[unique=true];target(uid)[unique=true]
+;basecmsmanagergroup;previewmanagergroup;
+;cmsmanagergroup;cmseditorgroup
+;cmsmanagergroup;cmspublishergroup
+;cmsmanagergroup;cmsreviewergroup
+;cmsmanagergroup;cmstranslatorgroup
+;cmstranslatorgroup;cmstranslatorgroup-DE
+;cmstranslatorgroup;cmstranslatorgroup-JP
+;cmstranslatorgroup;cmstranslatorgroup-ZH
+
+# Specific storefront CMS managers
+INSERT_UPDATE Employee;UID[unique=true];password[default=$defaultPassword];description;name;groups(uid)[mode=append];sessionLanguage(isocode)
+;cmsmanager-grocery;;Grocery CMS Manager;Grocery CMS Manager;spruce-cmsmanagergroup;en
+
+# Workflow users
+INSERT_UPDATE Employee;UID[unique=true];name;description;groups(uid)[mode=append];sessionLanguage(isocode);password[default=$defaultPassword]
+;cmseditor;CMS Editor;CMS Editor;cmseditorgroup;en;;
+;cmspublisher;CMS Publisher;CMS Publisher;cmspublishergroup;en;;
+;cmsreviewer;CMS Reviewer;CMS Reviewer;cmsreviewergroup;en;;
+;cmstranslator;CMS Translator;CMS Translator;cmstranslatorgroup;en;;
+;cmstranslator-Annette;German Translator;German Translator;cmstranslatorgroup-DE;de;;
+;cmstranslator-Seb;Asia-Pacific Translator;Asia-Pacific Translator;cmstranslatorgroup-JP,cmstranslatorgroup-ZH;ja;;
+
+# Access rights for managers
+
+$START_USERRIGHTS;;;;;;;;;
+Type;UID;MemberOfGroups;Password;Target;read;change;create;remove;change_perm
+UserGroup;spruce-cmsmanagergroup;basecmsmanagergroup,employeegroup;;;;;;;
+
+# general
+;;;;Item;+;+;;;;
+;;;;UserGroup;+;+;;;;
+;;;;Employee;+;+;;;;
+;;;;ItemSyncTimestamp;+;;;;;
+;;;;SyncItemJob;+;;;;;
+;;;;Type;+;;;;;
+
+# access rights for Products, Store, Site and Catalogs
+;;;;Product;+;+;;;;
+;;;;Category;+;+;;;;
+;;;;VariantType;+;;;;;
+;;;;BaseSite;+;+;-;-;-;
+;;;;BaseStore;+;-;-;-;-;
+;;;;Catalog;+;;;;;
+;;;;CatalogVersion;+;+;+;+;;
+;;;;ContentCatalog;+;+;+;+;+;
+;;;;MediaContainer;+;+;+;+;+;
+;;;;MediaContext;+;+;+;+;+;
+;;;;MediaFormat;+;+;+;+;+;
+;;;;MediaFormatMapping;+;+;+;+;+;
+
+# cms2 items
+;;;;AbstractComponentContainer;+;+;+;+;+;
+;;;;AbstractComponentContainer.itemtype;+;-;-;-;-;
+;;;;AbstractCMSComponent;+;+;+;+;+;
+;;;;AbstractCMSComponent.itemtype;;-;-;-;-;
+;;;;AbstractCMSAction;+;+;+;+;+;
+;;;;AbstractCMSAction.itemtype;;-;-;-;-;
+;;;;CMSItem;+;+;+;+;+;
+;;;;CMSItem.itemtype;;-;-;-;-;
+;;;;CMSPageType;+;+;+;+;+;
+;;;;CMSRelation;+;+;+;+;+;
+;;;;CMSCatalogRestriction;;;+;+;+;
+;;;;CMSCategoryRestriction;;;+;+;+;
+;;;;CMSProductRestriction;;;+;+;+;
+;;;;CatalogPage;-;-;-;-;-;
+;;;;CategoryPage;;;+;+;+;
+;;;;ContentPage;;;+;+;+;
+;;;;ProductPage;;;+;+;+;
+;;;;ContentSlot;+;+;+;+;+;
+;;;;ContentSlotForPage;+;+;+;+;+;
+;;;;ContentSlotForTemplate;+;+;+;+;+;
+;;;;ContentSlotName;+;+;+;+;+;
+;;;;ComponentTypeGroup;+;+;+;+;+;
+;;;;ElementsForContainer;+;+;+;+;+;
+;;;;ElementsForSlot;+;+;+;+;+;
+;;;;CockpitUIScriptConfigMedia;-;-;-;-;-;
+;;;;PageRestrictions;+;+;+;+;+;
+;;;;CatalogsForCMSSite;+;+;+;+;+;
+;;;;AvailableSlotsForTemplate;+;+;+;+;+;
+;;;;RestrictionsForPages;+;+;+;+;+;
+;;;;CatalogsForRestriction;+;+;+;+;+;
+;;;;CategoriesForRestriction;+;+;+;+;+;
+;;;;ProductsForRestriction;+;+;+;+;+;
+;;;;UsersForRestriction;+;+;+;+;+;
+;;;;UserGroupsForRestriction;+;+;+;+;+;
+;;;;PreviewDataToCatalogVersion;+;+;+;+;+;
+;;;;PreviewData;+;+;+;+;+;
+;;;;CMSSite;+;+;+;+;+;
+;;;;CMSVersion;+;+;+;+;+;
+;;;;BusinessProcess;+;+;+;+;+;
+;;;;CMSWorkflowComment;+;+;+;+;+;
+$END_USERRIGHTS;;;;;
+
+$START_USERRIGHTS;;;;;;;;;
+Type;UID;MemberOfGroups;Password;Target;read;change;create;remove;change_perm
+User;cmsmanager-grocery;;1234;;;;;;
+;;;;CatalogVersion;+;+;+;+;;
+$END_USERRIGHTS;;;;;
+
+
+$contentCatalog=spruceContentCatalog
+$syncJob=sync $contentCatalog:Staged->Online
+
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];readPrincipals(uid)[mode=append];writePrincipals(uid)[mode=append]
+;$contentCatalog;Staged;;cmsmanagergroup,spruce-cmsmanagergroup,cmseditorgroup,cmspublishergroup,cmsreviewergroup,basecmstranslatorgroup
+;$contentCatalog;Online;cmsmanagergroup,spruce-cmsmanagergroup,cmseditorgroup,cmspublishergroup,cmsreviewergroup,basecmstranslatorgroup;;
+
+INSERT_UPDATE CatalogVersionSyncJob; code[unique=true]; syncPrincipals(uid)[mode=append]; syncPrincipalsOnly;
+;$syncJob;cmsmanagergroup,cmspublishergroup,spruce-cmsmanagergroup;true
+
+INSERT_UPDATE WorkflowTemplate;code[unique=true];catalogVersions(catalog(id),version)[mode=append];
+;PageTranslation;$contentCatalog:Staged;
+
+
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];readPrincipals(uid)[mode=append];writePrincipals(uid)[mode=append]
+;spruceProductCatalog;Online;basecmsmanagergroup;;
+;spruceProductCatalog;Staged;basecmsmanagergroup;;
+
+
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true];resourceIds;scope[mode=append];authorizedGrantTypes;accessTokenValiditySeconds
+;smartedit;hybris;basic,permissionswebservices,previewwebservices;password;3600
+
+INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
+;storefrontPreviewRoute;"""cx-preview"""
+
+UPDATE CMSSite;uid[unique=true];;;;;;;;;;previewURL;;
+;$siteUid;;;;;;;;;;/$storefrontContextRoot;;
+

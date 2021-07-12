@@ -1,0 +1,13 @@
+INSERT_UPDATE DeliverySlotTimeConfig ; openingtime[dateformat='yyyy-MM-dd''T''HH:mm:ssZ'][unique=true] ; closingtime[dateformat='yyyy-MM-dd''T''HH:mm:ssZ'][unique=true] ;  &timeslotid;carrierCode; code ;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;0.375;0.8333333333333334;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;
+;午前 9:00;午後8:00;;;;

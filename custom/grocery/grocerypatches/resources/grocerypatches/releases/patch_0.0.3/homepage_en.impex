@@ -1,0 +1,45 @@
+$contentCatalog=spruceContentCatalog
+$contentCatalogName=Spruce Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+$siteResource=jar:org.grocery.core.setup.CoreSystemSetup&/groceryinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$siteResource1=jar:org.grocery.core.constants.GroceryCoreConstants&/groceryinitialdata/import/sampledata/productCatalogs/$productCatalog
+
+
+# Language
+$lang=en
+
+UPDATE BestSellersProductsComponent;$contentCV[unique=true];			uid[unique=true];		  title[lang=$lang];
+								   ;					   ;bestSellerProductsComponent ;"Our Bestselling Products";
+				   
+UPDATE CategoryCarouselComponent;$contentCV[unique=true];uid[unique=true]				;title[lang=$lang]
+                                ;                       ;GroceryHomepageCategoryCarousel;"Staples Section"
+                                ;                       ;categoryCarouselSection2B;"Offers of the Week"
+                                
+                                
+UPDATE ImageOverLayComponent ;$contentCV[unique=true]    ;uid[unique=true]             ;heading [lang=$lang]  				;subheading[lang=$lang]                                                                  ;btnText[lang=$lang]	                                 
+						     ;			                 ;BannerSection2ImageOverLay   ;How Spruce is reponding to Covid     ;Discover all the measures we are taking to make our service and products safe for you.  ;Learn More
+                                
+UPDATE CMSLinkComponent       ;$contentCV[unique=true];uid[unique=true]                 ;linkName[lang=$lang] 
+                              ;                       ;SimpleBanner1ForSection2A        ;"Essentials"
+                              ;                       ;SimpleBanner2ForSection2A        ;"Pantry"
+                              ;                       ;SimpleBanner3ForSection2A        ;"Liquor selection"
+							  ;                       ;SimpleBanner4ForSection2A        ;"Meat & Deli"
+							  ;                       ;SimpleBanner5ForSection2A        ;"Chocolates"
+							  ;                       ;SimpleBanner6ForSection2A        ;"Beverages"
+							  
+UPDATE Category;code[unique=true]; name[lang=$lang]  	       ;$productCV		
+					  ;fnv              ;"Fruit and Veg"       ;
+					  ;dairy            ;"Dairy, eggs & cheese";		
+					  ;bakery           	;"Bakery"		   ;
+					  ;personalcare     ;"Personal Care"       ;
+					  ;lqdr				;"Beverages"	       ;
+					  ;household        ;"Household"	       ;
+					  ;chocolates       ;"Chocolates"          ;
+					  ;mlp              ;"Milk And Milk products";	

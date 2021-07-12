@@ -1,0 +1,19 @@
+# USE CTRL-SPACE for type-ahead support
+
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Import the Product Catalog and Classification Catalog
+#
+
+$productCatalog=spruceProductCatalog
+$classificationCatalog=SpruceClassification
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$languageIsoCode=en
+
+# Product versions for product catalogs
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];languages(isoCode)[mode=append]
+;$productCatalog;Staged;$languageIsoCode
+;$productCatalog;Online;$languageIsoCode

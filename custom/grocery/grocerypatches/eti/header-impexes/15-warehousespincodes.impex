@@ -1,0 +1,6 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store Name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=%store%
+
+INSERT_UPDATE Warehouse2PincodeRelation;source(code);target(pincode)

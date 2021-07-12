@@ -1,0 +1,6 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=%store%
+
+INSERT_UPDATE StockLevel;productCode[unique=true];warehouse(code)[default='default',unique=true];available;reserved;preOrder;overSelling;inStockStatus(code)[default='notSpecified'];maxPreOrder

@@ -1,0 +1,24 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Tax;code[unique=true];name[lang=en];name[lang=ja];value;currency(isocode)
+;A0023A2_RetailTax_AU;"Retail Tax AU 1";;10;AUD;
+;ABV_RetailTax_AU;"Retail Tax AU 2";;10;AUD;
+;APC_RetailTax_AU;"Retail Tax AU 3";;10;AUD;
+;AHH_RetailTax_AU;"Retail Tax AU 4";;10;AUD;
+;AGS_RetailTax_AU;"Retail Tax AU 5";;10;AUD;
+;CH_RetailTax_AU;"Retail Tax AU 6";;10;AUD;
+;BFC_RetailTax_AU;"Retail Tax AU 7";;10;AUD;
+;MSF_RetailTax_AU;"Retail Tax AU 8";;5;AUD;
+;SCH_RetailTax_AU;"Retail Tax AU 9";;5;AUD;
+;CMP_RetailTax_AU;"Retail Tax AU 10";;10;AUD;
+;WW_RetailTax_AU;"Retail Tax AU 11";;10;AUD;
+;BBY_RetailTax_AU;"Retail Tax AU 12";;10;AUD;
+;PTC_RetailTax_AU;"Retail Tax AU 13";;10;AUD;
+;SSS_RetailTax_AU;"Retail Tax AU 14";;10;AUD;
+;PN_RetailTax_AU;"Retail Tax AU 15";;10;AUD;
+;FF_RetailTax_AU;"Retail Tax AU 16";;10;AUD;
+;RW_RetailTax_AU;"Retail Tax AU 17";;10;AUD;
+;RetailTax_JP;"Retail Tax Japan 01";;10;JPY;
+;RetailTax_IN;"Retail Tax IN 01";;10;INR;

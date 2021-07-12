@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="genders" type="java.util.List&lt;org.grocery.facades.product.data.GenderData>" />
+	</bean>
+
+	<bean class="org.grocery.facades.product.data.GenderData">
+		<property name="code" type="String" />
+		<property name="name" type="String" />
+	</bean>
+	
+	<bean class="org.grocery.facades.recipe.data.IngredientData">
+	    <property name="quantity" type="String" />
+		<property name="name" type="String" />
+		<property name="specialInstruction" type="String" />
+		<property name="cutStyle" type="String" />
+		<property name="code" type="String" />
+		<property name="url" type="String" />
+		<property name="product" type="de.hybris.platform.commercefacades.product.data.ProductData" />	
+		<property name="isEssential" type="Boolean" />	
+	</bean>
+	
+	<bean class="org.grocery.facades.recipe.data.IngredientsGroupData">
+	    <property name="groupName" type="String" />
+		<property name="code" type="String" />    
+		<property name="ingredients" type="java.util.List&lt;org.grocery.facades.recipe.data.IngredientData>" />
+ 	</bean>
+ 	
+ 	<bean class="org.grocery.facades.recipe.data.RecipeData">
+	    <property name="method" type="java.util.List&lt;String>" />
+		<property name="ingredientsAsText" type="String" />
+		<property name="serves" type="String" />
+		<property name="cookingTime" type="String" />
+		<property name="prepTime" type="String" />	
+		<property name="name" type="String" />
+		<property name="description" type="String" />		
+		<property name="code" type="String" />
+		<property name="videoURL" type="String" />
+		<property name="url" type="String" />
+		<property name="media" type="de.hybris.platform.cmsfacades.data.MediaData" />
+		<property name="uncategorizedIngredient" type="java.util.List&lt;org.grocery.facades.recipe.data.IngredientData>" />
+		<property name="group" type="java.util.List&lt;org.grocery.facades.recipe.data.IngredientsGroupData>" />
+        <property name="product" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ProductData>" />
+        <property name="essentialProduct" type="java.util.Set&lt;de.hybris.platform.commercefacades.product.data.ProductData>" />
+ 	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="productCartQuantity" type="Long" />
+		<property name="discounted" type="Boolean" />
+		<property name="brand" type="String" />
+		<property name="expiry" type="String" />
+		<property name="dietSuitability" type="String" />
+		<property name="weight" type="String" />
+		<property name="ingredients" type="String" />
+		<property name="usageGuidelines" type="String" />
+		<property name="isServiceable" type="Boolean" />
+		<property name="isProductPresentInWishlist" type="Boolean" />
+		<property name="packSizeLabel" type="String" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.PriceData">
+		<property name="salesPrice" type="java.math.BigDecimal" />
+		<property name="formattedSalesPrice" type="String" />
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.serviceability.data.ServiceabilityAreaData">
+		<property name="code" type="String" />
+		<property name="startPostalCode" type="String" />
+		<property name="endPostalCode" type="String" />
+		<property name="regionCode" type="String" />
+		<property name="region" type="String" />
+		<property name="warehouseCode" type="String" />
+		<property name="defaultPos" type="String" />
+		<property name="country" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData">
+		<property name="storeID" type="String" />
+		<property name="external" type="String" />
+	</bean>
+	<bean
+		class="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="preferredShipmentMode" type="String" />
+		<property name="preferredPostalCode" type="String" />
+		<property name="preferredPos" type="String" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData">
+		<property name="preferredShipmentMode" type="String" />
+		<property name="preferredPostalCode" type="String" />
+		<property name="preferredPos" type="String" />
+		<property name="currentShipmentMode" type="String" />
+		<property name="currentPostalCode" type="String" />
+		<property name="currentPos" type="String" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.deliveryslot.data.ZoneData">
+		<property name="code" type="java.lang.String" />
+		<property name="country"
+			type="de.hybris.platform.commercefacades.user.data.CountryData" />
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.commercefacades.deliveryslot.data.DeliverySlotDayConfigData">
+		<property name="deliveryDate" type="java.util.Date" />
+		<property name="orderingDayStartTime" type="java.util.Date" />
+		<property name="orderingDayEndTime" type="java.util.Date" />
+		<property name="zone"
+			type="de.hybris.platform.commercefacades.deliveryslot.data.ZoneData" />
+		<property name="isHolidayApplicable" type="java.lang.Boolean" />
+	</bean>
+
+	<bean
+		class="de.hybris.platform.commercefacades.deliveryslot.data.DeliverySlotTimeConfigData">
+		<property name="code" type="String" />
+		<property name="openingTime" type="java.util.Date" />
+		<property name="closingTime" type="java.util.Date" />
+		<property name="zone"
+			type="de.hybris.platform.commercefacades.deliveryslot.data.ZoneData" />
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.commercefacades.deliveryslot.info.data.DeliverySlotInfoData">
+		<property name="deliveryDate" type="java.util.Date" />
+		<property name="deliveryStartTime" type="java.util.Date" />
+		<property name="deliveryEndTime" type="java.util.Date" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.CountryData">
+		<property name="defaultcurrency" type="de.hybris.platform.commercefacades.storesession.data.CurrencyData"/>
+		<property name="defaultlanguage" type="de.hybris.platform.commercefacades.storesession.data.LanguageData"/>
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.commercefacades.payment.info.data.CODPaymentInfoData">
+		<property name="paymentId" type="String" />
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+		<property name="subTotalWithoutDiscount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+	</bean>
+	
+	<bean class="org.grocery.facades.recipe.data.RecipesCategoryData" extends="de.hybris.platform.commercefacades.product.data.CategoryData">
+        <property name="recipesCount" type="java.lang.Integer" />
+        <property name="recipes" type="java.util.List&lt;org.grocery.facades.recipe.data.RecipeData>" />
+        <property name="thumbnail" type="de.hybris.platform.cmsfacades.data.MediaData" />
+    </bean>
+	
+    <bean class="de.hybris.platform.commercefacades.order.data.PaymentModeData">
+	    <property name="type" type="java.lang.String"/>
+	    <property name="paymentModeImage" type="de.hybris.platform.cmsfacades.data.MediaData"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="email" type="String"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.VariantOptionData">
+		<property name="packSizeLabel" type="String"/>
+		<property name="discounted" type="Boolean" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderData">
+		<property name="deliverySlotInfo" type="de.hybris.platform.commercefacades.deliveryslot.info.data.DeliverySlotInfoData"/>
+	</bean>
+</beans>

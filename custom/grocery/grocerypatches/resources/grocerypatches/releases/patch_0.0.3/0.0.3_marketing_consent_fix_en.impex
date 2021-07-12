@@ -1,0 +1,6 @@
+
+$lang=en
+
+
+UPDATE ConsentTemplate; id[unique = true]                   ; name[lang=$lang]                                    ; description[lang=$lang];
+                      ; spruce_marketing_newsletter_consent ; "Promotional and Marketing Communication Preferences" ; "Yes, I would like to receive updates from Spruce online about products & services, promotions, special offers, news & events and marketing research via Email." ;

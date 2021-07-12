@@ -1,0 +1,27 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog
+
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+
+# Insert Category Structure
+INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories
+;fnv;root;
+;dairy;root;
+;bakery;root;
+;personalcare;root;
+;lqdr;root;
+;household;root;
+;pantry;root;
+;mlp;dairy;
+;chocolates;pantry;
+;bfc;pantry;
+;msd;root;
+;lqr;lqdr;
+;bc;personalcare;
+;pc;personalcare;
+;sss;pantry;
+;pn;pantry;
+;ff;pantry;
+;essentials;root;

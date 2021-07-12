@@ -1,0 +1,7 @@
+
+# USE CTRL-SPACE for type-ahead support
+$lang=en
+
+# Languages
+UPDATE Language;isocode[unique=true];name[lang=$lang]
+;$lang;$lang

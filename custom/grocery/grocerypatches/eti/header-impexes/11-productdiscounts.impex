@@ -1,0 +1,5 @@
+$productCatalog=%store%ProductCatalog
+$productCatalogName=%Store Name% Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE DiscountRow;  product(code,$catalogVersion)[unique=true];currency(isocode)[unique=true];discount(code)[unique=true];startTime[dateformat=yyyyMMdd];endTime[dateformat=yyyyMMdd];user(uid);ug(code)[unique=true];pg(code)[unique=true];$catalogVersion ;

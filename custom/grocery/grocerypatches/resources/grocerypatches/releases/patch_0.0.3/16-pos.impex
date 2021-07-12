@@ -1,0 +1,18 @@
+$productCatalog=spruceProductCatalog
+$productCatalogName=Spruce Product Catalog$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseStores=spruce
+
+INSERT_UPDATE PointOfService;name[unique=true];displayName;description;type(code);latitude;longitude;isExternal;baseStore(uid)[default=$baseStores]
+;POS1_AUS_SYDW;Ocean Street (SW) Store;Aus-Sydney West POS;STORE;-33.8136;151.0034;false;;
+;POS2_AUS_MLB;Port Melbourne Store;Aus-Melbourne POS;STORE;-37.840935;144.946457;false;;
+;POS3_AUS_CAN;Quayside Vista -Canberra Store;Aus-Canberra POS;STORE;-35.282001;149.128998;false;;
+;POS4_AUS_PRT;Moores Drive-Perth Store;Aus-Perth POS;STORE;-31.953512;115.857048;false;;
+;POS5_AUS_SYDS;NS Shopping World Store;Aus-Sydney South POS;STORE;-33.865143;151.2099;false;;
+;Pickup_AUS_SYDW01;Harris Park Pickup;Aus-Sydney-Paramatta Pickup;POS;-33.8136;151.0034;true;;
+;POS1_JP_Tokyo;東京渋谷店　;Japan - Shibuya Tokyo Store;STORE;35.685001;139.710007;false;;
+;POS2_JP_Nikko;博多店;Japan-Hakata Store;STORE;37.685001;139.710007;false;;
+;POS3_JP_Kyoto;京都店;Japan-Kyoto Store;STORE;38.685001;136.710007;false;;
+;POS4_JP_Osaka;大阪店;Japan-Osaka Store;STORE;39.685001;137.710007;false;;
+;POS5_JP_Tokyo  02;東京品川店　;Japan - Shinagawa Tokyo Store;STORE;35.685001;138.710007;false;;
+;POS5_JP_Tokyo  03;東京お台場店;Japan - Gotanda Tokyo Store;POS;35.685001;139.710007;true;;

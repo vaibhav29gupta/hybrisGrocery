@@ -1,0 +1,12 @@
+$serverConfigName=spruceSolrServerConfig
+
+INSERT_UPDATE SolrEndpointUrl ; solrServerConfig(name)[unique=true] ; url[unique=true]            ; master[unique=true,default=false]
+                              ; $serverConfigName                   ; https://localhost:8983/solr ; true        
+                              ; Default                             ; https://localhost:8983/solr ; true                     
+
+INSERT_UPDATE Trigger ; cronJob(code)[unique=true] ; second ; minute ; hour ; day ; month ; year ; relative ; active ; maxAcceptableDelay
+# Run the full-spruceIndex-cronJob at 2:00 PM every day
+                      ; full-spruceIndex-cronJob   ; 0      ; 0      ; 14    ; -1  ; -1    ; -1   ; true    ; true  ; -1                
+# Run the update-spruceIndex-cronJob every 5 minutes
+                      ; update-spruceIndex-cronJob ; 0      ; 5      ; -1   ; -1  ; -1    ; -1   ; true     ; true  ; -1                
+                         

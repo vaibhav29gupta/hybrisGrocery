@@ -1,0 +1,123 @@
+INSERT_UPDATE Script; code[unique=true]				; active[unique=true]	; scriptType(code)	; content;
+					; generateDeliverySlotsScript	; true					; GROOVY			; "import java.time.temporal.TemporalAdjusters;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import org.grocery.core.model.DeliverySlotDayConfigModel;
+import de.hybris.platform.storelocator.model.PointOfServiceModel;
+import java.time.ZoneId;
+import java.text.SimpleDateFormat;
+import org.grocery.core.model.DeliverySlotTimeConfigModel;
+
+flexibleSearchService = spring.getBean('flexibleSearchService');
+modelService = spring.getBean('modelService');
+
+List<PointOfServiceModel> pointOfServices = flexibleSearchService.search(""select {pk} from {PointOfService}"").getResult();
+
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat(""yyyy-MM-dd HH:mm:ss"");
+Date timeSlot1 = simpleDateFormat.parse(""1999-01-01 08:00:00"");
+Date timeSlot2 = simpleDateFormat.parse(""1999-01-01 12:00:00"");
+
+Date timeSlot3 = simpleDateFormat.parse(""1999-01-01 12:00:00"");
+Date timeSlot4 = simpleDateFormat.parse(""1999-01-01 15:00:00"");
+
+Date timeSlot5 = simpleDateFormat.parse(""1999-01-01 15:00:00"");
+Date timeSlot6 = simpleDateFormat.parse(""1999-01-01 18:00:00"");
+
+Date timeSlot7 = simpleDateFormat.parse(""1999-01-01 18:00:00"");
+Date timeSlot8 = simpleDateFormat.parse(""1999-01-01 21:00:00"");
+
+List<DeliverySlotTimeConfigModel> deliveryTimes = new ArrayList<>();
+
+DeliverySlotTimeConfigModel deliveryTime1 = modelService.create(DeliverySlotTimeConfigModel.class);
+deliveryTime1.setCode(""1"");
+deliveryTime1.setCarrierCode(""001"");
+deliveryTime1.setOpeningTime(timeSlot1);
+deliveryTime1.setClosingTime(timeSlot2);
+deliveryTime1.setPointOfServices(pointOfServices);
+modelService.save(deliveryTime1);
+deliveryTimes.add(deliveryTime1);
+
+DeliverySlotTimeConfigModel deliveryTime2 = modelService.create(DeliverySlotTimeConfigModel.class);
+deliveryTime2.setCode(""2"");
+deliveryTime2.setCarrierCode(""002"");
+deliveryTime2.setOpeningTime(timeSlot3);
+deliveryTime2.setClosingTime(timeSlot4);
+deliveryTime2.setPointOfServices(pointOfServices);
+modelService.save(deliveryTime2);
+deliveryTimes.add(deliveryTime2);
+
+DeliverySlotTimeConfigModel deliveryTime3 = modelService.create(DeliverySlotTimeConfigModel.class);
+deliveryTime3.setCode(""3"");
+deliveryTime3.setCarrierCode(""003"");
+deliveryTime3.setOpeningTime(timeSlot5);
+deliveryTime3.setClosingTime(timeSlot6);
+deliveryTime3.setPointOfServices(pointOfServices);
+modelService.save(deliveryTime3);
+deliveryTimes.add(deliveryTime3);
+
+DeliverySlotTimeConfigModel deliveryTime4 = modelService.create(DeliverySlotTimeConfigModel.class);
+deliveryTime4.setCode(""4"");
+deliveryTime4.setCarrierCode(""004"");
+deliveryTime4.setOpeningTime(timeSlot7);
+deliveryTime4.setClosingTime(timeSlot8);
+deliveryTime4.setPointOfServices(pointOfServices);
+modelService.save(deliveryTime4);
+deliveryTimes.add(deliveryTime4);
+
+LocalDate startDate = LocalDate.now().withDayOfMonth(1);
+LocalDate endDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+List<DeliverySlotDayConfigModel> deliveryDaySlots = new ArrayList<>();
+
+for (LocalDate date = startDate; date.isBefore(endDate) || date.isEqual(endDate); date = date.plusDays(1)) {
+	println ""Generating Slots for "" + date;
+	
+	LocalDate deliveryDate1 = date.plusDays(1);
+	DeliverySlotDayConfigModel deliverySlot1 = modelService.create(DeliverySlotDayConfigModel.class);
+	deliverySlot1.setDeliveryDate(Date.from(deliveryDate1.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+	LocalDateTime orderingDayStartTime = date.atStartOfDay();
+	deliverySlot1.setOrderingDayStartTime(Date.from(orderingDayStartTime.atZone(ZoneId.systemDefault()).toInstant()));
+	LocalDateTime orderingDayEndTime = date.plusDays(1).atStartOfDay();
+	deliverySlot1.setOrderingDayEndTime(Date.from(orderingDayEndTime.atZone(ZoneId.systemDefault()).toInstant()));
+	println deliverySlot1.getOrderingDayStartTime().toString() + "" - "" +  deliverySlot1.getOrderingDayEndTime().toString()  + ""    ==>    "" + deliverySlot1.getDeliveryDate().toString();
+	
+	LocalDate deliveryDate2 = date.plusDays(2);
+	DeliverySlotDayConfigModel deliverySlot2 = modelService.create(DeliverySlotDayConfigModel.class);
+	deliverySlot2.setDeliveryDate(Date.from(deliveryDate2.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+	deliverySlot2.setOrderingDayStartTime(Date.from(orderingDayStartTime.atZone(ZoneId.systemDefault()).toInstant()));
+	deliverySlot2.setOrderingDayEndTime(Date.from(orderingDayEndTime.atZone(ZoneId.systemDefault()).toInstant()));
+	println deliverySlot2.getOrderingDayStartTime().toString() + "" - "" +  deliverySlot2.getOrderingDayEndTime().toString() + ""    ==>    "" + deliverySlot2.getDeliveryDate().toString();
+	
+	LocalDate deliveryDate3 = date.plusDays(3);
+	DeliverySlotDayConfigModel deliverySlot3 = modelService.create(DeliverySlotDayConfigModel.class);
+	deliverySlot3.setDeliveryDate(Date.from(deliveryDate3.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+	deliverySlot3.setOrderingDayStartTime(Date.from(orderingDayStartTime.atZone(ZoneId.systemDefault()).toInstant()));
+	deliverySlot3.setOrderingDayEndTime(Date.from(orderingDayEndTime.atZone(ZoneId.systemDefault()).toInstant()));
+	println deliverySlot3.getOrderingDayStartTime().toString() + "" - "" +  deliverySlot3.getOrderingDayEndTime().toString() + ""    ==>    "" + deliverySlot3.getDeliveryDate().toString();
+	
+	deliverySlot1.setCarrierCode('001');
+	deliverySlot2.setCarrierCode('001');
+	deliverySlot3.setCarrierCode('001');
+	deliveryDaySlots.add(deliverySlot1);
+	deliveryDaySlots.add(deliverySlot2);
+	deliveryDaySlots.add(deliverySlot3);
+	
+	deliverySlot1.setPointOfServices(pointOfServices);
+	modelService.save(deliverySlot1);
+	deliverySlot2.setPointOfServices(pointOfServices);
+	modelService.save(deliverySlot2);
+	deliverySlot3.setPointOfServices(pointOfServices);
+	modelService.save(deliverySlot3);
+}
+
+for (PointOfServiceModel pointofservice: pointOfServices) {
+	pointofservice.setDeliveryDaySlots(deliveryDaySlots);
+	pointofservice.setDeliveryTimeSlots(deliveryTimes);
+	modelService.save(pointofservice);
+}"
+
+INSERT_UPDATE ScriptingJob	;code[unique=true]					;scriptURI;
+                          	;generateDeliverySlotsScriptJob		;model://generateDeliverySlotsScript
+
+INSERT_UPDATE CronJob		;code[unique=true]						;job(code)							;singleExecutable		;sessionLanguage(isocode)	;sessionUser(uid);
+                     		;generateDeliverySlotsScriptCronJob		;generateDeliverySlotsScriptJob		;false					;en							;admin;

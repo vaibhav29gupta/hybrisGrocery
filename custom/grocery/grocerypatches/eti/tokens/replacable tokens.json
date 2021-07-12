@@ -1,0 +1,15 @@
+[
+	{
+		"tokenname": "store",
+		"replaceby": "spruce"
+	},
+	{
+		"tokenname": "store name",
+		"replaceby": "Spruce"
+	},
+	{
+		"tokenname": "Approved",
+		"replaceby": "approved"
+	}
+	
+]
